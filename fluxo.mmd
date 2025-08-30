@@ -1,0 +1,23 @@
+flowchart TD;
+  A["Webhook Canal"] --> B["Snapshot Builder<br/>normaliza + evidencias"];
+  B --> C["Intake Agent<br/>1 LLM + ate 2 tools"];
+  C -->|snapshot enriquecido| D{Classificar};
+
+  D -->|DUVIDA| E["Catalogo -> resposta"];
+  E --> G["Apply Plan + tracking"];
+
+  D -->|Sem match| F["Fallback KB (guardrails)"];
+  F --> G;
+
+  D -->|PROCEDIMENTO| P1["Passo 1: Concorda depositar?"];
+  P1 -->|sim| P2["Passo 2: Criou conta?"];
+  P1 -->|nao| A1["Automacao ask_deposit_for_test"] --> G;
+
+  P2 -->|tem| P3["Passo 3: Deposito confirmado?"];
+  P2 -->|nao| A2["Automacao signup_link"] --> G;
+
+  P3 -->|confirmado| A3["trial_unlock"] --> G;
+  P3 -->|nenhum/pendente| A4["prompt_deposit"] --> G;
+
+  C -.->|pending_ops| H["Workers/Tools async"];
+  H -->|resultado| I["Turno de SISTEMA -> Orquestrador"] --> D;

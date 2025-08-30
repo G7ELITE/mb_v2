@@ -1,0 +1,126 @@
+---
+# Policy Intake - Configurações do Intake Agent
+# Define como o agente deve processar mensagens e executar tools
+
+# Orçamentos e limites
+llm_budget: 1  # Máximo de 1 chamada LLM por turno
+tool_budget: 2  # Máximo de 2 tools por turno
+max_latency_ms: 3000  # Timeout máximo em millisegundos
+
+# Thresholds de confiança para estratégias
+thresholds:
+  direct: 0.80      # Confiança alta - execução direta/sequencial
+  parallel: 0.60    # Confiança média - execução paralela
+  passthrough: 0.0  # Abaixo disso - sem tools, passthrough
+
+# Âncoras textuais para detecção de intenções
+anchors:
+  email: 
+    - "email"
+    - "e-mail" 
+    - "mail"
+    - "@"
+  
+  id:
+    - "id"
+    - "conta"
+    - "login"
+    - "número da conta"
+    - "número de conta"
+    - "minha conta"
+  
+  deposito:
+    - "deposito"
+    - "depósito"  
+    - "valor"
+    - "dinheiro"
+    - "pagar"
+    - "pagamento"
+  
+  teste:
+    - "teste"
+    - "testar"
+    - "quero"
+    - "começar"
+    - "iniciar"
+  
+  ajuda:
+    - "ajuda"
+    - "como"
+    - "onde"
+    - "dúvida"
+    - "não sei"
+    - "explicar"
+
+# Patterns regex para extração de IDs
+id_patterns:
+  nyrion:
+    - "\\b[0-9]{6,12}\\b"     # IDs numéricos de 6-12 dígitos
+    - "\\bNY[0-9]{6,10}\\b"   # IDs com prefixo NY
+  
+  quotex:  
+    - "\\b[a-zA-Z0-9]{6,16}\\b"    # IDs alfanuméricos de 6-16 chars
+    - "\\bQX[a-zA-Z0-9]{4,14}\\b"  # IDs com prefixo QX
+
+# Prioridade de brokers para verificação
+broker_priority:
+  - by_active_procedure    # Broker do procedimento ativo
+  - by_profile_known      # Broker já conhecido no perfil  
+  - by_message_context    # Broker mencionado na mensagem
+  - fallback_parallel     # Verificar todos em paralelo
+
+# Configurações por tipo de evidência
+evidence_weights:
+  email_found: 0.4
+  broker_id_found: 0.5
+  anchor_match: 0.2
+  active_procedure: 0.3
+  profile_context: 0.3
+
+# Estratégias de execução de tools
+tool_strategies:
+  direct:
+    description: "Execução sequencial otimizada para alta confiança"
+    max_tools: 2
+    timeout_per_tool: 2000
+    retry_on_failure: true
+  
+  parallel:
+    description: "Execução paralela para confiança média"
+    max_tools: 2
+    global_timeout: 3000
+    fail_fast: false
+  
+  passthrough:
+    description: "Sem execução de tools, passagem direta"
+    max_tools: 0
+
+# Configurações de cache e rate limiting
+cache:
+  tool_results_ttl: 300    # 5 minutos
+  verification_ttl: 1800   # 30 minutos
+  
+rate_limits:
+  tools_per_minute: 10
+  llm_calls_per_minute: 5
+
+# Configurações de logging
+logging:
+  log_tool_calls: true
+  log_llm_prompts: false  # Não logar prompts por privacidade
+  log_results: true
+  mask_sensitive_data: true
+
+# Configurações de fallback
+fallbacks:
+  tool_failure: "passthrough"
+  llm_failure: "heuristic_only" 
+  timeout: "partial_results"
+
+# Desenvolvimento e debug
+debug:
+  enabled: false
+  force_strategy: null  # Forçar estratégia específica (debug)
+  simulate_latency: false
+  mock_tool_responses: false
+
