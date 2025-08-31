@@ -1,0 +1,210 @@
+import axios from 'axios';
+import type { 
+  SimulationRequest, 
+  SimulationResult, 
+  HealthCheck,
+  Procedure,
+  Automation,
+  IntakeConfig 
+} from '../types';
+
+// Base URL do backend
+const API_BASE_URL = 'http://localhost:8000';
+
+// Configurar axios
+const api = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Interceptor para logs em modo dev
+api.interceptors.request.use(request => {
+  if (import.meta.env.DEV) {
+    console.log('[API Request]', request.method?.toUpperCase(), request.url);
+  }
+  return request;
+});
+
+api.interceptors.response.use(
+  response => {
+    if (import.meta.env.DEV) {
+      console.log('[API Response]', response.status, response.config.url);
+    }
+    return response;
+  },
+  error => {
+    console.error('[API Error]', error.response?.status, error.config?.url, error.message);
+    return Promise.reject(error);
+  }
+);
+
+// Serviços da API
+export const apiService = {
+  // Health check
+  async healthCheck(): Promise<HealthCheck> {
+    const response = await api.get('/health');
+    return response.data;
+  },
+
+  // Simulação (endpoint principal)
+  async simulate(request: SimulationRequest): Promise<SimulationResult> {
+    const response = await api.post('/engine/decide', request);
+    return response.data;
+  },
+
+  // Aplicar plano (se necessário para testes reais)
+  async applyPlan(plan: any, idempotencyKey?: string) {
+    const headers = idempotencyKey ? { 'X-Idempotency-Key': idempotencyKey } : {};
+    const response = await api.post('/api/tools/apply_plan', plan, { headers });
+    return response.data;
+  },
+
+  // Info dos canais
+  async getTelegramInfo() {
+    const response = await api.get('/channels/telegram/info');
+    return response.data;
+  },
+
+  async getWhatsappInfo() {
+    const response = await api.get('/channels/whatsapp/info');
+    return response.data;
+  },
+
+  // Endpoints futuros para CRUD (quando implementados no backend)
+  async getProcedures(): Promise<Procedure[]> {
+    // Por enquanto, retorna dados mock
+    return mockProcedures;
+  },
+
+  async saveProcedure(procedure: Procedure): Promise<Procedure> {
+    // TODO: Implementar quando backend tiver endpoint
+    console.log('Salvando procedimento:', procedure);
+    return procedure;
+  },
+
+  async getAutomations(): Promise<Automation[]> {
+    // Por enquanto, retorna dados mock
+    return mockAutomations;
+  },
+
+  async saveAutomation(automation: Automation): Promise<Automation> {
+    // TODO: Implementar quando backend tiver endpoint
+    console.log('Salvando automação:', automation);
+    return automation;
+  },
+
+  async getIntakeConfig(): Promise<IntakeConfig> {
+    // Por enquanto, retorna config mock
+    return mockIntakeConfig;
+  },
+
+  async saveIntakeConfig(config: IntakeConfig): Promise<IntakeConfig> {
+    // TODO: Implementar quando backend tiver endpoint
+    console.log('Salvando config intake:', config);
+    return config;
+  },
+};
+
+// Dados mock para desenvolvimento
+const mockProcedures: Procedure[] = [
+  {
+    id: 'liberar_teste',
+    title: 'Liberar acesso ao teste',
+    description: 'Procedimento para liberar acesso de teste do robô',
+    steps: [
+      {
+        name: 'Concorda em depositar',
+        condition: 'o lead concordou em depositar ou já depositou',
+        if_missing: { automation: 'ask_deposit_for_test' }
+      },
+      {
+        name: 'Criou conta',
+        condition: 'tem conta em alguma corretora suportada',
+        if_missing: { automation: 'signup_link' }
+      },
+      {
+        name: 'Depósito confirmado',
+        condition: 'depósito confirmado',
+        if_missing: { automation: 'prompt_deposit' }
+      },
+      {
+        name: 'Liberar',
+        condition: 'todas as etapas anteriores cumpridas',
+        do: { automation: 'trial_unlock' }
+      }
+    ]
+  }
+];
+
+const mockAutomations: Automation[] = [
+  {
+    id: 'ask_deposit_for_test',
+    topic: 'teste',
+    eligibility: 'não concordou em depositar e não depositou',
+    priority: 0.85,
+    cooldown: '24h',
+    output: {
+      type: 'message',
+      text: 'Para liberar o teste, você consegue fazer um pequeno depósito? 💰',
+      buttons: [
+        {
+          id: 'btn_yes_deposit',
+          label: 'Sim, consigo',
+          kind: 'callback',
+          set_facts: { 'agreements.can_deposit': true },
+          track: { event: 'click_yes_deposit', utm_passthrough: true }
+        },
+        {
+          id: 'btn_help_deposit',
+          label: 'Como deposito?',
+          kind: 'url',
+          url: '${deposit_help_link}',
+          track: { event: 'open_deposit_help' }
+        }
+      ]
+    }
+  },
+  {
+    id: 'signup_link',
+    topic: 'conta',
+    eligibility: 'não tem conta em alguma corretora suportada',
+    priority: 0.90,
+    cooldown: '12h',
+    output: {
+      type: 'message',
+      text: 'Primeiro você precisa criar uma conta na corretora! 📊\n\nRecomendo a Quotex - é mais fácil para iniciantes:',
+      buttons: [
+        {
+          id: 'btn_quotex_signup',
+          label: 'Criar conta Quotex',
+          kind: 'url',
+          url: 'https://quotex.io/pt/?lid=123456',
+          track: { event: 'signup_quotex_click' }
+        }
+      ]
+    }
+  }
+];
+
+const mockIntakeConfig: IntakeConfig = {
+  llm_budget: 1,
+  tool_budget: 2,
+  max_latency_ms: 3000,
+  thresholds: {
+    direct: 0.80,
+    parallel: 0.60
+  },
+  anchors: {
+    teste: ['quero testar', 'teste grátis', 'liberar teste', 'começar agora'],
+    ajuda: ['não consigo', 'como faço', 'preciso de ajuda', 'dúvida'],
+    conta: ['criar conta', 'cadastro', 'abrir conta']
+  },
+  id_patterns: {
+    quotex: ['\\b[a-zA-Z0-9]{6,16}\\b'],
+    nyrion: ['\\b[0-9]{6,12}\\b']
+  }
+};
+
+export default apiService;

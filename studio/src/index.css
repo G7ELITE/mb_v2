@@ -1,0 +1,199 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+@source "../index.html";
+@source "./**/*.{ts,tsx,js,jsx,html}";
+
+:root {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 16px; /* Base maior para melhor legibilidade */
+}
+
+body { 
+  background-color: #f8fafc; 
+  color: #1e293b;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Componentes utilitários melhorados */
+.card {
+  @apply bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-md transition-all duration-300;
+}
+
+/* Cards de estatísticas - cores reduzidas */
+.stats-card {
+  @apply bg-white rounded-2xl shadow-sm border border-gray-100 p-6 text-center hover:shadow-md transition-all duration-300;
+}
+
+.stats-card .stats-number {
+  @apply text-3xl font-bold text-gray-900 dark:text-white;
+}
+
+.stats-card .stats-label {
+  @apply text-sm text-gray-600 dark:text-gray-300 mt-1;
+}
+
+.sidebar-nav-item {
+  @apply flex items-center gap-3 px-3 py-2.5 text-base font-medium rounded-lg text-gray-700 hover:bg-gray-50 transition-all duration-200;
+}
+
+.sidebar-nav-item.active {
+  @apply bg-blue-50 text-blue-700 border-r-2 border-blue-500;
+}
+
+.input-field {
+  @apply block w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors;
+}
+
+.btn-primary {
+  @apply inline-flex items-center px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium text-base rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center px-5 py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium text-base rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2;
+}
+
+/* Melhorar select - mais visível */
+select.input-field {
+  @apply appearance-none bg-white bg-no-repeat bg-right bg-[length:16px] pr-8;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+}
+
+/* Melhorar range inputs */
+input[type="range"] {
+  @apply h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  @apply appearance-none w-4 h-4 bg-blue-600 rounded-full cursor-pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  @apply w-4 h-4 bg-blue-600 rounded-full cursor-pointer border-0;
+}
+
+/* Dark mode manual com toggle - CONTRASTE CORRIGIDO */
+.dark {
+  color-scheme: dark;
+}
+
+.dark body {
+  @apply bg-gray-900 text-gray-100;
+}
+
+/* Cards no modo escuro */
+.dark .card {
+  @apply bg-gray-800 border-gray-700 text-gray-100;
+}
+
+.dark .stats-card {
+  @apply bg-gray-800 border-gray-700;
+}
+
+/* Ajustes para seções colapsáveis */
+.collapsible-section {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+.collapsible-content {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+/* Sidebar no modo escuro */
+.dark .sidebar-nav-item {
+  @apply text-gray-300 hover:bg-gray-700 hover:text-white;
+}
+
+.dark .sidebar-nav-item.active {
+  @apply bg-blue-600/20 text-blue-300 border-blue-400;
+}
+
+/* Inputs e controles no modo escuro */
+.dark .input-field {
+  @apply bg-gray-700 border-gray-600 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400;
+}
+
+.dark .btn-secondary {
+  @apply bg-gray-700 hover:bg-gray-600 text-gray-100 border-gray-600;
+}
+
+.dark select.input-field {
+  @apply text-white;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d1d5db' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+}
+
+.dark input[type="range"] {
+  @apply bg-gray-600;
+}
+
+/* Textos em modo escuro - CONTRASTE FORTE */
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+  @apply !text-white;
+}
+
+.dark p, .dark span, .dark label, .dark div {
+  @apply !text-gray-100;
+}
+
+.dark .text-gray-600 {
+  @apply !text-gray-200;
+}
+
+.dark .text-gray-500 {
+  @apply !text-gray-300;
+}
+
+.dark .text-gray-900 {
+  @apply !text-white;
+}
+
+.dark .text-gray-700 {
+  @apply !text-gray-100;
+}
+
+.dark .text-gray-800 {
+  @apply !text-gray-100;
+}
+
+/* Textarea em modo escuro */
+.dark textarea.input-field {
+  @apply bg-gray-700 border-gray-600 text-white placeholder-gray-400;
+}
+
+/* Títulos e textos maiores para melhor legibilidade */
+h1 {
+  @apply text-3xl font-bold leading-tight;
+}
+
+h2 {
+  @apply text-xl font-semibold leading-tight;
+}
+
+h3 {
+  @apply text-lg font-medium leading-tight;
+}
+
+/* Interface mais clean */
+.main-content {
+  @apply max-w-none;
+}
+
+/* Espaçamentos mais generosos */
+.card {
+  @apply p-8;
+}
+
+/* Labels maiores e mais visíveis */
+label {
+  @apply text-base font-medium;
+}
+
+/* Inputs com padding generoso */
+textarea.input-field {
+  @apply px-4 py-3 text-base;
+}
+
+/* Tooltips melhorados */
+.tooltip {
+  @apply bg-gray-900 text-white text-sm px-3 py-2 rounded-lg shadow-lg;
+}

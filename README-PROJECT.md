@@ -1,5 +1,14 @@
 # ManyBlack V2 — README-PROJECT (Atualizado • sem Docker • sem UI)
 
+** QUANDO FOR USAR O TERMINAL ATIVE O .VENV NA RAIZ:
+devbael@DESKTOP-7B8L8U5:~/mb-v2 source .venv/bin/activate **
+
+** QUANDO FOR EXECUTAR ALGUM COMANDO RELACIONADO AO FRONTEND, VERIFIQUE SE O .VENV ESTA ATIVADO E USE O COMANDO NA PASTA DO FRONTEND:
+(.venv) devbael@DESKTOP-7B8L8U5:~/mb-v2/studio$ **
+
+** QUANDO FOR EXECUTAR ALGUM COMANDO RELACIONADO AO BACKEND, VERIFIQUE SE O .VENV ESTA ATIVADO E USE O COMANDO NA RAIZ DO PROJETO:
+(.venv) devbael@DESKTOP-7B8L8U5:~/mb-v2 **
+
 > **Status**: backend do zero para **Telegram** (WhatsApp preparado).  
 > **Foco**: duas trilhas por turno — **Dúvida** (resposta controlada) e **Procedimento** (funil de procedimentos flexível).  
 > **Arquitetura-chave**: **Intake Agent** (inteligente) prepara fatos; **Orquestrador** decide; **Workers/Tools** verificam fora; **Catálogo/Procedimentos** em **PT-BR** ditam o que enviar (texto/mídia/botões com rastreamento).
