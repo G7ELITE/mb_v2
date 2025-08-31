@@ -1,0 +1,10 @@
+# Redata linhas inteiras em .env e similares
+regex:^OPENAI_API_KEY=.*==>OPENAI_API_KEY=REDACTED
+regex:^TELEGRAM_BOT_TOKEN=.*==>TELEGRAM_BOT_TOKEN=REDACTED
+regex:^TELEGRAM_WEBHOOK_SECRET=.*==>TELEGRAM_WEBHOOK_SECRET=REDACTED
+regex:^JWT_SECRET=.*==>JWT_SECRET=REDACTED
+
+# (Opcional) Padrões mais genéricos de chaves
+regex:sk-[A-Za-z0-9_-]{20,}==>sk-REDACTED
+regex:sk-proj-[A-Za-z0-9_-]{20,}==>sk-proj-REDACTED
+regex:[0-9]{8,}:[A-Za-z0-9_-]{30,}==>TELEGRAM_TOKEN_REDACTED
