@@ -41,7 +41,7 @@ export default function Layout() {
                 <span className="text-white font-bold text-sm">MB</span>
               </div>
               {!sidebarCollapsed && (
-                <h1 className="ml-3 text-lg font-bold text-gray-900 dark:text-white">ManyBlack Studio</h1>
+                <span className="ml-3 text-lg font-bold text-gray-900 dark:text-white">MB Studio</span>
               )}
             </div>
             

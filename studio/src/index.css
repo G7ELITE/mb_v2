@@ -10,7 +10,7 @@
 
 body { 
   background-color: #f8fafc; 
-  color: #1e293b;
+  color: #080f1b;
   font-size: 1rem;
   line-height: 1.6;
 }
@@ -34,7 +34,7 @@ body {
 }
 
 .sidebar-nav-item {
-  @apply flex items-center gap-3 px-3 py-2.5 text-base font-medium rounded-lg text-gray-700 hover:bg-gray-50 transition-all duration-200;
+  @apply flex items-center gap-3 px-3 py-2.5 text-base font-medium rounded-lg text-gray-700 hover:bg-gray-50 transition-all duration-400;
 }
 
 .sidebar-nav-item.active {
@@ -75,33 +75,45 @@ input[type="range"]::-moz-range-thumb {
 /* Dark mode manual com toggle - CONTRASTE CORRIGIDO */
 .dark {
   color-scheme: dark;
+  background-color: #0f0f0f !important;
 }
 
 .dark body {
-  @apply bg-gray-900 text-gray-100;
+  background-color: #0f0f0f !important;  /* Cinza quase preto */
+  color: #f0f0f0 !important;
+}
+
+.dark #root {
+  background-color: #0f0f0f !important;
+  min-height: 100vh !important;
+}
+
+.dark .main-content {
+  background-color: #0f0f0f !important;
 }
 
 /* Cards no modo escuro */
 .dark .card {
-  @apply bg-gray-800 border-gray-700 text-gray-100;
+  @apply bg-gray-800 border-gray-600 text-gray-100;
 }
 
 .dark .stats-card {
-  @apply bg-gray-800 border-gray-700;
+  @apply bg-gray-800 border-gray-600;
+  
 }
 
 /* Ajustes para seções colapsáveis */
 .collapsible-section {
-  @apply transition-all duration-300 ease-in-out;
+  @apply transition-all duration-600 ease-in-out;
 }
 
 .collapsible-content {
-  @apply transition-all duration-300 ease-in-out;
+  @apply transition-all duration-600 ease-in-out;
 }
 
 /* Sidebar no modo escuro */
 .dark .sidebar-nav-item {
-  @apply text-gray-300 hover:bg-gray-700 hover:text-white;
+  @apply text-gray-400 hover:bg-gray-700 hover:text-white;
 }
 
 .dark .sidebar-nav-item.active {
@@ -155,14 +167,105 @@ input[type="range"]::-moz-range-thumb {
   @apply !text-gray-100;
 }
 
+/* Correções específicas para procedimentos e automações */
+.dark .text-blue-600 {
+  @apply !text-blue-300;
+}
+
+.dark .text-blue-700 {
+  @apply !text-blue-200;
+}
+
+.dark .text-green-600 {
+  @apply !text-green-400;
+}
+
+.dark .text-green-700 {
+  @apply !text-white
+}
+
+.dark .text-yellow-600 {
+  @apply !text-yellow-300;
+}
+
+.dark .text-yellow-700 {
+  @apply !text-yellow-200;
+}
+
+.dark .text-red-600 {
+  @apply !text-red-300;
+}
+
+.dark .text-red-700 {
+  @apply !text-red-600;
+}
+
+.dark .text-orange-600 {
+  @apply !text-orange-300;
+}
+
+/* Correções para backgrounds e contrastes específicos */
+.dark .bg-gray-50 {
+  @apply !bg-gray-900;
+}
+
+.dark .bg-blue-100 {
+  @apply !bg-blue-100/30;
+}
+
+.dark .bg-gray-100 {
+  @apply !bg-gray-700;
+}
+
+.dark .bg-blue-50 {
+  @apply !bg-blue-900/10;
+}
+
+.dark .bg-green-50 {
+  @apply !bg-blue-900/10;
+}
+
+.dark .bg-yellow-50 {
+  @apply !bg-yellow-900/20;
+}
+
+.dark .bg-red-50 {
+  @apply !bg-red-900/20;
+}
+
+.dark .bg-orange-50 {
+  @apply !bg-orange-900/20;
+}
+
+/* Correções específicas para elementos em modo escuro */
+.dark .border-gray-200 {
+  @apply !border-gray-700;
+}
+
+.dark .border-blue-200 {
+  @apply !border-blue-900;
+}
+
+.dark .border-green-200 {
+  @apply !border-blue-900;
+}
+
 /* Textarea em modo escuro */
 .dark textarea.input-field {
   @apply bg-gray-700 border-gray-600 text-white placeholder-gray-400;
 }
 
+/* Utility classes */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* Títulos e textos maiores para melhor legibilidade */
 h1 {
-  @apply text-3xl font-bold leading-tight;
+  @apply text-2xl font-bold leading-tight;
 }
 
 h2 {

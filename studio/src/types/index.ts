@@ -40,7 +40,7 @@ export interface Action {
 export interface Button {
   id: string;
   label: string;
-  kind: 'callback' | 'url';
+  kind: 'callback' | 'url' | 'quick_reply';
   set_facts?: Record<string, any>;
   url?: string;
   track?: Record<string, any>;

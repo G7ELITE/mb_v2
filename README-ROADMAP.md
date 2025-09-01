@@ -1,8 +1,40 @@
-# ManyBlack V2 — README-ROADMAP (Completo • sem Docker • sem UI)
+# ManyBlack V2 — README-ROADMAP (✅ Completo • Backend + Frontend Studio)
 
-> **Visão**: Plataforma de conversão/atendimento orientada a **contexto**, com dois tipos de interação por turno: **Dúvida** (resposta pontual, controlada por catálogo/KB) e **Procedimento** (funil de procedimentos flexível, passo a passo).  
-> **Arquitetura**: **Intake Agent** (inteligente) entende mensagens cruas e executa tools; **Orquestrador** decide com base em **Lead Snapshot** enriquecido; **Workers/Tools** realizam verificações externas; **Catálogo** e **Procedimentos** são editados em **PT‑BR**.  
-> **Escopo**: **sem UI** nesta fase e **sem Docker**. Foco em contratos, dados, runtime, testes e operação.
+> **🎯 Status Atual**: ✅ **Fase 1 Completa** - Sistema totalmente funcional com backend FastAPI e frontend React
+> 
+> **Visão**: Plataforma completa de conversão/atendimento orientada a **contexto**, com interface visual amigável em português para equipes operacionais. Dois tipos de interação por turno: **Dúvida** (resposta pontual, controlada por catálogo) e **Procedimento** (funis flexíveis passo a passo).  
+> 
+> **Arquitetura**: **Intake Agent** (inteligente) processa mensagens e executa ferramentas; **Orquestrador** decide com base em **Lead Snapshot** enriquecido; **Workers/Tools** realizam verificações externas; **ManyBlack Studio** permite configuração visual em **PT‑BR**.
+> 
+> **✨ Novidades**: Interface visual completa, modo escuro, simulador integrado, dashboard em tempo real
+
+---
+
+## ✅ Implementado - ManyBlack Studio (Frontend Visual)
+
+### 🎨 Interface Completa em Português
+- **Dashboard**: Visão geral em tempo real com métricas de saúde do sistema
+- **Procedimentos**: Editor visual de funis com passos sequenciais
+- **Automações**: CRUD completo de mensagens automáticas com botões
+- **Intake & Âncoras**: Configuração de detecção de intenções
+- **Simulador**: Teste de conversas com modo desenvolvedor
+- **Publicação**: Deploy de configurações (estrutura preparada)
+
+### 🌟 Recursos de UX/UI
+- **🇧🇷 100% PT-BR**: Interface totalmente em português brasileiro
+- **🌙 Modo Escuro**: Design moderno com alto contraste
+- **📱 Responsivo**: Funciona em desktop, tablet e mobile
+- **🎛️ Sidebar Colapsável**: Maximize área de trabalho
+- **⚡ Blocos Colapsáveis**: Visualize apenas o necessário
+- **🔄 Transições Suaves**: Experiência fluida e moderna
+
+### 🛠️ Stack Tecnológica do Frontend
+- **React 18** + TypeScript para UI robusta
+- **Tailwind CSS v4** para estilização moderna
+- **React Router** para navegação client-side
+- **React Query** para cache e sincronização
+- **React Hook Form** para formulários otimizados
+- **Heroicons** para ícones consistentes
 
 ---
 

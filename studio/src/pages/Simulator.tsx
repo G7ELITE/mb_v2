@@ -33,6 +33,38 @@ export default function Simulator() {
   });
 
   const devMode = watch('devMode');
+  const currentSnapshot = watch('snapshot');
+  
+  // Calcular resumo do estado atual em tempo real
+  const getCurrentStateSummary = () => {
+    // Construir snapshot processando nested keys
+    const processedSnapshot = {
+      accounts: { quotex: 'desconhecido', nyrion: 'desconhecido' },
+      deposit: { status: 'nenhum' },
+      agreements: {},
+      flags: {},
+    };
+    
+    // Processar currentSnapshot para nested keys
+    Object.entries(currentSnapshot).forEach(([key, value]) => {
+      if (key.includes('.')) {
+        const [mainKey, subKey] = key.split('.');
+        if (!processedSnapshot[mainKey as keyof typeof processedSnapshot]) {
+          processedSnapshot[mainKey as keyof typeof processedSnapshot] = {} as any;
+        }
+        (processedSnapshot[mainKey as keyof typeof processedSnapshot] as any)[subKey] = value;
+      } else {
+        (processedSnapshot as any)[key] = value;
+      }
+    });
+    
+    return {
+      accounts_status: processedSnapshot.accounts,
+      deposit_status: processedSnapshot.deposit.status || 'nenhum',
+      agreements_count: Object.values(processedSnapshot.agreements).filter(v => v === true).length,
+      flags_count: Object.values(processedSnapshot.flags).filter(v => v === true).length
+    };
+  };
 
   const onSubmit = async (data: SimulationForm) => {
     if (!data.message.trim()) {
@@ -78,11 +110,18 @@ export default function Simulator() {
   };
 
   const addFactHelper = (key: string, value: any) => {
-    const currentSnapshot = watch('snapshot');
-    setValue('snapshot', {
-      ...currentSnapshot,
-      [key]: value
-    });
+    console.log('🔥 Helper clicado!', { key, value });
+    try {
+      const currentSnapshot = watch('snapshot');
+      const newSnapshot = {
+        ...currentSnapshot,
+        [key]: value
+      };
+      setValue('snapshot', newSnapshot);
+      console.log('✅ Snapshot atualizado:', newSnapshot);
+    } catch (error) {
+      console.error('❌ Erro ao atualizar snapshot:', error);
+    }
   };
 
   const getInteractionTypeIcon = (type: string) => {
@@ -136,6 +175,16 @@ export default function Simulator() {
                 </label>
                 <div className="space-y-2">
                   <div className="text-sm text-gray-600 mb-3">Helpers rápidos:</div>
+                  
+                  {/* Botão de teste simples */}
+                  <button
+                    type="button"
+                    onClick={() => console.log('🚀 TESTE: Botão simples funcionou!')}
+                    className="w-full p-2 bg-red-500 text-white rounded hover:bg-red-600 mb-3"
+                  >
+                    TESTE: Se esse botão não funcionar, é pq tem al problema geral
+                  </button>
+                  
                   <div className="grid grid-cols-1 gap-2">
                     <button
                       type="button"
@@ -165,7 +214,29 @@ export default function Simulator() {
                     >
                       ✓ Lead ativo (lead_inativo = false)
                     </button>
+                    <button
+                      type="button"
+                      onClick={() => addFactHelper('flags.explained', true)}
+                      className="text-left text-sm text-green-600 hover:text-green-500 p-2 bg-green-50 rounded"
+                    >
+                      ✓ Já foi explicado (flags.explained = true)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => addFactHelper('flags.onboarded', true)}
+                      className="text-left text-sm text-green-600 hover:text-green-500 p-2 bg-green-50 rounded"
+                    >
+                      ✓ Onboarding feito (flags.onboarded = true)
+                    </button>
                   </div>
+                </div>
+                
+                {/* Debug: Mostrar snapshot atual */}
+                <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded">
+                  <div className="text-sm font-medium text-yellow-800 mb-2">Debug - Snapshot atual:</div>
+                  <pre className="text-xs text-yellow-700 overflow-x-auto">
+                    {JSON.stringify(watch('snapshot'), null, 2)}
+                  </pre>
                 </div>
               </div>
 
@@ -227,6 +298,36 @@ export default function Simulator() {
 
         {/* Resultado da Simulação */}
         <div className="space-y-6">
+          {/* Estado Atual - Sempre Visível */}
+          <div className="card">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Estado Atual do Lead</h2>
+            <div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-lg p-4">
+              {(() => {
+                const summary = getCurrentStateSummary();
+                return (
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <div className="font-medium text-gray-700 mb-1">Status das contas:</div>
+                      <div className="text-gray-600">{JSON.stringify(summary.accounts_status)}</div>
+                    </div>
+                    <div>
+                      <div className="font-medium text-gray-700 mb-1">Status do depósito:</div>
+                      <div className="text-gray-600">{summary.deposit_status}</div>
+                    </div>
+                    <div>
+                      <div className="font-medium text-gray-700 mb-1">Acordos ativos:</div>
+                      <div className="text-2xl font-bold text-blue-600">{summary.agreements_count}</div>
+                    </div>
+                    <div>
+                      <div className="font-medium text-gray-700 mb-1">Flags ativas:</div>
+                      <div className="text-2xl font-bold text-green-600">{summary.flags_count}</div>
+                    </div>
+                  </div>
+                );
+              })()}
+            </div>
+          </div>
+
           {result && (
             <div className="card">
               <h2 className="text-lg font-semibold text-gray-900 mb-4">Resultado da Simulação</h2>
@@ -291,10 +392,17 @@ export default function Simulator() {
                 <div>
                   <h3 className="font-medium text-gray-900 mb-2">Resumo do Estado:</h3>
                   <div className="bg-gray-50 rounded-lg p-3 text-sm">
-                    <div>Status das contas: {JSON.stringify(result.metadata.snapshot_summary.accounts_status)}</div>
-                    <div>Status do depósito: {result.metadata.snapshot_summary.deposit_status}</div>
-                    <div>Acordos ativos: {result.metadata.snapshot_summary.agreements_count}</div>
-                    <div>Flags ativas: {result.metadata.snapshot_summary.flags_count}</div>
+                    {(() => {
+                      const summary = getCurrentStateSummary();
+                      return (
+                        <>
+                          <div>Status das contas: {JSON.stringify(summary.accounts_status)}</div>
+                          <div>Status do depósito: {summary.deposit_status}</div>
+                          <div className="font-semibold text-blue-600">Acordos ativos: {summary.agreements_count}</div>
+                          <div className="font-semibold text-green-600">Flags ativas: {summary.flags_count}</div>
+                        </>
+                      );
+                    })()}
                   </div>
                 </div>
 

@@ -1,52 +1,108 @@
 # ManyBlack Studio
 
-Interface visual para configuração e testes do ManyBlack V2 - Sistema de orquestração de leads orientado a contexto.
+🎨 **Interface visual amigável em português brasileiro** para configuração e teste do ManyBlack V2 - Sistema inteligente de orquestração de leads com automações em linguagem natural.
 
-## 🎯 Objetivos
+## 🎯 Visão Geral
 
-O ManyBlack Studio permite que a equipe operacional (não técnica) configure funis de procedimentos, automações e teste conversas de forma visual, sem necessidade de editar código ou YAML.
+O ManyBlack Studio foi desenvolvido especificamente para **equipes operacionais brasileiras** (não técnicas) configurarem funis de conversação, automações e testarem cenários de forma visual e intuitiva, sem necessidade de programação ou edição de arquivos técnicos.
 
-### Funcionalidades Principais
+### ✨ Características da Interface
 
-- **📊 Dashboard** - Visão geral do sistema e ações rápidas
-- **🔄 Procedimentos** - Editor visual de funis com passos sequenciais
-- **⚡ Automações** - CRUD de mensagens automáticas com botões e rastreamento
-- **🎯 Intake & Âncoras** - Configuração de palavras-chave e detecção de intenções
-- **🧪 Simulador** - Teste conversas antes de publicar, com modo dev
-- **🚀 Publicação** - Deploy de configurações (placeholder)
+- **🇧🇷 100% em Português Brasileiro** - Termos técnicos traduzidos e contextualizados
+- **🌙 Modo Escuro Completo** - Interface moderna com alto contraste para longas jornadas de trabalho
+- **📱 Responsiva & Acessível** - Funciona perfeitamente em desktop, tablet e mobile
+- **🎛️ Sidebar Colapsável** - Maximize a área de trabalho quando necessário
+- **⚡ Blocos Colapsáveis** - Visualize apenas as informações relevantes no momento
+- **🔍 Auto-complete Inteligente** - Sugestões contextuais em português natural
 
-## 🏗️ Arquitetura
+### 🚀 Funcionalidades Principais
+
+- **📊 Dashboard** - Visão geral em tempo real do sistema com métricas importantes
+- **🔄 Procedimentos** - Editor visual de funis com etapas sequenciais e condições em português
+- **⚡ Automações** - Criação e gerenciamento de mensagens automáticas com botões interativos
+- **🎯 Intake & Âncoras** - Configuração de palavras-chave e detecção de intenções dos leads
+- **🧪 Simulador** - Teste completo de conversas antes de publicar, com modo desenvolvedor
+- **🚀 Publicação** - Deploy seguro de configurações com validação prévia
+
+## 🏗️ Arquitetura Técnica
 
 ```
 studio/
 ├── src/
-│   ├── components/     # Componentes reutilizáveis
-│   │   ├── Layout.tsx
-│   │   ├── AutocompleteInput.tsx
-│   │   └── StepModal.tsx
-│   ├── pages/          # Páginas principais
-│   │   ├── Dashboard.tsx
-│   │   ├── Procedures.tsx
-│   │   ├── ProcedureEditor.tsx
-│   │   ├── Automations.tsx
-│   │   ├── Intake.tsx
-│   │   └── Simulator.tsx
-│   ├── services/       # Integração com backend
-│   │   └── api.ts
-│   ├── types/          # Tipos TypeScript
-│   │   └── index.ts
-│   └── data/           # Dados mock e constantes
-├── public/
-└── package.json
+│   ├── components/          # Componentes reutilizáveis
+│   │   ├── Layout.tsx       # Layout principal com sidebar colapsável
+│   │   ├── CollapsibleSection.tsx  # Seções com botões de ação
+│   │   ├── AutocompleteInput.tsx   # Input inteligente 
+│   │   └── ThemeToggle.tsx         # Alternador modo escuro
+│   ├── contexts/            # Contextos React
+│   │   └── ThemeContext.tsx # Gerenciamento do tema dark/light
+│   ├── pages/              # Páginas da aplicação
+│   │   ├── Dashboard.tsx   # Visão geral com métricas em tempo real
+│   │   ├── Procedures.tsx  # Listagem e gerenciamento de procedimentos
+│   │   ├── Automations.tsx # CRUD de automações de mensagens
+│   │   ├── Intake.tsx      # Configuração de intake e âncoras
+│   │   ├── Simulator.tsx   # Simulador de conversas com modo dev
+│   │   └── Publication.tsx # Deploy de configurações
+│   ├── services/           # Integração com APIs
+│   │   └── api.ts         # Cliente HTTP para ManyBlack V2 Backend
+│   ├── types/             # Definições TypeScript
+│   │   └── index.ts      # Interfaces de Procedures, Automations, etc.
+│   └── hooks/            # React Hooks customizados
+└── package.json          # Dependências e scripts
 ```
 
-## 🚀 Como Executar
+### 🛠️ Stack Tecnológica
 
-### Pré-requisitos
+- **⚡ Vite** - Build tool ultra-rápido
+- **⚛️ React 18** - UI Library com Hooks
+- **📘 TypeScript** - Tipagem estática
+- **🎨 Tailwind CSS v4** - Framework CSS utility-first
+- **🧭 React Router** - Roteamento client-side
+- **📋 React Hook Form** - Gerenciamento de formulários
+- **🔄 React Query** - Cache e sincronização de dados
+- **🎛️ Headless UI** - Componentes acessíveis
+- **🎯 Heroicons** - Ícones SVG otimizados
 
-- Node.js 18+
-- npm ou yarn
-- Backend ManyBlack V2 rodando em `http://localhost:8000`
+## 🚀 Instalação e Execução
+
+### 📋 Pré-requisitos
+
+- **Node.js 18+** (recomendado LTS)
+- **npm** ou **yarn** 
+- **Backend ManyBlack V2** rodando em `http://localhost:8000`
+- **Virtual environment** ativo (`.venv`) no diretório raiz do projeto
+
+### ⚙️ Configuração Inicial
+
+```bash
+# 1. Navegue até o diretório do studio
+cd studio/
+
+# 2. Instale as dependências
+npm install
+
+# 3. Configure as variáveis de ambiente (se necessário)
+cp .env.example .env
+
+# 4. Execute em modo desenvolvimento
+npm run dev
+```
+
+### 🌐 Acessando a Aplicação
+
+- **Interface Principal**: `http://localhost:5173`
+- **Modo Hot Reload**: Ativo por padrão em desenvolvimento
+- **Backend API**: Certifique-se que `http://localhost:8000` está acessível
+
+### 🛠️ Scripts Disponíveis
+
+```bash
+npm run dev       # Servidor de desenvolvimento (porta 5173)
+npm run build     # Build para produção
+npm run preview   # Preview do build de produção
+npm run lint      # Verificação de código com ESLint
+npm run type-check # Verificação de tipos TypeScript
+```
 
 ### Instalação
 

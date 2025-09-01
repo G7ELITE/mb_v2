@@ -8,6 +8,7 @@ import Simulator from './pages/Simulator';
 import Procedures from './pages/Procedures';
 import ProcedureEditor from './pages/ProcedureEditor';
 import Automations from './pages/Automations';
+import AutomationEditor from './pages/AutomationEditor';
 import Intake from './pages/Intake';
 
 // Criar QueryClient para React Query
@@ -46,6 +47,8 @@ function App() {
               <Route path="procedures/new" element={<ProcedureEditor />} />
               <Route path="procedures/:id/edit" element={<ProcedureEditor />} />
               <Route path="automations" element={<Automations />} />
+              <Route path="automations/new" element={<AutomationEditor />} />
+              <Route path="automations/:id/edit" element={<AutomationEditor />} />
               <Route path="intake" element={<Intake />} />
               <Route path="publish" element={<PlaceholderPage title="Publicação" />} />
               <Route path="*" element={

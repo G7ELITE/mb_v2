@@ -1,17 +1,48 @@
-# ManyBlack V2 — README-PROJECT (Atualizado • sem Docker • sem UI)
+# ManyBlack V2 — README-PROJECT (Atualizado • Backend + Frontend Studio)
 
-** QUANDO FOR USAR O TERMINAL ATIVE O .VENV NA RAIZ:
-devbael@DESKTOP-7B8L8U5:~/mb-v2 source .venv/bin/activate **
+📋 **COMANDOS IMPORTANTES**
 
-** QUANDO FOR EXECUTAR ALGUM COMANDO RELACIONADO AO FRONTEND, VERIFIQUE SE O .VENV ESTA ATIVADO E USE O COMANDO NA PASTA DO FRONTEND:
-(.venv) devbael@DESKTOP-7B8L8U5:~/mb-v2/studio$ **
+⚠️ **SEMPRE ATIVE O .VENV ANTES DE QUALQUER COMANDO:**
+```bash
+# Na raiz do projeto
+devbael@DESKTOP-7B8L8U5:~/mb-v2$ source .venv/bin/activate
+```
 
-** QUANDO FOR EXECUTAR ALGUM COMANDO RELACIONADO AO BACKEND, VERIFIQUE SE O .VENV ESTA ATIVADO E USE O COMANDO NA RAIZ DO PROJETO:
-(.venv) devbael@DESKTOP-7B8L8U5:~/mb-v2 **
+🎨 **Para comandos do FRONTEND (Studio):**
+```bash
+# Certifique-se que o .venv está ativo e navegue para a pasta do studio
+(.venv) devbael@DESKTOP-7B8L8U5:~/mb-v2/studio$ npm run dev
+```
 
-> **Status**: backend do zero para **Telegram** (WhatsApp preparado).  
-> **Foco**: duas trilhas por turno — **Dúvida** (resposta controlada) e **Procedimento** (funil de procedimentos flexível).  
-> **Arquitetura-chave**: **Intake Agent** (inteligente) prepara fatos; **Orquestrador** decide; **Workers/Tools** verificam fora; **Catálogo/Procedimentos** em **PT-BR** ditam o que enviar (texto/mídia/botões com rastreamento).
+⚙️ **Para comandos do BACKEND (API):**
+```bash
+# Certifique-se que o .venv está ativo e execute da raiz do projeto
+(.venv) devbael@DESKTOP-7B8L8U5:~/mb-v2$ python -m app.main
+```
+
+---
+
+## 🎯 Visão Geral do Projeto
+
+> **Status Atual**: Sistema completo com **Backend FastAPI** + **Frontend Studio** em produção
+> 
+> **Arquitetura Principal**: 
+> - **🤖 Intake Agent** (inteligente) processa mensagens e enriquece fatos
+> - **🎛️ Orquestrador** toma decisões baseadas em regras em português natural  
+> - **⚙️ Workers/Tools** executam verificações externas e ações
+> - **📚 Catálogo/Procedimentos** em **PT-BR** controlam respostas automáticas
+> - **🎨 ManyBlack Studio** interface visual para configuração e testes
+
+### 🚀 Funcionalidades Implementadas
+
+- ✅ **Backend FastAPI** com arquitetura orientada a contexto
+- ✅ **Frontend React** com interface em português brasileiro
+- ✅ **Duas trilhas de conversação**: Dúvida (resposta controlada) e Procedimento (funis flexíveis)
+- ✅ **Intake inteligente** com processamento de linguagem natural
+- ✅ **Simulador integrado** para teste de conversas
+- ✅ **Dashboard em tempo real** com métricas do sistema
+- ✅ **Modo escuro completo** com alto contraste
+- ✅ **Interface responsiva** e acessível
 
 ---
 
@@ -61,6 +92,28 @@ Copie e configure o arquivo de ambiente:
 cp env.example .env
 # Edite .env com suas configurações
 ```
+
+### 3.4 Frontend Studio (Novo!)
+Configure e execute o frontend:
+```bash
+# 1. Entre na pasta do studio
+cd studio/
+
+# 2. Instale dependências do Node.js
+npm install
+
+# 3. Execute em modo desenvolvimento
+npm run dev
+
+# O frontend estará disponível em http://localhost:3000
+```
+
+**Recursos do Studio:**
+- 🎨 Interface 100% em português brasileiro
+- 🌙 Modo escuro com alto contraste
+- 📱 Design responsivo e acessível
+- 🔄 Integração em tempo real com o backend
+- 🧪 Simulador de conversas integrado
 
 Conteúdo do `.env`:
 ```dotenv

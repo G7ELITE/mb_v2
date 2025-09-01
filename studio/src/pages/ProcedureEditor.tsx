@@ -313,7 +313,7 @@ export default function ProcedureEditor() {
                         </p>
                         {step.if_missing && (
                           <p className="text-xs text-orange-600 mt-1">
-                            Se não satisfeito → {step.if_missing.automation || step.if_missing.procedure}
+                            Se não → {step.if_missing.automation || step.if_missing.procedure}
                           </p>
                         )}
                         {step.do && (

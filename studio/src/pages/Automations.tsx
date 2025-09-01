@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   PlusIcon, 
@@ -7,76 +7,48 @@ import {
   TrashIcon,
   ClockIcon,
   BoltIcon,
-
   CogIcon
 } from '@heroicons/react/24/outline';
 import CollapsibleSection from '../components/CollapsibleSection';
 import type { Automation } from '../types';
-
-// Mock data para demonstração
-const mockAutomations: Automation[] = [
-  {
-    id: 'ask_deposit_for_test',
-    topic: 'teste',
-    eligibility: 'não concordou em depositar e não depositou',
-    priority: 0.85,
-    cooldown: '24h',
-    output: {
-      type: 'message',
-      text: 'Para liberar o teste, você consegue fazer um pequeno depósito? 💰',
-      buttons: [
-        {
-          id: 'btn_yes_deposit',
-          label: 'Sim, consigo',
-          kind: 'callback',
-          set_facts: { 'agreements.can_deposit': true },
-          track: { event: 'click_yes_deposit', utm_passthrough: true }
-        },
-        {
-          id: 'btn_help_deposit',
-          label: 'Como deposito?',
-          kind: 'url',
-          url: '${deposit_help_link}',
-          track: { event: 'open_deposit_help' }
-        }
-      ]
-    }
-  },
-  {
-    id: 'signup_link',
-    topic: 'conta',
-    eligibility: 'não tem conta em alguma corretora suportada',
-    priority: 0.90,
-    cooldown: '12h',
-    output: {
-      type: 'message',
-      text: 'Primeiro você precisa criar uma conta na corretora! 📊\n\nRecomendo a Quotex - é mais fácil para iniciantes:',
-      buttons: [
-        {
-          id: 'btn_quotex_signup',
-          label: 'Criar conta Quotex',
-          kind: 'url',
-          url: 'https://quotex.io/pt/?lid=123456',
-          track: { event: 'signup_quotex_click' }
-        }
-      ]
-    }
-  },
-  {
-    id: 'trial_unlock',
-    topic: 'liberacao',
-    eligibility: 'todas as etapas anteriores cumpridas',
-    priority: 1.0,
-    cooldown: '0h',
-    output: {
-      type: 'message',
-      text: '🎉 Parabéns! Seu acesso foi liberado!\n\nAgora você pode usar o robô de sinais. Lembrando:\n• Opera em M5\n• Usa estratégia Gale\n• Acompanhe sempre o mercado\n\nBoa sorte e bons trades! 📈'
-    }
-  }
-];
+import { automationStorage } from '../services/automationStorage';
 
 export default function Automations() {
-  const [automations] = useState<Automation[]>(mockAutomations);
+  const [automations, setAutomations] = useState<Automation[]>([]);
+  const [stats, setStats] = useState({
+    total: 0,
+    highPriority: 0,
+    avgCooldown: '0h',
+    topics: 0
+  });
+
+  // Carregar automações
+  useEffect(() => {
+    loadAutomations();
+  }, []);
+
+  const loadAutomations = () => {
+    try {
+      const loadedAutomations = automationStorage.getAll();
+      const loadedStats = automationStorage.getStats();
+      setAutomations(loadedAutomations);
+      setStats(loadedStats);
+    } catch (error) {
+      console.error('Erro ao carregar automações:', error);
+    }
+  };
+
+  const handleDelete = (id: string) => {
+    if (confirm(`Tem certeza que deseja excluir a automação "${id}"?`)) {
+      try {
+        automationStorage.delete(id);
+        loadAutomations(); // Recarregar lista
+      } catch (error) {
+        console.error('Erro ao excluir automação:', error);
+        alert('Erro ao excluir automação');
+      }
+    }
+  };
 
   const getPriorityLabel = (priority: number) => {
     if (priority >= 0.9) return 'Alta';
@@ -103,40 +75,42 @@ export default function Automations() {
         </Link>
       </div>
 
-      {/* Cards de Estatísticas - MOVIDO PARA O TOPO */}
+      {/* Cards de Estatísticas */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="stats-card">
-          <div className="stats-number">3</div>
+          <div className="stats-number">{stats.total}</div>
           <div className="stats-label">Total de automações</div>
         </div>
         <div className="stats-card">
-          <div className="stats-number">2</div>
+          <div className="stats-number">{stats.highPriority}</div>
           <div className="stats-label">Alta prioridade</div>
         </div>
         <div className="stats-card">
-          <div className="stats-number">12h</div>
+          <div className="stats-number">{stats.avgCooldown}</div>
           <div className="stats-label">Cooldown médio</div>
         </div>
         <div className="stats-card">
-          <div className="stats-number">87%</div>
-          <div className="stats-label">Taxa de conversão</div>
+          <div className="stats-number">{stats.topics}</div>
+          <div className="stats-label">Tópicos únicos</div>
         </div>
       </div>
 
       {/* Filtros Rápidos */}
       <div className="flex flex-wrap gap-2">
         <button className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
-          Todas (3)
+          Todas ({automations.length})
         </button>
         <button className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600">
-          Alta prioridade (2)
+          Alta prioridade ({stats.highPriority})
         </button>
-        <button className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600">
-          Teste (1)
-        </button>
-        <button className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600">
-          Conta (1)
-        </button>
+        {[...new Set(automations.map(a => a.topic))].map(topic => (
+          <button 
+            key={topic}
+            className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+          >
+            {topic} ({automations.filter(a => a.topic === topic).length})
+          </button>
+        ))}
       </div>
 
       {/* Lista de Automações */}
@@ -145,29 +119,65 @@ export default function Automations() {
           <CollapsibleSection
             key={automation.id}
             title={automation.id}
-            description={`Tópico: ${automation.topic} • Prioridade: ${getPriorityLabel(automation.priority)} (${automation.priority}) • ${automation.eligibility}`}
+            description={`Tópico: ${automation.topic} • ${automation.eligibility}`}
             icon={CogIcon}
             defaultExpanded={false}
+            actions={[
+              {
+                label: 'Testar',
+                onClick: () => window.location.href = `/simulator?automation=${automation.id}`,
+                icon: PlayIcon,
+                variant: 'primary'
+              },
+              {
+                label: 'Editar',
+                onClick: () => window.location.href = `/automations/${automation.id}/edit`,
+                icon: PencilIcon,
+                variant: 'secondary'
+              },
+              {
+                label: 'Excluir',
+                onClick: () => handleDelete(automation.id),
+                icon: TrashIcon,
+                variant: 'danger'
+              }
+            ]}
+            previewContent={
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <span className="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 px-2 py-1 rounded">
+                    {getPriorityLabel(automation.priority)}
+                  </span>
+                  <span className="text-xs bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300 px-2 py-1 rounded">
+                    {automation.cooldown}
+                  </span>
+                  <span className="text-xs bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 px-2 py-1 rounded">
+                    Ativa
+                  </span>
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
+                  <span className="font-medium">Preview:</span> {automation.output.text.slice(0, 100)}...
+                </div>
+                {automation.output.buttons && automation.output.buttons.length > 0 && (
+                  <div className="flex gap-1">
+                    {automation.output.buttons.slice(0, 2).map((button, index) => (
+                      <span
+                        key={index}
+                        className="text-xs bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400 px-2 py-1 rounded"
+                      >
+                        {button.label}
+                      </span>
+                    ))}
+                    {automation.output.buttons.length > 2 && (
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        +{automation.output.buttons.length - 2} mais
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+            }
           >
-            <div className="flex justify-end mb-6 space-x-2">
-              <Link
-                to={`/simulator?automation=${automation.id}`}
-                className="btn-secondary flex items-center"
-              >
-                <PlayIcon className="h-4 w-4 mr-1" />
-                Testar
-              </Link>
-              <Link
-                to={`/automations/${automation.id}/edit`}
-                className="btn-secondary flex items-center"
-              >
-                <PencilIcon className="h-4 w-4 mr-1" />
-                Editar
-              </Link>
-              <button className="text-red-600 hover:text-red-500 p-2">
-                <TrashIcon className="h-4 w-4" />
-              </button>
-            </div>
                 
             {/* Preview da mensagem */}
             <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-3 mb-4">
@@ -242,7 +252,7 @@ export default function Automations() {
       {/* Dicas */}
       <div className="card bg-green-50 border-green-200">
         <h3 className="font-medium text-green-900 mb-2">💡 Dicas para automações</h3>
-        <ul className="text-sm text-green-800 space-y-1">
+        <ul className="text-sm text-white-400 space-y-1">
           <li>• Use prioridades para controlar qual mensagem aparece primeiro</li>
           <li>• Configure cooldowns para evitar spam</li>
           <li>• Teste sempre no simulador antes de publicar</li>

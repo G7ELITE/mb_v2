@@ -72,7 +72,7 @@ export default function Procedures() {
     if (step.do) {
       return <CheckCircleIcon className="h-4 w-4 text-green-500" />;
     }
-    return <ClockIcon className="h-4 w-4 text-yellow-500" />;
+    return <ClockIcon className="h-4 w-4 text-gray" />;
   };
 
   return (
@@ -123,32 +123,56 @@ export default function Procedures() {
             description={`ID: ${procedure.id} • ${procedure.description}`}
             icon={DocumentTextIcon}
             defaultExpanded={false}
+            actions={[
+              {
+                label: 'Testar',
+                onClick: () => window.location.href = `/simulator?procedure=${procedure.id}`,
+                icon: PlayIcon,
+                variant: 'primary'
+              },
+              {
+                label: 'Editar',
+                onClick: () => window.location.href = `/procedures/${procedure.id}/edit`,
+                icon: PencilIcon,
+                variant: 'secondary'
+              },
+              {
+                label: 'Excluir',
+                onClick: () => console.log('Excluir', procedure.id),
+                icon: TrashIcon,
+                variant: 'danger'
+              }
+            ]}
+            previewContent={
+              <div className="space-y-2">
+                <div className="flex items-center gap-4">
+                  <span className="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300 px-2 py-1 rounded">
+                    {procedure.steps.length} passos
+                  </span>
+                  {procedure.settings?.max_procedure_time && (
+                    <span className="text-xs bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300 px-2 py-1 rounded">
+                      Máx: {procedure.settings.max_procedure_time}
+                    </span>
+                  )}
+                  {procedure.settings?.procedure_cooldown && (
+                    <span className="text-xs bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300 px-2 py-1 rounded">
+                      Cooldown: {procedure.settings.procedure_cooldown}
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center text-sm">
+                  <CheckCircleIcon className="h-4 w-4 text-green-500 mr-2" />
+                  <span className="text-gray-600 dark:text-gray-300">Status: Ativo • Atualizado há 2 dias</span>
+                </div>
+              </div>
+            }
           >
-            <div className="flex justify-end mb-6 space-x-2">
-              <Link
-                to={`/simulator?procedure=${procedure.id}`}
-                className="btn-secondary flex items-center"
-              >
-                <PlayIcon className="h-4 w-4 mr-1" />
-                Testar
-              </Link>
-              <Link
-                to={`/procedures/${procedure.id}/edit`}
-                className="btn-secondary flex items-center"
-              >
-                <PencilIcon className="h-4 w-4 mr-1" />
-                Editar
-              </Link>
-              <button className="text-red-600 hover:text-red-500 p-2">
-                <TrashIcon className="h-4 w-4" />
-              </button>
-            </div>
 
             {/* Configurações */}
             {procedure.settings && (
-              <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-                <div className="text-xs font-medium text-gray-600 mb-2">Configurações:</div>
-                <div className="flex items-center space-x-4 text-sm text-gray-600">
+              <div className="mb-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <div className="text-xs font-medium text-gray-600 dark:text-gray-300 mb-2">Configurações:</div>
+                <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-300">
                   {procedure.settings.max_procedure_time && (
                     <span>Tempo máximo: {procedure.settings.max_procedure_time}</span>
                   )}
@@ -161,17 +185,17 @@ export default function Procedures() {
 
             {/* Passos */}
             <div className="space-y-3">
-              <h4 className="font-medium text-gray-900">
+              <h4 className="font-medium text-gray-900 dark:text-gray-100">
                 Passos ({procedure.steps.length})
               </h4>
               <div className="space-y-2">
                 {procedure.steps.map((step, index) => (
                   <div 
                     key={index}
-                    className="flex items-start p-3 bg-gray-50 rounded-lg"
+                    className="flex items-start p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
                   >
                     <div className="flex items-center mr-3">
-                      <span className="flex items-center justify-center w-6 h-6 bg-blue-100 text-blue-600 text-xs font-medium rounded-full">
+                      <span className="flex items-center justify-center w-6 h-6 bg-blue-900 dark:bg-gray-800/60 text-gray-600 dark:text-blue-300 text-xs font-medium rounded-full">
                         {index + 1}
                       </span>
                       <div className="ml-2">
@@ -179,19 +203,19 @@ export default function Procedures() {
                       </div>
                     </div>
                     <div className="flex-1">
-                      <div className="font-medium text-gray-900">
+                      <div className="font-medium text-gray-900 dark:text-gray-100">
                         {step.name}
                       </div>
-                      <div className="text-sm text-gray-600 mt-1">
+                      <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                         Condição: {step.condition}
                       </div>
                       {step.if_missing && (
-                        <div className="text-xs text-orange-600 mt-1">
-                          Se não satisfeito → {step.if_missing.automation || step.if_missing.procedure}
+                        <div className="text-xs text-red-700 dark:text-red-700 mt-1">
+                          Se não → {step.if_missing.automation || step.if_missing.procedure}
                         </div>
                       )}
                       {step.do && (
-                        <div className="text-xs text-green-600 mt-1">
+                        <div className="text-xs text-green-600 dark:text-green-300 mt-1">
                           Ação final → {step.do.automation || step.do.procedure}
                         </div>
                       )}
@@ -238,7 +262,7 @@ export default function Procedures() {
       {/* Dicas */}
       <div className="card bg-blue-50 border-blue-200">
         <h3 className="font-medium text-blue-900 mb-2">💡 Dicas</h3>
-        <ul className="text-sm text-blue-800 space-y-1">
+        <ul className="text-sm text-white-800 space-y-1">
           <li>• Procedimentos executam passos em ordem até encontrar um não satisfeito</li>
           <li>• Use o simulador para testar diferentes cenários antes de publicar</li>
           <li>• Mantenha condições simples e em português natural</li>
