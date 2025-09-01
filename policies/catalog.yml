@@ -192,3 +192,64 @@
         set_facts:
           deposit.status: "pending"
 
+- id: welcome_new_user
+  topic: "boas-vindas-novo"
+  use_when: "usuário novo chegando"
+  eligibility: "primeiro contato sem histórico"
+  priority: 0.95
+  cooldown: 0h
+  output:
+    type: message
+    text: |
+      👋 Olá! Bem-vindo ao ManyBlack!
+      
+      Sou seu assistente virtual e vou te ajudar a começar com nosso robô de sinais.
+      
+      Para liberar seu acesso de teste, preciso verificar algumas informações básicas.
+    buttons:
+      - id: btn_already_have_account
+        label: "Já tenho conta"
+        kind: callback
+        set_facts:
+          flags.has_existing_account: true
+        track:
+          event: "has_existing_account"
+      - id: btn_new_user  
+        label: "Sou novo aqui"
+        kind: callback
+        set_facts:
+          flags.is_new_user: true
+        track:
+          event: "is_new_user"
+
+- id: account_verification
+  topic: "verificacao"
+  use_when: "verificar conta existente"
+  eligibility: "mencionou ID de corretora ou tem conta"
+  priority: 0.88
+  cooldown: 2h
+  output:
+    type: message
+    text: |
+      🔍 Perfeito! Vou verificar sua conta para liberar o acesso.
+      
+      Detectei que você mencionou uma conta. Vou confirmar os dados e verificar seu status de depósito.
+
+- id: deposit_confirmed_success
+  topic: "deposito_confirmado"
+  use_when: "depósito foi confirmado"
+  eligibility: "tem depósito confirmado"
+  priority: 0.92
+  cooldown: 1h
+  output:
+    type: message
+    text: |
+      ✅ Excelente! Seu depósito foi confirmado!
+      
+      🎯 Sua conta está ativa e o acesso ao robô foi liberado!
+      
+      Próximos passos:
+      • Configure o valor de entrada (recomendo começar com $1)
+      • Acompanhe os sinais no nosso canal VIP
+      • Use sempre a estratégia Gale conforme orientações
+

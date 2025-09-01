@@ -51,12 +51,12 @@
         automation: "explain_robot"
     
     - name: "Procedimento de teste"
-      condition: "false"  # Sempre executa se chegou até aqui
+      condition: "false"
       do:
         procedure: "liberar_teste"
 
 - id: ajuda_deposito
-  title: "Ajuda com depósito"  
+  title: "Ajuda com depósito"
   description: "Procedimento para ajudar com processo de depósito"
   steps:
     - name: "Tem conta"
@@ -65,7 +65,7 @@
         automation: "signup_link"
     
     - name: "Orientação detalhada"
-      condition: "false"  # Sempre executa
+      condition: "false"
       do:
         automation: "deposit_help_detailed"
 
@@ -84,7 +84,7 @@
         automation: "ask_broker_preference"
     
     - name: "Oferecer benefício"
-      condition: "false"  # Sempre executa
+      condition: "false"
       do:
         automation: "trial_unlock"
 
@@ -98,28 +98,6 @@
         automation: "ask_problem_details"
     
     - name: "Solução básica"
-      condition: "false"  # Sempre executa
+      condition: "false"
       do:
         automation: "provide_basic_solution"
-
-# Metadados dos procedimentos
-metadata:
-  version: "1.0"
-  last_updated: "2024-01-15"
-  default_timeout: "5m"
-  max_retries: 3
-  
-# Configurações globais
-settings:
-  # Tempo máximo para um procedimento completo
-  max_procedure_time: "30m"
-  
-  # Cooldown entre execuções do mesmo procedimento
-  procedure_cooldown: "1h"
-  
-  # Se deve logar cada passo
-  log_steps: true
-  
-  # Se deve permitir procedimentos aninhados
-  allow_nested_procedures: true
-

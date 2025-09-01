@@ -123,6 +123,60 @@
 - Token do Telegram configurado em `.env`
 - ngrok instalado e autenticado
 
+### 6. **NOVA IMPLEMENTAÇÃO** - `ngrok` Frontend + Backend Unificado
+
+**🎯 Configuração atual**: Um único túnel ngrok serve frontend e backend simultaneamente
+
+**Como funciona**:
+```bash
+# 1. Inicia apenas ngrok no frontend (porta 5173)
+ngrok http 5173
+
+# 2. Frontend automaticamente faz proxy das chamadas /api para backend local
+# Configurado em: studio/vite.config.ts
+
+# Comando para obtendo URL do ngrok e ativar webhook:
+./activate_webhook.sh
+```
+
+**Benefícios da nova implementação**:
+- ✅ **Um único link** serve frontend e backend
+- ✅ **Mais simples** de usar e compartilhar
+- ✅ **Melhor UX** - sem necessidade de 2 URLs diferentes
+- ✅ **Proxy automático** - todas as chamadas `/api` redirecionadas
+- ✅ **Funciona local e via ngrok** sem mudanças no código
+
+**Configurações aplicadas**:
+```typescript
+// studio/vite.config.ts - Proxy configurado
+server: {
+  proxy: {
+    '/api': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+    '/health': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+    '/engine': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+    '/channels': { target: 'http://127.0.0.1:8000', changeOrigin: true },
+    '/tools': { target: 'http://127.0.0.1:8000', changeOrigin: true }
+  }
+}
+```
+
+**Comandos práticos**:
+```bash
+# Para desenvolvimento normal:
+./start.sh                    # Inicia backend + frontend
+ngrok http 5173               # Expõe frontend (que inclui backend via proxy)
+
+# URL final: https://xxx.ngrok-free.app
+# ✅ Frontend: https://xxx.ngrok-free.app
+# ✅ Backend: https://xxx.ngrok-free.app/api/...
+# ✅ Health: https://xxx.ngrok-free.app/health
+```
+
+**Migração da configuração antiga**:
+- ❌ **Antes**: 2 túneis separados (frontend + backend)
+- ✅ **Agora**: 1 túnel no frontend com proxy automático
+- 🔄 **Automático**: Vite dev-server redireciona `/api` para backend local
+
 ---
 
 ## 🐍 Comandos Python/Backend
@@ -509,21 +563,46 @@ alembic upgrade head
 ./logs.sh live  # Acompanhar em tempo real
 ```
 
-### 📱 **Testar com Telegram**
+### 📱 **Testar com Telegram** (Nova Implementação)
 
 ```bash
-# 1. Certificar que backend está rodando:
-curl http://127.0.0.1:8000/health
+# 1. Iniciar sistema completo:
+./start.sh                    # Backend + Frontend
 
-# 2. Configurar webhook:
-./webhook.sh start
+# 2. Configurar ngrok unificado (frontend + backend):
+ngrok http 5173               # Um único túnel
+# Exemplo URL: https://abc123.ngrok-free.app
 
-# 3. Ver status:
-./webhook.sh status
+# 3. Configurar webhook Telegram com URL do ngrok:
+# MÉTODO 1 - Manual:
+curl -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/setWebhook" \
+  -d "url=https://abc123.ngrok-free.app/channels/telegram/webhook?secret=$TELEGRAM_WEBHOOK_SECRET"
 
-# 4. Testar no Telegram e acompanhar logs:
+# MÉTODO 2 - Script automático (adaptar para nova implementação):
+./webhook.sh start            # Pode precisar ajustar para porta 5173
+
+# 4. Verificar configuração:
+curl "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/getWebhookInfo"
+
+# 5. Testar interface:
+# Acesse: https://abc123.ngrok-free.app (frontend)
+# Backend automático via: https://abc123.ngrok-free.app/api/...
+
+# 6. Acompanhar logs em tempo real:
 ./logs.sh live
+
+# 7. Testar no Telegram (Bot: @mb_v2_bot):
+# - Envie mensagem para o bot: "Olá bot, teste"  
+# - Bot deve responder confirmando funcionamento
+# - Verifique logs do backend: ./logs.sh live
+# - Teste funcionalidades no frontend simultaneamente
 ```
+
+**Benefícios da nova implementação para Telegram**:
+- ✅ **Frontend e backend no mesmo link** - fácil monitoramento
+- ✅ **Testes mais realistas** - simula ambiente de produção
+- ✅ **Debug simplificado** - um único domínio para acompanhar
+- ✅ **UX melhorada** - pode testar bot e interface simultaneamente
 
 ### 🧹 **Limpeza Completa**
 
@@ -554,13 +633,20 @@ cd studio/ && rm -rf node_modules && npm install
 ./logs.sh live               # Acompanhar logs
 ./stop.sh                    # Parar tudo
 
+# NGROK UNIFICADO (NOVA IMPLEMENTAÇÃO):
+ngrok http 5173              # Um túnel para frontend+backend
+# Acesso: https://xxx.ngrok-free.app (frontend + /api para backend)
+
 # DEBUG:
 ./logs.sh errors             # Ver apenas erros
 ./logs.sh status             # Status geral
-curl http://127.0.0.1:8000/health  # Testar backend
+curl http://127.0.0.1:8000/health  # Testar backend local
+curl http://127.0.0.1:5173/health  # Testar backend via proxy
 
-# TELEGRAM:
-./webhook.sh start           # Configurar webhook
+# TELEGRAM (NOVA IMPLEMENTAÇÃO):
+ngrok http 5173              # Expor frontend+backend
+curl -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/setWebhook" \
+  -d "url=https://SEU-NGROK.ngrok-free.app/channels/telegram/webhook?secret=$TELEGRAM_WEBHOOK_SECRET"
 ./webhook.sh status          # Status webhook
 
 # BANCO:
@@ -610,6 +696,62 @@ grep TELEGRAM_BOT_TOKEN .env  # Verificar token
 ps aux | grep -E "(uvicorn|vite|npm)"  # Encontrar PIDs
 kill -9 PID_DO_PROCESSO                # Forçar encerramento
 ./stop.sh                              # Script automático
+```
+
+### ❌ "Bot só responde com fallback"
+**Sintomas**: Pipeline executa 0 ações, sempre usa resposta padrão
+```bash
+# 1. Verificar logs de erro YAML
+./logs.sh backend | grep -i "erro.*procedimentos"
+
+# 2. Validar arquivos YAML
+python3 -c "import yaml; yaml.safe_load(open('policies/procedures.yml'))"
+python3 -c "import yaml; yaml.safe_load(open('policies/catalog.yml'))"
+
+# 3. Verificar mapeamento de ações
+curl -X POST http://127.0.0.1:5173/channels/telegram/webhook?secret=seu_secret \
+  -H "Content-Type: application/json" \
+  -d '{"update_id":1,"message":{"message_id":1,"from":{"id":123},"chat":{"id":123},"text":"teste"}}'
+```
+
+### ❌ "Erro de parsing YAML nos procedimentos"
+**Sintomas**: `while parsing a block collection... expected <block end>, but found '?'`
+```bash
+# 1. Verificar indentação nos arquivos YAML
+grep -n "^  " policies/procedures.yml  # Deve usar 2 espaços
+grep -n $'\t' policies/procedures.yml  # Não deve ter tabs
+
+# 2. Recriar arquivo limpo se necessário
+cp policies/procedures.yml policies/procedures.yml.backup
+# Editar manualmente removendo caracteres especiais
+
+# 3. Testar carregamento
+python3 -c "
+import yaml
+try:
+    with open('policies/procedures.yml') as f:
+        data = yaml.safe_load(f)
+    print('✅ YAML válido')
+except Exception as e:
+    print(f'❌ Erro: {e}')
+"
+```
+
+### ❌ "Pipeline executa mas não responde"
+**Sintomas**: `actions_count > 0` mas `response_sent = false`
+```bash
+# 1. Verificar tipos de ação suportados
+grep -n "action_type.*message" app/tools/apply_plan.py
+grep -n "send_message\|message" app/channels/telegram.py
+
+# 2. Testar execução manual
+python3 -c "
+from app.tools.apply_plan import apply_plan
+import asyncio
+plan = {'actions': [{'type': 'message', 'text': 'teste'}]}
+result = asyncio.run(apply_plan(plan))
+print(result)
+"
 ```
 
 ---

@@ -14,11 +14,17 @@ def configure_logging():
     root.addHandler(h)
 
 
-def log_structured(level: str, event: str, **kwargs):
+def log_structured(level: str, event: str, data=None, **kwargs):
     """Helper para logs estruturados em JSON."""
     log_entry = {
         "event": event,
         "level": level,
-        **kwargs
     }
+    
+    # Suportar tanto dicionário como kwargs
+    if data:
+        log_entry.update(data)
+    if kwargs:
+        log_entry.update(kwargs)
+        
     logging.getLogger().info(json.dumps(log_entry))

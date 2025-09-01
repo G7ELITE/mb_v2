@@ -8,16 +8,10 @@
 devbael@DESKTOP-7B8L8U5:~/mb-v2$ source .venv/bin/activate
 ```
 
-🎨 **Para comandos do FRONTEND (Studio):**
+🎨 **Use os comandos dos arquivos .sh de acordo com a necessidade:**
 ```bash
-# Certifique-se que o .venv está ativo e navegue para a pasta do studio
-(.venv) devbael@DESKTOP-7B8L8U5:~/mb-v2/studio$ npm run dev
-```
-
-⚙️ **Para comandos do BACKEND (API):**
-```bash
-# Certifique-se que o .venv está ativo e execute da raiz do projeto
-(.venv) devbael@DESKTOP-7B8L8U5:~/mb-v2$ python -m app.main
+# Documentação dos comandos estão no arquivo COMANDOS.md na raiz do projeto
+(.venv) devbael@DESKTOP-7B8L8U5:~/mb-v2$ 
 ```
 
 ---
@@ -41,6 +35,11 @@ devbael@DESKTOP-7B8L8U5:~/mb-v2$ source .venv/bin/activate
 - ✅ **Intake inteligente** com processamento de linguagem natural
 - ✅ **Simulador integrado** para teste de conversas
 - ✅ **Dashboard em tempo real** com métricas do sistema
+- ✅ **Bot Telegram funcional** com resposta automática implementada
+- ✅ **Pipeline de automações** completamente funcional com procedimentos em YAML
+- ✅ **Persistência completa** de leads, perfis e eventos de jornada no PostgreSQL  
+- ✅ **Tools reais** implementados (verify_signup, check_deposit) com simulação
+- ✅ **Catálogo expandido** com 10+ automações e knowledge base detalhada
 - ✅ **Modo escuro completo** com alto contraste
 - ✅ **Interface responsiva** e acessível
 
@@ -105,7 +104,7 @@ npm install
 # 3. Execute em modo desenvolvimento
 npm run dev
 
-# O frontend estará disponível em http://localhost:3000
+# O frontend estará disponível em http://localhost:5173
 ```
 
 **Recursos do Studio:**
@@ -114,6 +113,27 @@ npm run dev
 - 📱 Design responsivo e acessível
 - 🔄 Integração em tempo real com o backend
 - 🧪 Simulador de conversas integrado
+
+**🌐 Nova Implementação Ngrok Unificado:**
+```bash
+# Para expor frontend + backend via um único link:
+./start.sh          # Inicia backend + frontend
+ngrok http 5173     # Expõe frontend (inclui backend via proxy)
+
+# Resultado: https://xxx.ngrok-free.app
+# ✅ Frontend: https://xxx.ngrok-free.app
+# ✅ Backend: https://xxx.ngrok-free.app/api/...
+# ✅ Health: https://xxx.ngrok-free.app/health
+
+# Comando para obtendo URL do ngrok e ativar webhook:
+./activate_webhook.sh
+```
+
+**Benefícios:**
+- ✅ **Um único domínio** para frontend e backend
+- ✅ **Proxy automático** configurado no Vite
+- ✅ **Mais simples** para compartilhar e testar
+- ✅ **Funciona** localmente e via ngrok
 
 Conteúdo do `.env`:
 ```dotenv
@@ -158,22 +178,44 @@ python -m app.main
 # gunicorn app.main:app -w 4 -k uvicorn.workers.UvicornWorker
 ```
 
-### 3.6 Registrar webhook do Telegram
+### 3.6 Registrar webhook do Telegram (Nova Implementação)
 ```bash
+# 1. Iniciar sistema com ngrok unificado:
+./start.sh                # Backend + Frontend
+ngrok http 5173          # Túnel único para frontend+backend
+
+# 2. Configurar webhook (substitua pela URL real do ngrok):
 curl -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/setWebhook" \
-  -d "url=$PUBLIC_URL/channels/telegram/webhook?secret=$TELEGRAM_WEBHOOK_SECRET"
+  -d "url=https://SEU-NGROK.ngrok-free.app/channels/telegram/webhook?secret=$TELEGRAM_WEBHOOK_SECRET"
+
+# 3. Verificar configuração:
+curl "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/getWebhookInfo"
 ```
+
+**Vantagens da nova implementação:**
+- ✅ Um único domínio ngrok para frontend e backend
+- ✅ Mais fácil de compartilhar e debugar
+- ✅ Frontend e backend acessíveis simultaneamente
 
 ### 3.7 Validar instalação
 ```bash
-# Health check
+# Health check (backend direto)
 curl http://localhost:8000/health
+
+# Health check (via proxy do frontend)
+curl http://localhost:5173/health
 
 # Informações do sistema  
 curl http://localhost:8000/info
 
 # Info do canal Telegram
 curl http://localhost:8000/channels/telegram/info
+
+# Testar frontend
+curl http://localhost:5173
+
+# Testar via ngrok (se configurado)
+curl https://SEU-NGROK.ngrok-free.app/health
 ```
 
 ### 3.8 Executar testes

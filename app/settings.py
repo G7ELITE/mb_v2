@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     DB_USER: str = "mbuser"
     DB_PASSWORD: str = "change-me"
     REDIS_URL: str | None = None
-    TELEGRAM_BOT_TOKEN: str = ""
+    TELEGRAM_BOT_TOKEN: str = "8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI"
     TELEGRAM_WEBHOOK_SECRET: str = ""
     JWT_SECRET: str = ""
     

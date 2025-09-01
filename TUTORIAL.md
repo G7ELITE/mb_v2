@@ -20,7 +20,7 @@
 
 ### Como Acessar o Sistema
 
-1. **Abra seu navegador** e acesse: `http://localhost:3000`
+1. **Abra seu navegador** e acesse: `http://localhost:5173`
 2. **Verifique se o backend está rodando** - deve aparecer "Sistema Saudável" no dashboard
 3. **Explore o modo escuro** - clique no ícone da lua no canto superior direito
 
@@ -511,4 +511,160 @@ O **ManyBlack Studio** é uma ferramenta poderosa que coloca o controle da conve
 
 ---
 
-*💌 Dúvidas? Entre em contato com o time técnico ou consulte a documentação técnica em `README-PROJECT.md`*
+## 🤖 Testando o Bot Telegram Real
+
+### Como testar o sistema funcionando:
+
+1. **Acesse o bot**: Procure por `@mb_v2_bot` no Telegram
+2. **Envie mensagens teste**:
+   - "quero testar o robô" → Deve ativar procedimento de liberação
+   - "preciso de ajuda para depositar" → Deve mostrar guia de depósito  
+   - "tenho conta quotex 123456" → Deve verificar e confirmar conta
+3. **Observe as respostas**: Devem ser automações específicas, não mensagens padrão
+4. **Verifique botões**: Muitas respostas incluem botões interativos
+
+### 📊 Monitorando o sistema:
+
+```bash
+# Ver logs em tempo real
+./logs.sh live
+
+# Verificar status dos processos
+./logs.sh status
+
+# Ver apenas erros
+./logs.sh errors
+```
+
+### ✅ Sinais de que está funcionando:
+- ✅ Pipeline executa 1+ ações (não 0)
+- ✅ `response_sent: true` nos logs
+- ✅ Respostas específicas com botões interativos
+- ✅ Mensagens contextuais baseadas no que você enviou
+
+### ❌ Sinais de problema:
+- ❌ Sempre responde "Sistema está processando..."
+- ❌ Pipeline executa 0 ações
+- ❌ Erro de YAML nos logs
+- ❌ `response_sent: false`
+
+---
+
+## 🆘 Solução de Problemas Comuns
+
+### ❌ **"Lead não recebe mensagens no Telegram"**
+
+**Problema**: Bot processa mensagens mas lead não recebe resposta
+
+**Causas mais comuns:**
+
+#### 1. **Erro de ngrok - Múltiplas sessões** 
+```
+ERR_NGROK_108: Your account is limited to 1 simultaneous ngrok agent sessions
+```
+
+**Solução**:
+```bash
+# Parar todas as sessões ngrok
+./webhook.sh stop
+
+# Verificar se parou completamente  
+ps aux | grep ngrok
+
+# Forçar encerramento se necessário
+pkill -f ngrok
+
+# Aguardar 5 segundos
+sleep 5
+
+# Reativar corretamente
+./activate_webhook.sh
+```
+
+#### 2. **Backend ou frontend não rodando**
+```bash
+# Verificar status
+./logs.sh status
+
+# Se algum estiver parado, reiniciar
+./restart.sh
+
+# Aguardar inicialização completa (30s)
+sleep 30
+
+# Reativar webhook
+./activate_webhook.sh
+```
+
+#### 3. **Erro no arquivo procedures.yml**
+```bash
+# Verificar se YAML está válido
+python3 -c "import yaml; yaml.safe_load(open('policies/procedures.yml'))"
+
+# Ver logs de erro específicos
+./logs.sh backend | grep -i "procedimento\|yaml"
+
+# Se houver erro, corrigir indentação/sintaxe do YAML
+```
+
+#### 4. **Token do Telegram inválido**
+```bash
+# Verificar se token está configurado
+grep TELEGRAM_BOT_TOKEN .env
+
+# Testar token manualmente
+curl -s "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/getMe"
+```
+
+#### 5. **Webhook não configurado corretamente**
+```bash
+# Verificar status do webhook
+curl -s "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/getWebhookInfo" | jq
+
+# Reconfigurar webhook
+./activate_webhook.sh
+
+# Verificar se URL está acessível
+curl -s "$(curl -s http://127.0.0.1:4040/api/tunnels | jq -r '.tunnels[0].public_url')/health"
+```
+
+### 🔧 **Sequência de diagnóstico completa:**
+
+```bash
+# 1. Verificar todos os processos
+./logs.sh status
+
+# 2. Parar tudo se necessário
+./stop.sh
+
+# 3. Reiniciar sistema completo
+./start.sh
+
+# 4. Aguardar estabilização
+sleep 30
+
+# 5. Parar ngrok antigo
+pkill -f ngrok
+sleep 5
+
+# 6. Ativar webhook limpo
+./activate_webhook.sh
+
+# 7. Testar pipeline localmente
+source .env
+curl -X POST "http://127.0.0.1:5173/channels/telegram/webhook?secret=$TELEGRAM_WEBHOOK_SECRET" \
+  -H "Content-Type: application/json" \
+  -d '{"update_id":1,"message":{"message_id":1,"from":{"id":123},"chat":{"id":123},"text":"teste"}}'
+
+# 8. Monitorar logs em tempo real
+./logs.sh live
+```
+
+### 📱 **Teste final:**
+1. Envie mensagem real para @mb_v2_bot: "quero testar"
+2. Observe logs: deve aparecer "Pipeline executado" e "response_sent: true"
+3. Verifique resposta: deve ser automação específica com botões
+
+---
+
+*💌 Dúvidas? Entre em contato com o time técnico ou consulte a documentação técnica em `README-PROJECT.md` e `COMANDOS.md`*

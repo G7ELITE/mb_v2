@@ -117,3 +117,64 @@ Se tiver dúvidas, pode perguntar aqui mesmo no chat. Estou sempre disponível p
 - Pratique primeiro em conta demo
 - Busque conhecimento sobre análise técnica
 
+## Perguntas frequentes
+
+### ❓ "Preciso ter experiência para usar o robô?"
+**Não!** O robô foi desenvolvido especialmente para iniciantes. Ele faz toda a análise técnica automaticamente e envia sinais prontos.
+
+### ❓ "Quanto posso ganhar por dia?"
+**Depende** do seu capital e gestão de risco. Com uma banca de $100 e gestão conservadora, é possível ter lucros de $5-15 por dia. Lembre-se: consistência é mais importante que grandes ganhos.
+
+### ❓ "O robô funciona 24h?"
+**Não.** O robô opera apenas nos melhores horários do mercado:
+- Segunda a sexta: 9h às 18h (horário de Brasília)
+- Foco no período de maior volatilidade: 14h às 17h
+
+### ❓ "Posso usar em qualquer corretora?"
+**Atualmente** suportamos:
+- ✅ **Quotex** (recomendada para iniciantes)
+- ✅ **Nyrion** (para traders mais experientes)
+
+### ❓ "Como sei que o sinal está certo?"
+Nossos sinais têm:
+- 📊 **Taxa de acerto**: 75-80%
+- 🔍 **Análise técnica**: Múltiplos indicadores
+- ⏰ **Timing preciso**: Momento exato de entrada
+- 📱 **Notificações**: Alertas em tempo real
+
+### ❓ "E se eu perder dinheiro?"
+- 🛡️ Use sempre **stop loss** e gestão de risco
+- 💡 Comece com valores **baixos** ($1-2)
+- 📚 **Estude** os materiais de educação
+- 🆘 **Contate** suporte se precisar de ajuda
+
+### ❓ "Preciso ficar online o tempo todo?"
+**Não!** Você recebe:
+- 📱 Notificações push no celular
+- 📧 Alertas por email (opcional)
+- 💬 Sinais no canal do Telegram
+- ⏰ Tempo suficiente para executar (5-10 min)
+
+## 🎯 Dicas para maximizar resultados
+
+### 📈 Para iniciantes:
+1. Comece sempre com conta demo
+2. Use valores mínimos ($1) nas primeiras semanas
+3. Foque em aprender, não em ganhar
+4. Anote seus trades em uma planilha
+5. Pare após 3 perdas consecutivas
+
+### 💪 Para avançar:
+1. Estude análise técnica básica
+2. Entenda os padrões dos pares que opera
+3. Desenvolva disciplina emocional
+4. Mantenha registro de performance
+5. Ajuste estratégia baseado em resultados
+
+### 🚀 Próximo nível:
+1. Combine sinais com sua análise
+2. Use múltiplos timeframes
+3. Diversifique pares operados
+4. Implemente stop loss rigoroso
+5. Considere automação avançada
+

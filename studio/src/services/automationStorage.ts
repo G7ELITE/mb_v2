@@ -151,7 +151,7 @@ export const automationStorage = {
     };
   },
 
-  private calculateAvgCooldown(automations: Automation[]): string {
+  calculateAvgCooldown(automations: Automation[]): string {
     const cooldowns = automations.map(a => {
       const match = a.cooldown.match(/(\d+)h/);
       return match ? parseInt(match[1]) : 0;

@@ -1,2 +1,110 @@
 INFO:     Will watch for changes in these directories: ['/home/devbael/mb-v2']
-ERROR:    [Errno 98] Address already in use
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [23671] using StatReload
+INFO:     Started server process [23674]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:36178 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+Recebido update do Telegram: 123457021
+Evento normalizado: {'platform': 'telegram', 'user_id': '1062650136', 'message_text': 'quero testar', 'type': 'text', 'raw': {'update_id': 123457021, 'message': {'message_id': 31, 'from': {'id': 1062650136, 'is_bot': False, 'first_name': 'TesteFinal', 'username': 'teste_final'}, 'chat': {'id': 1062650136, 'first_name': 'TesteFinal', 'type': 'private'}, 'date': 1756744100, 'text': 'quero testar'}}}
+Lead existente: ID=8, chat_id=1062650136
+🎯 Iniciando pipeline completo de processamento
+📊 Construindo snapshot do lead...
+Construindo snapshot para plataforma: telegram
+Snapshot construído com 2 candidatos
+🔍 Executando intake inteligente...
+Iniciando intake agent
+Análise: confiança=0.80, estratégia=direct
+Tool verify_signup executado com sucesso
+Intake concluído com estratégia: direct
+🧠 Executando orquestrador de decisões...
+Iniciando decisão dec_51ed243d533e
+Executando procedimento: liberar_teste
+Executando procedimento: liberar_teste
+Procedimentos carregados: 5
+Avaliando passo: Concorda em depositar
+Passo não satisfeito: Concorda em depositar - executando ação
+Catálogo carregado com 10 automações
+Executando automação: ask_deposit_for_test
+Decisão dec_51ed243d533e: PROCEDIMENTO executado
+Decisão dec_51ed243d533e concluída com 1 ações
+⚡ Aplicando plano com 1 ações...
+{"event": "apply_plan_start", "level": "info", "decision_id": "dec_51ed243d533e", "actions_count": 1, "has_idempotency": false}
+{"event": "action_execution_start", "level": "info", "action_id": "dec_51ed243d533e_action_0", "action_type": "message", "decision_id": "dec_51ed243d533e"}
+{"event": "action_execution_success", "level": "info", "action_id": "dec_51ed243d533e_action_0", "action_type": "message"}
+{"event": "apply_plan_success", "level": "info", "decision_id": "dec_51ed243d533e", "actions_executed": 1}
+HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 200 OK"
+Mensagem enviada com sucesso para chat 1062650136
+✅ Mensagem do pipeline enviada com sucesso: Para liberar o teste, você consegue fazer um peque...
+Perfil do lead 8 atualizado: {'accounts': {'quotex': 'candidato', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
+🎉 Pipeline completo executado - Decisão: dec_51ed243d533e
+INFO:     127.0.0.1:40478 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'app/channels/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [23674]
+INFO:     Started server process [25461]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+Recebido update do Telegram: 913341850
+Evento normalizado: {'platform': 'telegram', 'user_id': '1062650136', 'message_text': 'sim', 'type': 'text', 'raw': {'update_id': 913341850, 'message': {'message_id': 21, 'from': {'id': 1062650136, 'is_bot': False, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'language_code': 'pt-br'}, 'chat': {'id': 1062650136, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'type': 'private'}, 'date': 1756743658, 'text': 'sim'}}}
+Lead existente: ID=8, chat_id=1062650136
+🎯 Iniciando pipeline completo de processamento
+📊 Construindo snapshot do lead...
+Construindo snapshot para plataforma: telegram
+Snapshot construído com 0 candidatos
+🔍 Executando intake inteligente...
+Iniciando intake agent
+Análise: confiança=0.00, estratégia=passthrough
+Estratégia passthrough - sem execução de tools
+Intake concluído com estratégia: passthrough
+🧠 Executando orquestrador de decisões...
+Iniciando decisão dec_58b4864fa73d
+Nenhum procedimento ativo, usando seletor
+Catálogo carregado com 10 automações
+Avaliando 10 automações do catálogo
+Nenhuma automação elegível encontrada
+Buscando resposta na base de conhecimento
+Consultando KB para: 'sim...'
+KB carregada com 27 entradas
+Nenhuma resposta relevante encontrada na KB
+Decisão dec_58b4864fa73d: PROCEDIMENTO executado
+Decisão dec_58b4864fa73d concluída com 1 ações
+⚡ Aplicando plano com 1 ações...
+{"event": "apply_plan_start", "level": "info", "decision_id": "dec_58b4864fa73d", "actions_count": 1, "has_idempotency": false}
+{"event": "action_execution_start", "level": "info", "action_id": "dec_58b4864fa73d_action_0", "action_type": "send_message", "decision_id": "dec_58b4864fa73d"}
+{"event": "action_execution_error", "level": "error", "action_id": "dec_58b4864fa73d_action_0", "action_type": "send_message", "error": "object of type 'NoneType' has no len()"}
+{"event": "apply_plan_success", "level": "info", "decision_id": "dec_58b4864fa73d", "actions_executed": 1}
+HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 200 OK"
+Mensagem enviada com sucesso para chat 1062650136
+Perfil do lead 8 atualizado: {'accounts': {'quotex': 'desconhecido', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
+🎉 Pipeline completo executado - Decisão: dec_58b4864fa73d
+INFO:     91.108.5.152:0 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK

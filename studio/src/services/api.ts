@@ -8,8 +8,8 @@ import type {
   IntakeConfig 
 } from '../types';
 
-// Base URL do backend
-const API_BASE_URL = 'http://localhost:8000';
+// Base URL do backend - usar caminhos relativos via proxy
+const API_BASE_URL = '';
 
 // Configurar axios
 const api = axios.create({
