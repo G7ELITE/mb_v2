@@ -892,3 +892,169 @@ curl -X POST "http://127.0.0.1:5173/channels/telegram/webhook?secret=$TELEGRAM_W
 ---
 
 *💌 Dúvidas? Entre em contato com o time técnico ou consulte a documentação técnica em `README-PROJECT.md` e `COMANDOS.md`*
+
+---
+
+## 🧪 **Testes e Troubleshooting**
+
+### **Executar Testes E2E**
+
+#### **FASE 1: Hook + Gate + Aplicação de ações**
+```bash
+# Teste completo da FASE 1
+python -c "
+import asyncio
+from tests.test_confirmation_gate import test_fase_1_e2e_hook_gate_actions
+asyncio.run(test_fase_1_e2e_hook_gate_actions())
+"
+```
+
+#### **FASE 2: Intake sempre-LLM**
+```bash
+# Teste da FASE 2
+python -c "
+import asyncio
+from tests.test_confirmation_gate import test_fase_2_intake_sempre_llm
+asyncio.run(test_fase_2_intake_sempre_llm())
+"
+```
+
+#### **FASE 2: Intake Blindado (Validações Completas)**
+```bash
+# Teste com validações blindadas
+python -c "
+import asyncio
+from tests.test_confirmation_gate import test_fase_2_intake_blindado
+asyncio.run(test_fase_2_intake_blindado())
+"
+```
+
+**Validações blindadas incluem:**
+- ✅ `error is None/''` - sem fallback silencioso
+- ✅ `used_samples == 2` - self-consistency aplicada
+- ✅ `len(intents) > 0` - intents não vazio
+- ✅ `polarity válida` - yes/no/other/sarcastic
+- ✅ `targets or facts or propose_automations` - conteúdo mínimo
+- ✅ `props[i] ∈ catálogo` - proposta válida (se houver)
+
+**Resumo esperado:**
+```
+📊 RESUMO FASE 2 - Intake Blindado:
+  • Intents: 2 (test, deposit...)
+  • Polarity: other
+  • Has targets: True
+  • Facts count: 0
+  • Propose count: 1
+  • Used samples: 2
+  • Agreement score: 0.85
+  • Error: None
+```
+
+#### **Gate Determinístico**
+```bash
+# Teste do Gate determinístico
+python -c "
+import asyncio
+from tests.test_confirmation_gate import test_gate_deterministico_curto
+asyncio.run(test_gate_deterministico_curto())
+"
+```
+
+**Mapeamento de respostas curtas:**
+- Afirmativas: `['sim','ok','👍','claro']` → YES
+- Negativas: `['não','agora não']` → NO  
+- Neutras: `['depois','talvez']` → OTHER
+
+**Ações esperadas:**
+- YES: `clear_waiting` + `set_facts` (quando aplicável)
+- NO/OTHER: `clear_waiting` (sem `set_facts` irreversível)
+
+**Flag restaurada automaticamente** no teste (try/finally).
+
+### **Flags de Configuração**
+
+#### **Ativar Gate Determinístico**
+```bash
+# Para testes - respostas curtas processadas sem LLM
+export GATE_YESNO_DETERMINISTICO=true
+
+# Para produção - usar LLM para todas as confirmações
+export GATE_YESNO_DETERMINISTICO=false
+```
+
+#### **Configurar Intake Sempre-LLM**
+```bash
+# Ativar intake sempre-LLM
+export INTAKE_LLM_CONFIG_MODE=always_llm
+
+# Usar intake híbrido (padrão)
+export INTAKE_LLM_CONFIG_MODE=hybrid
+```
+
+### **Troubleshooting**
+
+#### **Erro de Schema no Intake**
+```
+Error: Invalid schema for function 'analyze_intake': 'any' is not valid
+```
+**Solução**: O schema foi corrigido na FASE 2. Verifique se está usando a versão mais recente.
+
+#### **Confirmações não funcionam**
+```
+Lead responde "sim" mas bot envia fallback
+```
+**Soluções**:
+1. Verificar se `expects_reply.target` está configurado na automação
+2. Verificar se o target existe em `confirm_targets.yml`
+3. Verificar logs: `{'event':'gate_eval', 'has_waiting':true}`
+
+#### **Hook não cria aguardando**
+```
+Automation hook error: name 'message_sent' is not defined
+```
+**Solução**: Erro corrigido na FASE 2. Verificar se `result.get('message_sent')` está sendo usado.
+
+#### **Testes falham por banco**
+```
+FATAL: database "manyblack_v2_test" does not exist
+```
+**Solução**: Usar testes simples que não dependem do banco:
+```bash
+# Teste simples da FASE 2
+python -c "
+import asyncio
+from app.core.intake_agent import run_intake_always_llm
+# ... código do teste
+"
+```
+
+### **Logs de Debug**
+
+#### **FASE 1 - Hook**
+```json
+{"event":"hook_waiting_set", "automation_id":"ask_deposit_for_test", "lead_id":8, "target":"confirm_can_deposit", "ttl_seconds":1800}
+```
+
+#### **FASE 1 - Gate**
+```json
+{"event":"gate_eval", "has_waiting":true, "retro_active":false, "decision":"yes", "reason_summary":"deterministic_fallback"}
+```
+
+#### **FASE 1 - Aplicação de ações**
+```json
+{"event":"test_apply_actions", "set_facts":true, "clear_waiting":true}
+```
+
+#### **FASE 2 - Intake**
+```json
+{"event":"intake_llm", "intents":2, "polarity":"other", "targets":0, "facts_count":0, "propose_automations_count":1, "used_samples":2}
+```
+
+#### **Gate Determinístico**
+```json
+{"event":"gate_short_circuit", "used":true, "polarity":"yes"}
+```
+
+---
+
+**🎉 Parabéns! Você agora domina o ManyBlack Studio e pode criar automações poderosas!**

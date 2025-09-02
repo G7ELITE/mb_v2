@@ -30,7 +30,9 @@ class AutomationHook:
         self, 
         automation_id: str, 
         lead_id: Optional[int], 
-        success: bool = True
+        success: bool = True,
+        provider_message_id: Optional[str] = None,
+        prompt_text: Optional[str] = None
     ) -> None:
         """
         Chamado após uma automação ser enviada com sucesso.
@@ -39,6 +41,8 @@ class AutomationHook:
             automation_id: ID da automação enviada
             lead_id: ID do lead
             success: Se o envio foi bem-sucedido
+            provider_message_id: ID da mensagem no provider (Telegram, etc.)
+            prompt_text: Texto da pergunta enviada
         """
         if not success or not lead_id or not automation_id:
             return
@@ -65,16 +69,34 @@ class AutomationHook:
             ttl_minutes = await self._get_target_ttl(target)
             ttl_seconds = ttl_minutes * 60
             
-            # Configurar estado aguardando
-            await self.contexto_service.definir_aguardando_confirmacao(
+            # Extrair texto da pergunta se não fornecido
+            if not prompt_text:
+                output = automation_config.get("output", {})
+                prompt_text = output.get("text", "")
+            
+            # Configurar estado aguardando com informações completas
+            aguardando = {
+                "tipo": "confirmacao",
+                "target": target,
+                "automation_id": automation_id,
+                "lead_id": lead_id,
+                "provider_message_id": provider_message_id,
+                "prompt_text": prompt_text,
+                "ttl": int(time.time()) + ttl_seconds,
+                "created_at": int(time.time())
+            }
+            
+            await self.contexto_service.atualizar_contexto(
                 lead_id=lead_id,
-                fato=target,
-                origem=f"automation:{automation_id}",
-                ttl_segundos=ttl_seconds
+                aguardando=aguardando,
+                ultima_automacao_enviada=automation_id
             )
             
             logger.info(f"🪝 [AutomationHook] Set waiting confirmation for lead {lead_id}: {target} (ttl: {ttl_minutes}min)")
             logger.info(f"🪝 [AutomationHook] Automation {automation_id} configured with expects_reply.target={target}")
+            
+            # Log estruturado para observabilidade
+            logger.info(f"{{'event':'hook_waiting_set', 'automation_id':'{automation_id}', 'lead_id':{lead_id}, 'target':'{target}', 'ttl_seconds':{ttl_seconds}}}")
             
         except Exception as e:
             logger.error(f"Error in automation hook: {str(e)}")

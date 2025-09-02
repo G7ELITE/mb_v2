@@ -21,6 +21,9 @@ class Settings(BaseSettings):
     CONFIRM_AGENT_THRESHOLD: float = 0.80
     CONFIRM_AGENT_MAX_HISTORY: int = 10
     
+    # Flag para Gate determinístico (testes)
+    GATE_YESNO_DETERMINISTICO: bool = False
+    
     model_config = {"env_file": ".env", "extra": "ignore"}
 
 

@@ -475,3 +475,122 @@ id_patterns:
 - **Telemetria consistente** com action_type padronizado e idempotência.
 
 **FIM — README-ROADMAP**
+
+---
+
+## 🎯 **Marcos Concluídos**
+
+### ✅ **Implementação #12: MAX MODE - Fases 1 e 2**
+- **FASE 1**: Hook/ApplyPlan/Gate com aplicação de ações E2E
+- **FASE 2**: Intake sempre-LLM com schema válido
+- **Gate determinístico**: Curto-circuito para respostas curtas
+- **Testes E2E**: Validação completa das funcionalidades
+- **Observabilidade**: Logs estruturados para todas as operações
+
+### ✅ **Implementação #11: Correção Final do Sistema de Confirmação**
+- **Erro crítico corrigido**: `message_sent` → `result.get('message_sent')`
+- **Confirmações funcionais**: "sim" → resposta contextual adequada
+- **Fluxo completo**: Confirmação → set_facts → mensagem usuário → clear_waiting
+- **Pipeline robusto**: Confirmações interceptadas antes do orchestrator
+
+### ✅ **Implementação #10: Correções Críticas + Melhorias na Página de Leads**
+- **Filtros JSONB corrigidos**: Busca por leads com/sem conta funciona
+- **Ações de lead**: Limpar sessão e deletar lead
+- **Informações técnicas**: Debug melhorado com snapshot completo
+- **Interface aprimorada**: Dark mode, responsividade e acessibilidade
+
+### ✅ **Implementação #9: Sistema de Confirmação LLM-first V2 (Completo)**
+- **ConfirmationGate**: LLM-first com fallback determinístico
+- **AutomationHook**: Cria estado aguardando automaticamente
+- **Actions estruturadas**: set_facts, send_message, clear_waiting
+- **Testes completos**: Unitários e integração
+- **Documentação atualizada**: Tutorial e melhorias implementadas
+
+### ✅ **Implementação #8: Página de Leads no Studio**
+- **Backend**: Endpoints `/api/leads` com filtros avançados
+- **Frontend**: Página completa com tabela, filtros e modal de detalhes
+- **Integração**: Reutilização de componentes existentes
+- **Funcionalidades**: Paginação, ordenação, busca e ações de lead
+
+### ✅ **Implementação #7: Sistema de Confirmação LLM-first**
+- **ConfirmationGate**: Intercepta confirmações antes do intake
+- **AutomationHook**: Cria estado aguardando automaticamente
+- **Guardrails**: TTL, whitelist, confidence threshold
+- **Fallback determinístico**: Para LLM falhas/timeouts
+- **Testes**: Unitários e integração completos
+
+### ✅ **Implementação #6: Correções Críticas**
+- **Argument mismatch**: `handle_procedure_flow()` corrigido
+- **Orchestrator**: Funções atualizadas para aceitar `contexto_lead`
+- **Pipeline**: Fluxo de decisão funcionando corretamente
+- **Testes**: Validação de correções implementadas
+
+### ✅ **Implementação #5: Studio Frontend Completo**
+- **Interface moderna**: React + TypeScript + Tailwind CSS
+- **Páginas principais**: Dashboard, Procedimentos, Automações, Intake, Simulador
+- **Integração backend**: Proxy Vite + React Query
+- **Funcionalidades**: CRUD completo, simulação, visualização de dados
+
+### ✅ **Implementação #4: Sistema de Automações YAML**
+- **Catálogo de automações**: YAML estruturado com metadata
+- **Sistema de procedimentos**: Funnels configuráveis
+- **Orquestrador**: Seleção inteligente de automações
+- **Integração**: Pipeline completo funcionando
+
+### ✅ **Implementação #3: Pipeline de Decisão**
+- **Orchestrator**: Lógica central de decisão
+- **Flow handlers**: Procedimentos, dúvidas, fallbacks
+- **Contexto persistente**: Estado do lead mantido
+- **Integração**: Telegram + pipeline funcionando
+
+### ✅ **Implementação #2: Integração Telegram**
+- **Webhook handler**: Recebe mensagens do Telegram
+- **Enriquecimento**: Snapshot do lead + histórico
+- **Pipeline**: Integração com sistema de decisão
+- **Testes**: Validação de integração
+
+### ✅ **Implementação #1: Estrutura Base**
+- **FastAPI**: Backend moderno e rápido
+- **PostgreSQL**: Banco de dados robusto
+- **SQLAlchemy**: ORM para persistência
+- **Estrutura**: Arquitetura escalável definida
+
+## 🚀 **Próximos Passos**
+
+### ✅ **FASE 2: Intake Sempre-LLM (VALIDADA)**
+- **Intake sempre-LLM**: Análise estruturada com intents, polarity, targets
+- **Self-consistency**: Majority vote com 2 amostras
+- **Validações blindadas**: Testes robustos com asserts de conteúdo
+- **Logs estruturados**: Observabilidade completa
+- **Schema válido**: Function calling sem erros 400
+- **Agreement score**: Calculado baseado na concordância de polarity
+
+### **FASE 3: Gate de Confirmação Retroativo**
+- **Detecção retroativa**: Se hook falhar, detectar confirmações
+- **TTL inteligente**: Verificar última automação recente
+- **Logs estruturados**: Observabilidade completa
+- **Testes E2E**: Validação de cenários de falha
+
+### **FASE 4: Orquestrador com Dupla Entrada**
+- **Regras + LLM**: Combinar fatos duros com sinais do intake
+- **Guardrails**: Regras > LLM em conflito
+- **Proposta de automações**: Aceitar sugestões do LLM
+- **Logs estruturados**: Decision tracking completo
+
+### **FASE 5: RAG Inteligente**
+- **Heurística de uso**: Só RAG quando útil
+- **Re-rank**: Melhorar qualidade de contexto
+- **Filtros por lead**: Personalizar contexto
+- **Performance**: Otimizar latência
+
+### **FASE 6: Observabilidade Completa**
+- **Métricas**: Tokens, custo, latency, agreement
+- **Prometheus**: Métricas estruturadas
+- **Idempotência**: Confirmar headers/chaves
+- **Debug**: Logs detalhados para troubleshooting
+
+### **FASE 7: Multi-modelo (Opcional)**
+- **Segundo modelo**: Para high-stakes decisions
+- **Arbitro**: Resolver divergências
+- **Agreement score**: Medir concordância
+- **Feature flags**: Controle granular

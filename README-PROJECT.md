@@ -178,6 +178,114 @@ TELEGRAM_WEBHOOK_SECRET=troque
 JWT_SECRET=uma-frase-muito-longa-e-aleatoria
 ```
 
+## 🧪 **Testes**
+
+### **Executar Testes Unitários**
+```bash
+# Testes do sistema de confirmação
+pytest tests/test_confirmation_gate.py -v
+
+# Testes específicos
+pytest tests/test_confirmation_gate.py::test_fase_1_e2e_hook_gate_actions -v
+pytest tests/test_confirmation_gate.py::test_fase_2_intake_sempre_llm -v
+pytest tests/test_confirmation_gate.py::test_gate_deterministico_curto -v
+```
+
+### **MAX MODE – Fases 1–2 (Teste)**
+
+#### **Flags de Configuração**
+```bash
+# Ativar Gate determinístico para respostas curtas (testes)
+export GATE_YESNO_DETERMINISTICO=true
+
+# Configurar modo do intake
+export INTAKE_LLM_CONFIG_MODE=always_llm
+```
+
+#### **Testes E2E**
+```bash
+# FASE 1: Hook + Gate + Aplicação de ações
+python -c "
+import asyncio
+from tests.test_confirmation_gate import test_fase_1_e2e_hook_gate_actions
+asyncio.run(test_fase_1_e2e_hook_gate_actions())
+"
+
+# FASE 2: Intake sempre-LLM
+python -c "
+import asyncio
+from tests.test_confirmation_gate import test_fase_2_intake_sempre_llm
+asyncio.run(test_fase_2_intake_sempre_llm())
+"
+
+# Gate determinístico
+python -c "
+import asyncio
+from tests.test_confirmation_gate import test_gate_deterministico_curto
+asyncio.run(test_gate_deterministico_curto())
+"
+```
+
+#### **Logs Esperados**
+```json
+// FASE 1 - Hook
+{"event":"hook_waiting_set", "automation_id":"ask_deposit_for_test", "lead_id":8, "target":"confirm_can_deposit", "ttl_seconds":1800}
+
+// FASE 1 - Gate
+{"event":"gate_eval", "has_waiting":true, "retro_active":false, "decision":"yes", "reason_summary":"deterministic_fallback"}
+
+// FASE 1 - Aplicação de ações
+{"event":"test_apply_actions", "set_facts":true, "clear_waiting":true}
+
+// FASE 2 - Intake
+{"event":"intake_llm", "intents":2, "polarity":"other", "targets":0, "facts_count":0, "propose_automations_count":1, "used_samples":2}
+
+// Gate determinístico
+{"event":"gate_short_circuit", "used":true, "polarity":"yes"}
+```
+
+#### **Fase 2 — Intake Blindado (Teste)**
+O teste da FASE 2 agora inclui validações blindadas completas:
+
+```python
+# Validações principais
+assert hasattr(enriched_env.snapshot, 'llm_signals')
+assert signals.get('error') in (None, '')  # sem fallback silencioso
+assert signals.get('used_samples', 1) == 2  # self-consistency aplicada
+assert len(intents) > 0  # intents não vazio
+assert polarity in ['yes', 'no', 'other', 'sarcastic']  # polarity válida
+assert has_content  # pelo menos um entre targets, facts ou propose_automations
+```
+
+**Resumo esperado:**
+```
+📊 RESUMO FASE 2 - Intake Blindado:
+  • Intents: 2 (test, deposit...)
+  • Polarity: other
+  • Has targets: True
+  • Facts count: 0
+  • Propose count: 1
+  • Used samples: 2
+  • Agreement score: 0.85
+  • Error: None
+```
+
+#### **Gate Determinístico (Teste)**
+Para respostas curtas em testes, use a flag `GATE_YESNO_DETERMINISTICO`:
+
+```bash
+export GATE_YESNO_DETERMINISTICO=true
+```
+
+**Mapeamento:**
+- Afirmativas: `['sim','ok','👍','claro']` → YES
+- Negativas: `['não','agora não']` → NO  
+- Neutras: `['depois','talvez']` → OTHER
+
+**Ações esperadas:**
+- YES: `clear_waiting` + `set_facts` (quando aplicável)
+- NO/OTHER: `clear_waiting` (sem `set_facts` irreversível)
+
 ### 3.4 Migrações
 ```bash
 alembic upgrade head

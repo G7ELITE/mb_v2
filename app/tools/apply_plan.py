@@ -181,9 +181,20 @@ async def execute_action(
                 automation_id = action.get("automation_id")
                 # Extrair lead_id do metadata do plan
                 lead_id = (metadata or {}).get("lead_id")
+                # Extrair provider_message_id se disponível
+                provider_message_id = (metadata or {}).get("provider_message_id")
+                # Extrair texto da mensagem
+                prompt_text = action.get("text", "")
+                
                 logger.info(f"🔧 [ApplyPlan] Calling automation hook: automation_id={automation_id}, lead_id={lead_id}, success={result.get('message_sent')}")
                 if automation_id and lead_id:
-                    await automation_hook.on_automation_sent(automation_id, lead_id, True)
+                    await automation_hook.on_automation_sent(
+                        automation_id=automation_id, 
+                        lead_id=lead_id, 
+                        success=True,
+                        provider_message_id=provider_message_id,
+                        prompt_text=prompt_text
+                    )
                 else:
                     logger.warning(f"🔧 [ApplyPlan] Missing automation_id ({automation_id}) or lead_id ({lead_id}) for hook")
             except Exception as hook_error:

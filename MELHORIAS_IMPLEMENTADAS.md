@@ -328,37 +328,208 @@ O sistema de confirmação inicial precisava de validação completa e correçõ
 
 ---
 
-## **Implementação #11: Correção Final do Sistema de Confirmação**
+## **Implementação #13: Correções Fases 1 e 2 (Final)**
 
 ### 📖 **Problema Identificado**
-- **Erro crítico**: `name 'message_sent' is not defined` no AutomationHook
-- **Confirmações não funcionais**: Lead responde "sim" mas bot ainda envia fallback "Não entendi bem sua mensagem"
-- **Falta de resposta**: Confirmações processadas mas usuário não recebe feedback
+- **FASE 1**: Testes não aplicavam ações do Gate (clear_waiting/set_facts)
+- **FASE 2**: Schema inválido no function-calling (uso de "any")
+- **Gate**: Falta de determinismo para respostas curtas em testes
 
 ### 🔧 **Solução Implementada**
-1. **Erro corrigido**: Variável `message_sent` → `result.get('message_sent')` no apply_plan
-2. **Mensagens de confirmação**: Gate agora gera `send_message` com resposta contextual
-3. **Fluxo completo**: Confirmação → set_facts → mensagem usuário → clear_waiting
 
-### 🏗️ **Componentes Corrigidos**
-- `app/tools/apply_plan.py` - Erro `message_sent` corrigido
-- `app/core/confirmation_gate.py` - Actions incluem mensagens de confirmação
-- `app/channels/telegram.py` - Logs limpos, propagação correta de metadata
+#### **FASE 1 - Aplicação de Ações E2E**
+1. **Executor de ações**: `apply_actions_for_test()` para testes E2E
+2. **Persistência de fatos**: Atualiza `LeadProfile` via `LeadRepository`
+3. **Limpeza de aguardando**: Chama `contexto_service.limpar_aguardando()`
+4. **Logs estruturados**: `{'event':'test_apply_actions', 'set_facts':true, 'clear_waiting':true}`
+5. **Teste E2E completo**: Hook → Gate → Aplicação → Validação
 
-### 🎛️ **Funcionalidades Corrigidas**
-- **Hook funcional**: AutomationHook não gera mais erro de variável indefinida
-- **Confirmações com resposta**: "sim" → "✅ Perfeito! Entendi que você consegue fazer o depósito..."
-- **Fluxo completo**: Confirmação processada antes do orchestrator, com resposta adequada
-- **Actions sequenciais**: set_facts → send_message → clear_waiting
+#### **FASE 2 - Schema Válido**
+1. **Schema corrigido**: Remove `"any"` e usa `"oneOf"` com tipos válidos
+2. **Function calling**: `analyze_intake` com schema JSON válido
+3. **Self-consistency**: Majority vote com 2 amostras
+4. **Logs estruturados**: `{'event':'intake_llm', 'used_samples':2, ...}`
+5. **Fallback robusto**: Retorna resultado vazio em caso de erro
+
+#### **Gate Determinístico**
+1. **Flag de configuração**: `GATE_YESNO_DETERMINISTICO` em settings
+2. **Curto-circuito**: Respostas curtas processadas sem LLM
+3. **Respostas conhecidas**: "sim/ok/👍" → YES, "não/agora não" → NO
+4. **Logs estruturados**: `{'event':'gate_short_circuit', 'used':true, 'polarity':'yes'}`
+5. **Testes determinísticos**: Validação sem dependência de LLM
+
+### 🏗️ **Componentes Atualizados**
+- `tests/test_confirmation_gate.py` - Executor de ações e testes E2E
+- `app/core/intake_agent.py` - Schema JSON válido para function calling
+- `app/core/confirmation_gate.py` - Curto-circuito determinístico
+- `app/settings.py` - Flag `GATE_YESNO_DETERMINISTICO`
+- `README-PROJECT.md` - Seção de testes E2E e flags
+- `README-ROADMAP.md` - Marcos concluídos e próximos passos
+- `TUTORIAL.md` - Comandos de teste e troubleshooting
+
+### 🎛️ **Funcionalidades Implementadas**
+- **Testes E2E robustos**: Aplicação real de ações com validação
+- **Schema válido**: Function calling sem erros 400
+- **Determinismo**: Respostas curtas processadas sem LLM
+- **Observabilidade**: Logs estruturados para todas as operações
+- **Documentação completa**: Guias de teste e troubleshooting
 
 ### 🧪 **Testes Realizados**
-- ✅ **Hook sem erros**: `message_sent` corrigido, hook funciona sem exceções
-- ✅ **Confirmações funcionais**: "sim" e "Consigo depositar" reconhecidos como `polarity=yes`
-- ✅ **Actions completas**: 3 actions criadas (set_facts + send_message + clear_waiting)
-- ✅ **Mensagem contextual**: Resposta adequada para confirmação positiva
+- ✅ **FASE 1 E2E**: Hook → aguardando → Gate → ações aplicadas → validação
+- ✅ **FASE 2 Schema**: Intake sempre-LLM sem erros de schema
+- ✅ **Gate determinístico**: Respostas curtas processadas corretamente
+- ✅ **Persistência**: Fatos salvos no banco via `LeadRepository`
+- ✅ **Limpeza**: Estado aguardando limpo após confirmação
+- ✅ **Logs estruturados**: Todos os eventos logados em formato JSON
 
 ### 🔄 **Impacto na Operação**
-- **Confirmações naturais**: Lead responde "sim" → bot confirma e define fatos automaticamente
-- **Sem fallbacks incorretos**: Sistema não envia mais "Não entendi bem sua mensagem" para confirmações
-- **UX melhorada**: Usuário recebe feedback claro sobre confirmação processada
-- **Pipeline robusto**: Confirmações interceptadas antes do orchestrator, evitando duplicação
+- **Testes confiáveis**: E2E que realmente valida o comportamento
+- **Schema estável**: Intake sempre-LLM sem erros de API
+- **Determinismo**: Testes não dependem de LLM para respostas simples
+- **Debug melhorado**: Logs estruturados facilitam troubleshooting
+- **Documentação atualizada**: Guias completos para equipe operacional
+
+### 📋 **Próximos Passos**
+- **FASE 3**: Gate de confirmação retroativo
+- **FASE 4**: Orquestrador com dupla entrada (regras + LLM)
+- **FASE 5**: RAG inteligente só quando útil
+- **FASE 6**: Observabilidade completa com métricas
+
+### 📖 **Problema Identificado**
+- **FASE 1**: Hook não criava estado "aguardando" completo com informações necessárias
+- **FASE 2**: Intake tradicional não usava LLM para análise estruturada de mensagens
+- **Falta de observabilidade**: Logs não estruturados para análise de performance
+
+### 🔧 **Solução Implementada**
+
+#### **FASE 1 - Correção do Hook/ApplyPlan**
+1. **Hook aprimorado**: `on_automation_sent` agora recebe `provider_message_id` e `prompt_text`
+2. **Estado completo**: Aguardando salva `target`, `automation_id`, `lead_id`, `provider_message_id`, `prompt_text`, `ttl`, `created_at`
+3. **Última automação**: Contexto salva `ultima_automacao_enviada` para detecção retroativa
+4. **Logs estruturados**: `{'event':'hook_waiting_set', 'automation_id', 'lead_id', 'target', 'ttl_seconds'}`
+
+#### **FASE 2 - Intake Sempre-LLM**
+1. **Configuração**: `INTAKE_LLM_CONFIG` com `mode: "always_llm"`, `samples: 2`, `self_consistency: true`
+2. **Output estruturado**: LLM retorna `intents`, `polarity`, `targets`, `facts`, `propose_automations`, `needs_clarifying`
+3. **Self-consistency**: Majority vote com 2 amostras para campos críticos
+4. **RAG inteligente**: Pula RAG para mensagens ≤ 4 tokens
+5. **Sinais no snapshot**: Adiciona `llm_signals` sem modificar fatos duros
+
+### 🏗️ **Componentes Atualizados**
+- `app/core/automation_hook.py` - Hook com informações completas
+- `app/tools/apply_plan.py` - Passa `provider_message_id` e `prompt_text` para hook
+- `app/core/confirmation_gate.py` - Suporte a detecção retroativa
+- `app/core/intake_agent.py` - Intake sempre-LLM com output estruturado
+- `app/core/contexto_lead.py` - Suporte a `ultima_automacao_enviada`
+
+### 🎛️ **Funcionalidades Implementadas**
+- **Hook robusto**: Cria estado aguardando completo com todas as informações necessárias
+- **Detecção retroativa**: Gate detecta confirmações mesmo se hook falhar
+- **Intake inteligente**: LLM analisa mensagens e propõe automações
+- **Self-consistency**: Majority vote para maior confiabilidade
+- **Observabilidade**: Logs estruturados para todas as operações
+
+### 🧪 **Testes Realizados**
+- ✅ **FASE 1 E2E**: Hook → aguardando criado → Gate processa "sim" → actions executadas
+- ✅ **Estado completo**: Aguardando contém todas as informações necessárias
+- ✅ **Detecção retroativa**: Gate funciona mesmo sem aguardando ativo
+- ✅ **Intake LLM**: Análise estruturada com intents, polarity, targets
+- ✅ **Self-consistency**: Majority vote funciona corretamente
+- ✅ **Logs estruturados**: Todos os eventos logados em formato JSON
+
+### 🔄 **Impacto na Operação**
+- **Confirmações robustas**: Sistema funciona mesmo com falhas no hook
+- **Análise inteligente**: LLM entende intenções e propõe automações adequadas
+- **Debug melhorado**: Logs estruturados facilitam troubleshooting
+- **Performance otimizada**: RAG só quando necessário, self-consistency para confiabilidade
+- **Pipeline preparado**: Base sólida para próximas fases do MAX MODE
+
+---
+
+## **Implementação #15: Validações Finais Fase 2 (Intake Blindado) + Gate Determinístico**
+
+### 📖 **Problema Identificado**
+- **FASE 2**: Testes não validavam conteúdo mínimo dos sinais LLM
+- **Gate**: Falta de robustez no teste determinístico (flag não restaurada)
+- **Documentação**: Falta de guias específicos para validações blindadas
+
+### 🔧 **Solução Implementada**
+
+#### **FASE 2 - Teste "Intake Blindado" com Asserts de Conteúdo**
+1. **Validações blindadas completas**:
+   - `assert hasattr(enriched_env.snapshot, 'llm_signals')`
+   - `assert signals.get('error') in (None, '')` - sem fallback silencioso
+   - `assert signals.get('used_samples', 1) == 2` - self-consistency aplicada
+   - `assert 0.0 <= agreement_score <= 1.0` - agreement score válido
+   - `assert len(intents) > 0` - intents não vazio
+   - `assert polarity in ['yes', 'no', 'other', 'sarcastic']` - polarity válida
+   - `assert has_content` - pelo menos um entre targets, facts ou propose_automations
+   - Validação de proposta contra catálogo válido
+
+2. **Resumo estruturado**:
+   ```
+   📊 RESUMO FASE 2 - Intake Blindado:
+     • Intents: 2 (test, deposit...)
+     • Polarity: other
+     • Has targets: True
+     • Facts count: 0
+     • Propose count: 1
+     • Used samples: 2
+     • Agreement score: 0.85
+     • Error: None
+   ```
+
+#### **Gate Determinístico - Ajustes Mínimos**
+1. **Teste robusto**: `try/finally` para restaurar flag `GATE_YESNO_DETERMINISTICO`
+2. **Verificação de ações**: YES tem `clear_waiting` + `set_facts`, NO/OTHER apenas `clear_waiting`
+3. **Mapeamento correto**:
+   - Afirmativas: `['sim','ok','👍','claro']` → YES
+   - Negativas: `['não','agora não']` → NO
+   - Neutras: `['depois','talvez']` → OTHER
+4. **Logs estruturados**: `{'event':'gate_short_circuit', 'used':true, 'polarity':'yes|no|other'}`
+
+#### **Integração Intake Sempre-LLM**
+1. **Campos preenchidos**: Todos os campos necessários no `llm_signals`
+2. **Self-consistency**: Majority vote com 2 amostras
+3. **Agreement score**: Calculado baseado na concordância de polarity
+4. **Logs estruturados**: `{'event':'intake_llm', 'used_samples':2, 'agreement_score':0.x, 'error':None}`
+
+### 🏗️ **Componentes Atualizados**
+- `tests/test_confirmation_gate.py` - Validações blindadas e resumo estruturado
+- `app/core/intake_agent.py` - Campos completos em `llm_signals`
+- `app/core/confirmation_gate.py` - Mapeamento correto YES/NO/OTHER
+- `README-PROJECT.md` - Seção "Fase 2 — Intake blindado (teste)"
+- `TUTORIAL.md` - Comandos de teste e troubleshooting atualizados
+
+### 🎛️ **Funcionalidades Implementadas**
+- **Testes confiáveis**: Validações blindadas garantem qualidade
+- **Determinismo**: Respostas curtas processadas sem LLM em testes
+- **Observabilidade**: Logs estruturados facilitam debug
+- **Robustez**: Flags restauradas e ações validadas
+- **Documentação completa**: Guias para equipe operacional
+
+### 🧪 **Testes Realizados**
+- ✅ **FASE 2 blindada**: Todos os asserts de conteúdo passam
+- ✅ **Sem fallback silencioso**: Erro detectado e reportado
+- ✅ **Self-consistency**: 2 amostras com majority vote
+- ✅ **Agreement score**: Calculado e validado
+- ✅ **Proposta válida**: Verificação contra catálogo
+- ✅ **Gate determinístico**: Mapeamento correto YES/NO/OTHER
+- ✅ **Flags restauradas**: `GATE_YESNO_DETERMINISTICO` restaurada
+- ✅ **Logs estruturados**: Todos os eventos em formato JSON
+
+### 🔄 **Impacto na Operação**
+- **Testes confiáveis**: Validações blindadas garantem qualidade
+- **Determinismo**: Respostas curtas processadas sem LLM em testes
+- **Observabilidade**: Logs estruturados facilitam debug
+- **Robustez**: Flags restauradas e ações validadas
+- **Documentação completa**: Guias para equipe operacional
+
+### 📋 **Próximos Passos**
+As **FASES 3-6** do MAX MODE estão prontas para implementação:
+- **FASE 3**: Gate de confirmação retroativo
+- **FASE 4**: Orquestrador com dupla entrada (regras + LLM)
+- **FASE 5**: RAG inteligente só quando útil
+- **FASE 6**: Observabilidade completa com métricas
+
+**O sistema ManyBlack V2 agora tem uma base sólida, robusta e testável com validações blindadas completas para as próximas fases do MAX MODE!**

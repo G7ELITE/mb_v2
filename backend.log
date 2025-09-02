@@ -2082,3 +2082,620 @@ INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads?page=1&page
 INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads/8 HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'app/core/automation_hook.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [30833]
+INFO:     Started server process [21915]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/tools/apply_plan.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [21915]
+INFO:     Started server process [22061]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [22061]
+INFO:     Started server process [22219]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [22219]
+INFO:     Started server process [22440]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [22440]
+INFO:     Started server process [23029]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/automation_hook.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [23029]
+INFO:     Started server process [23141]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/intake_agent.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [23141]
+INFO:     Started server process [23811]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/intake_agent.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [23811]
+INFO:     Started server process [23994]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/intake_agent.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [23994]
+INFO:     Started server process [24296]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/intake_agent.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [24296]
+Process SpawnProcess-58:
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/server.py", line 69, in serve
+    await self._serve(sockets)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/server.py", line 76, in _serve
+    config.load()
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/config.py", line 434, in load
+    self.loaded_app = import_from_string(self.app)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/devbael/mb-v2/app/main.py", line 13, in <module>
+    from app.channels.telegram import router as tg_router
+  File "/home/devbael/mb-v2/app/channels/telegram.py", line 14, in <module>
+    from app.core.intake_agent import run_intake
+  File "/home/devbael/mb-v2/app/core/intake_agent.py", line 108
+    llm_result = await _analyze_message_with_llm(current_message, env, use_rag)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: 'await' outside async function
+WARNING:  StatReload detected changes in 'app/core/intake_agent.py'. Reloading...
+Process SpawnProcess-59:
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/server.py", line 69, in serve
+    await self._serve(sockets)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/server.py", line 76, in _serve
+    config.load()
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/config.py", line 434, in load
+    self.loaded_app = import_from_string(self.app)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/devbael/mb-v2/app/main.py", line 13, in <module>
+    from app.channels.telegram import router as tg_router
+  File "/home/devbael/mb-v2/app/channels/telegram.py", line 14, in <module>
+    from app.core.intake_agent import run_intake
+  File "/home/devbael/mb-v2/app/core/intake_agent.py", line 108
+    llm_result = await _analyze_message_with_llm(current_message, env, use_rag)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: 'await' outside async function
+WARNING:  StatReload detected changes in 'app/core/intake_agent.py'. Reloading...
+Process SpawnProcess-60:
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 194, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 687, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/server.py", line 69, in serve
+    await self._serve(sockets)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/server.py", line 76, in _serve
+    config.load()
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/config.py", line 434, in load
+    self.loaded_app = import_from_string(self.app)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/importlib/__init__.py", line 90, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1387, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1360, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1331, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 935, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/devbael/mb-v2/app/main.py", line 13, in <module>
+    from app.channels.telegram import router as tg_router
+  File "/home/devbael/mb-v2/app/channels/telegram.py", line 14, in <module>
+    from app.core.intake_agent import run_intake
+  File "/home/devbael/mb-v2/app/core/intake_agent.py", line 108
+    llm_result = await _analyze_message_with_llm(current_message, env, use_rag)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: 'await' outside async function
+WARNING:  StatReload detected changes in 'app/core/intake_agent.py'. Reloading...
+INFO:     Started server process [25811]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/intake_agent.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [25811]
+INFO:     Started server process [26155]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/intake_agent.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [26155]
+INFO:     Started server process [26350]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/tools/apply_plan.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [26350]
+INFO:     Started server process [26971]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [26971]
+INFO:     Started server process [30130]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/intake_agent.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [30130]
+INFO:     Started server process [30401]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/settings.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [30401]
+INFO:     Started server process [30638]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [30638]
+INFO:     Started server process [30805]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [30805]
+INFO:     Started server process [31121]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [31121]
+INFO:     Started server process [31281]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [31281]
+INFO:     Started server process [31589]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/automation_hook.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [31589]
+INFO:     Started server process [3385]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [3385]
+INFO:     Started server process [5510]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/intake_agent.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [5510]
+INFO:     Started server process [5766]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/intake_agent.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [5766]
+INFO:     Started server process [5955]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/intake_agent.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [5955]
+INFO:     Started server process [6074]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [6074]
+INFO:     Started server process [6332]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [6332]
+INFO:     Started server process [6740]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [6740]
+INFO:     Started server process [6852]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [6852]
+INFO:     Started server process [7607]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [7607]
+INFO:     Started server process [10288]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [10288]
+INFO:     Started server process [12677]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+Iniciando decisão dec_0135555b5337
+Nenhum procedimento ativo, usando seletor
+Catálogo carregado com 13 automações
+Avaliando 13 automações do catálogo
+Automação elegível: ask_deposit_for_test
+Automação elegível: ask_deposit_permission_v3
+Automação selecionada: ask_deposit_for_test (prioridade: 0.85)
+Automação selecionada pelo catálogo
+Decisão dec_0135555b5337: PROCEDIMENTO executado
+Decisão dec_0135555b5337 concluída com 1 ações
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "POST /engine/decide HTTP/1.1" 200 OK
+Iniciando decisão dec_af56e7212bca
+Avaliando 13 automações do catálogo
+Automação elegível: ask_deposit_for_test
+Automação elegível: ask_deposit_permission_v3
+Automação elegível: signup_link_v3
+Automação selecionada: ask_deposit_for_test (prioridade: 0.85)
+Automação selecionada pelo catálogo
+Decisão dec_af56e7212bca: DÚVIDA processada
+Decisão dec_af56e7212bca concluída com 1 ações
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "POST /engine/decide HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /health HTTP/1.1" 200 OK
+Iniciando decisão dec_d0bcd770805e
+Avaliando 13 automações do catálogo
+Automação elegível: ask_deposit_for_test
+Automação elegível: ask_deposit_permission_v3
+Automação selecionada: ask_deposit_for_test (prioridade: 0.85)
+Automação selecionada pelo catálogo
+Decisão dec_d0bcd770805e: DÚVIDA processada
+Decisão dec_d0bcd770805e concluída com 1 ações
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "POST /engine/decide HTTP/1.1" 200 OK
+Iniciando decisão dec_d9060da2cc22
+Nenhum procedimento ativo, usando seletor
+Avaliando 13 automações do catálogo
+Automação elegível: ask_deposit_for_test
+Automação elegível: ask_deposit_permission_v3
+Automação elegível: signup_link_v3
+Automação selecionada: ask_deposit_for_test (prioridade: 0.85)
+Automação selecionada pelo catálogo
+Decisão dec_d9060da2cc22: PROCEDIMENTO executado
+Decisão dec_d9060da2cc22 concluída com 1 ações
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "POST /engine/decide HTTP/1.1" 200 OK
+Iniciando decisão dec_bd627bb798fd
+Avaliando 13 automações do catálogo
+Automação elegível: ask_deposit_for_test
+Automação elegível: ask_deposit_permission_v3
+Automação selecionada: ask_deposit_for_test (prioridade: 0.85)
+Automação selecionada pelo catálogo
+Decisão dec_bd627bb798fd: DÚVIDA processada
+Decisão dec_bd627bb798fd concluída com 1 ações
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "POST /engine/decide HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads/8 HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:b314:20ea:52bb:9c8a:5bed:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK

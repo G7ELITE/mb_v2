@@ -78,6 +78,22 @@ class ConfirmationGate:
         if not current_message:
             return ConfirmationResult(handled=False, reason="empty_message")
         
+        # Determinar se é retroativo
+        is_retroactive = any(conf.get("source") == "retroactive" for conf in pending_confirmations)
+        
+        # Verificar curto-circuito determinístico para respostas curtas
+        if settings.GATE_YESNO_DETERMINISTICO and self._is_short_response(current_message):
+            short_result = self._deterministic_short_response(current_message, pending_confirmations)
+            if short_result:
+                # Log estruturado para observabilidade
+                logger.info(f"{{'event':'gate_short_circuit', 'used':True, 'polarity':'{short_result.polarity}'}}")
+                
+                # Criar ações baseadas no resultado
+                actions = await self._create_confirmation_actions(short_result, env.lead.id)
+                short_result.actions = actions
+                
+                return short_result
+        
         # Tentar LLM primeiro se habilitado
         if settings.CONFIRM_AGENT_MODE in ["llm_first", "hybrid"] and self.openai_client:
             try:
@@ -90,6 +106,9 @@ class ConfirmationGate:
                     if llm_result.confidence >= settings.CONFIRM_AGENT_THRESHOLD:
                         actions = await self._create_confirmation_actions(llm_result, env.lead.id)
                         llm_result.actions = actions
+                        
+                        # Log estruturado para observabilidade
+                        logger.info(f"{{'event':'gate_eval', 'has_waiting':True, 'retro_active':{is_retroactive}, 'decision':'{llm_result.polarity}', 'reason_summary':'llm_classification'}}")
                         
                         # Log telemetria
                         latency_ms = int((time.time() - start_time) * 1000)
@@ -117,6 +136,9 @@ class ConfirmationGate:
                 actions = await self._create_confirmation_actions(fallback_result, env.lead.id)
                 fallback_result.actions = actions
                 
+                # Log estruturado para observabilidade
+                logger.info(f"{{'event':'gate_eval', 'has_waiting':True, 'retro_active':{is_retroactive}, 'decision':'{fallback_result.polarity}', 'reason_summary':'deterministic_fallback'}}")
+                
                 # Log telemetria
                 latency_ms = int((time.time() - start_time) * 1000)
                 await self._log_confirmation_telemetry(
@@ -125,8 +147,45 @@ class ConfirmationGate:
                 
                 return fallback_result
         
+        # Se chegou aqui, nenhum método funcionou
+        logger.info(f"{{'event':'gate_eval', 'has_waiting':True, 'retro_active':{is_retroactive}, 'decision':'unknown', 'reason_summary':'no_method_succeeded'}}")
         return ConfirmationResult(handled=False, reason="no_match")
     
+    async def _get_automation_config(self, automation_id: str) -> Optional[Dict[str, Any]]:
+        """
+        Obtém configuração de uma automação do catálogo YAML.
+        
+        Args:
+            automation_id: ID da automação
+            
+        Returns:
+            Configuração da automação ou None
+        """
+        try:
+            import yaml
+            import os
+            
+            # Carregar catalog.yml
+            catalog_path = os.path.join(
+                os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 
+                "policies", "catalog.yml"
+            )
+            
+            if os.path.exists(catalog_path):
+                with open(catalog_path, 'r', encoding='utf-8') as f:
+                    catalog_list = yaml.safe_load(f) or []
+                    
+                # Buscar automação por ID
+                for automation in catalog_list:
+                    if automation.get("id") == automation_id:
+                        return automation
+                        
+            return None
+            
+        except Exception as e:
+            logger.error(f"Error loading automation config: {str(e)}")
+            return None
+
     async def _get_pending_confirmations(self, contexto_lead, env: Env) -> List[Dict[str, Any]]:
         """
         Obtém lista de confirmações pendentes baseada no contexto.
@@ -144,7 +203,7 @@ class ConfirmationGate:
         if contexto_lead and contexto_lead.aguardando:
             aguardando = contexto_lead.aguardando
             if aguardando.get("tipo") == "confirmacao":
-                target = aguardando.get("fato")
+                target = aguardando.get("target")  # Nova estrutura usa 'target' ao invés de 'fato'
                 if target and self._is_target_valid(target):
                     # Verificar TTL
                     ttl = aguardando.get("ttl", 0)
@@ -152,14 +211,32 @@ class ConfirmationGate:
                         pending.append({
                             "target": target,
                             "source": "context",
-                            "timestamp": ttl - 1800  # Assuming 30min TTL
+                            "timestamp": aguardando.get("created_at", 0),
+                            "automation_id": aguardando.get("automation_id"),
+                            "prompt_text": aguardando.get("prompt_text", ""),
+                            "provider_message_id": aguardando.get("provider_message_id")
                         })
         
-        # TODO: Verificar última automação se for de pergunta e recente
-        # if contexto_lead and contexto_lead.ultima_automacao_enviada:
-        #     automation = await self._get_automation_by_id(contexto_lead.ultima_automacao_enviada)
-        #     if automation and automation.get("expects_reply"):
-        #         ...
+        # Verificar retroativo: se não há aguardando ativo, verificar última automação recente
+        if not pending and contexto_lead and contexto_lead.ultima_automacao_enviada:
+            # Verificar se a última automação foi enviada nos últimos 10 minutos
+            current_time = int(time.time())
+            # TODO: Implementar verificação de timestamp da última automação
+            # Por enquanto, assumir que se não há aguardando mas há última automação, pode ser retroativo
+            automation_id = contexto_lead.ultima_automacao_enviada
+            automation_config = await self._get_automation_config(automation_id)
+            
+            if automation_config and automation_config.get("expects_reply"):
+                target = automation_config["expects_reply"].get("target")
+                if target and self._is_target_valid(target):
+                    pending.append({
+                        "target": target,
+                        "source": "retroactive",
+                        "timestamp": current_time - 600,  # 10 minutos atrás
+                        "automation_id": automation_id,
+                        "prompt_text": automation_config.get("output", {}).get("text", ""),
+                        "reason": "retroactive_detection"
+                    })
         
         return pending
     
@@ -336,6 +413,93 @@ Regras:
             )
         
         return ConfirmationResult(handled=False, reason="deterministic_no_match", source="fallback")
+    
+    def _is_short_response(self, message: str) -> bool:
+        """
+        Verifica se a mensagem é uma resposta curta.
+        
+        Args:
+            message: Mensagem a ser verificada
+            
+        Returns:
+            True se é resposta curta
+        """
+        if not message:
+            return False
+        
+        # Respostas curtas conhecidas
+        short_responses = {
+            "yes": ["sim", "s", "yes", "y", "ok", "👍", "✅", "claro", "pode ser", "beleza"],
+            "no": ["não", "nao", "n", "no", "nope", "agora não", "depois", "mais tarde", "não consigo"]
+        }
+        
+        message_lower = message.lower().strip()
+        
+        # Verificar se é uma resposta curta conhecida
+        for polarity, responses in short_responses.items():
+            if message_lower in responses:
+                return True
+        
+        # Verificar se tem ≤ 3 palavras
+        words = message_lower.split()
+        if len(words) <= 3:
+            return True
+        
+        return False
+    
+    def _deterministic_short_response(self, message: str, pending_confirmations: List[Dict[str, Any]]) -> Optional[ConfirmationResult]:
+        """
+        Classifica resposta curta de forma determinística.
+        
+        Args:
+            message: Mensagem a ser classificada
+            pending_confirmations: Confirmações pendentes
+            
+        Returns:
+            ConfirmationResult ou None se não conseguir classificar
+        """
+        if not pending_confirmations:
+            return None
+        
+        message_lower = message.lower().strip()
+        
+        # Respostas afirmativas
+        yes_responses = ["sim", "s", "yes", "y", "ok", "👍", "✅", "claro", "pode ser", "beleza"]
+        if message_lower in yes_responses:
+            return ConfirmationResult(
+                handled=True,
+                target=pending_confirmations[0]["target"],
+                polarity="yes",
+                confidence=0.95,
+                source="deterministic_short",
+                reason="short_yes_response"
+            )
+        
+        # Respostas negativas
+        no_responses = ["não", "nao", "n", "no", "nope", "agora não", "impossível", "não dá", "não da", "negativo"]
+        if message_lower in no_responses:
+            return ConfirmationResult(
+                handled=True,
+                target=pending_confirmations[0]["target"],
+                polarity="no",
+                confidence=0.95,
+                source="deterministic_short",
+                reason="short_no_response"
+            )
+        
+        # Respostas neutras/adiamento
+        other_responses = ["depois", "talvez", "mais tarde", "agora não", "vou ver", "deixa eu pensar"]
+        if message_lower in other_responses:
+            return ConfirmationResult(
+                handled=True,
+                target=pending_confirmations[0]["target"],
+                polarity="other",
+                confidence=0.90,
+                source="deterministic_short",
+                reason="short_other_response"
+            )
+        
+        return None
     
     def _build_llm_context(
         self, 
