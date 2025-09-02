@@ -1,89 +1,1136 @@
 INFO:     Will watch for changes in these directories: ['/home/devbael/mb-v2']
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [23671] using StatReload
-INFO:     Started server process [23674]
+INFO:     Started reloader process [26951] using StatReload
+INFO:     Started server process [26954]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     127.0.0.1:36178 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55552 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55568 - "GET /health HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
-Recebido update do Telegram: 123457021
-Evento normalizado: {'platform': 'telegram', 'user_id': '1062650136', 'message_text': 'quero testar', 'type': 'text', 'raw': {'update_id': 123457021, 'message': {'message_id': 31, 'from': {'id': 1062650136, 'is_bot': False, 'first_name': 'TesteFinal', 'username': 'teste_final'}, 'chat': {'id': 1062650136, 'first_name': 'TesteFinal', 'type': 'private'}, 'date': 1756744100, 'text': 'quero testar'}}}
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads/8 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 398, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/app/api/leads.py", line 234, in get_lead_detail
+    "event_type": event.event_type,
+                  ^^^^^^^^^^^^^^^^
+AttributeError: 'JourneyEvent' object has no attribute 'event_type'
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 404 Not Found
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /leads HTTP/1.1" 404 Not Found
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /leads HTTP/1.1" 404 Not Found
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /leads/ HTTP/1.1" 404 Not Found
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads/8 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 398, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/app/api/leads.py", line 234, in get_lead_detail
+    "event_type": event.event_type,
+                  ^^^^^^^^^^^^^^^^
+AttributeError: 'JourneyEvent' object has no attribute 'event_type'
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35386 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'app/api/leads.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [26954]
+INFO:     Started server process [31280]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/api/leads.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [31280]
+INFO:     Started server process [31432]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads/8 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=true HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads/1 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads/2 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=true HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'app/core/automation_hook.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [31432]
+INFO:     Started server process [23333]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/selector.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [23333]
+INFO:     Started server process [23531]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/procedures.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [23531]
+INFO:     Started server process [23653]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/tools/apply_plan.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [23653]
+INFO:     Started server process [23750]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/tools/apply_plan.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [23750]
+INFO:     Started server process [23819]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/tools/apply_plan.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [23819]
+INFO:     Started server process [24978]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/channels/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [24978]
+INFO:     Started server process [25049]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/tools/apply_plan.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [25049]
+INFO:     Started server process [25095]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [25095]
+INFO:     Started server process [27471]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [27471]
+INFO:     Started server process [27510]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [27510]
+INFO:     Started server process [27559]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [27559]
+INFO:     Started server process [27645]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/channels/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [27645]
+INFO:     Started server process [27732]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [27732]
+INFO:     Started server process [28129]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [28129]
+INFO:     Started server process [29721]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29721]
+INFO:     Started server process [29755]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29755]
+INFO:     Started server process [29875]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29875]
+INFO:     Started server process [29956]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29956]
+INFO:     Started server process [30094]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [30094]
+INFO:     Started server process [30152]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [30152]
+INFO:     Started server process [31588]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'tests/test_confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [31588]
+INFO:     Started server process [31646]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=true HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=true HTTP/1.1" 404 Not Found
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads/8 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads/8 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=true HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads/3 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads/2 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads/2 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads/3 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads/1 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads/2 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads/1 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads/8 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads/8 HTTP/1.1" 200 OK
+Recebido update do Telegram: 913341870
+Evento normalizado: {'platform': 'telegram', 'user_id': '1062650136', 'message_text': 'eu deposito', 'type': 'text', 'raw': {'update_id': 913341870, 'message': {'message_id': 61, 'from': {'id': 1062650136, 'is_bot': False, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'language_code': 'pt-br'}, 'chat': {'id': 1062650136, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'type': 'private'}, 'date': 1756781960, 'text': 'eu deposito'}}}
 Lead existente: ID=8, chat_id=1062650136
 🎯 Iniciando pipeline completo de processamento
 📊 Construindo snapshot do lead...
 Construindo snapshot para plataforma: telegram
+KB carregada: 27 seções
+Cache miss para tópico: depósito, executando busca
+RAG: nenhum contexto encontrado
+Snapshot construído com 2 candidatos
+🔍 Executando intake inteligente...
+Iniciando intake agent
+Análise: confiança=0.50, estratégia=passthrough
+Estratégia passthrough - sem execução de tools
+Intake concluído com estratégia: passthrough
+🎯 Verificando confirmações LLM-first...
+🧠 Executando orquestrador de decisões...
+Iniciando decisão dec_7d238e9b3d34
+Decisão dec_7d238e9b3d34: FALLBACK ativado
+Decisão dec_7d238e9b3d34 concluída com 1 ações
+⚡ Aplicando plano com 1 ações...
+{"event": "apply_plan_start", "level": "info", "decision_id": "dec_7d238e9b3d34", "actions_count": 1, "has_idempotency": false}
+{"event": "action_execution_start", "level": "info", "action_id": "dec_7d238e9b3d34_action_0", "action_type": "send_message", "action_type_raw": "send_message", "decision_id": "dec_7d238e9b3d34"}
+{"event": "action_execution_success", "level": "info", "action_id": "dec_7d238e9b3d34_action_0", "action_type": "send_message"}
+{"event": "apply_plan_success", "level": "info", "decision_id": "dec_7d238e9b3d34", "actions_executed": 1}
+HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 200 OK"
+Mensagem enviada com sucesso para chat 1062650136
+✅ Mensagem do pipeline enviada com sucesso: Não entendi bem sua mensagem. Pode me explicar mel...
+Perfil do lead 8 atualizado: {'accounts': {'quotex': 'candidato', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
+🎉 Pipeline completo executado - Decisão: dec_7d238e9b3d34
+INFO:     91.108.5.152:0 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads/3 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?deposit_status=confirmed&page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 1496, in __getattr__
+    return getattr(self.comparator, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Comparator' object has no attribute 'astext'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 398, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/app/api/leads.py", line 103, in list_leads
+    query = query.filter(LeadProfile.deposit['status'].astext == deposit_status)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 1498, in __getattr__
+    raise AttributeError(
+AttributeError: Neither 'BinaryExpression' object nor 'Comparator' object has an attribute 'astext'
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?deposit_status=confirmed&page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 1496, in __getattr__
+    return getattr(self.comparator, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Comparator' object has no attribute 'astext'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 398, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/app/api/leads.py", line 103, in list_leads
+    query = query.filter(LeadProfile.deposit['status'].astext == deposit_status)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 1498, in __getattr__
+    raise AttributeError(
+AttributeError: Neither 'BinaryExpression' object nor 'Comparator' object has an attribute 'astext'
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /leads?deposit_status=confirmed&page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 404 Not Found
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /leads HTTP/1.1" 404 Not Found
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?accounts_quotex=com_conta&page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 1496, in __getattr__
+    return getattr(self.comparator, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Comparator' object has no attribute 'astext'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 398, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/app/api/leads.py", line 105, in list_leads
+    query = query.filter(LeadProfile.accounts['quotex'].astext == accounts_quotex)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 1498, in __getattr__
+    raise AttributeError(
+AttributeError: Neither 'BinaryExpression' object nor 'Comparator' object has an attribute 'astext'
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?accounts_quotex=com_conta&page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 1496, in __getattr__
+    return getattr(self.comparator, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Comparator' object has no attribute 'astext'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 398, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/app/api/leads.py", line 105, in list_leads
+    query = query.filter(LeadProfile.accounts['quotex'].astext == accounts_quotex)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 1498, in __getattr__
+    raise AttributeError(
+AttributeError: Neither 'BinaryExpression' object nor 'Comparator' object has an attribute 'astext'
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?accounts_quotex=com_conta&page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 1496, in __getattr__
+    return getattr(self.comparator, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Comparator' object has no attribute 'astext'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 398, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/app/api/leads.py", line 105, in list_leads
+    query = query.filter(LeadProfile.accounts['quotex'].astext == accounts_quotex)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 1498, in __getattr__
+    raise AttributeError(
+AttributeError: Neither 'BinaryExpression' object nor 'Comparator' object has an attribute 'astext'
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?accounts_quotex=com_conta&page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 1496, in __getattr__
+    return getattr(self.comparator, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Comparator' object has no attribute 'astext'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 398, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/app/api/leads.py", line 105, in list_leads
+    query = query.filter(LeadProfile.accounts['quotex'].astext == accounts_quotex)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 1498, in __getattr__
+    raise AttributeError(
+AttributeError: Neither 'BinaryExpression' object nor 'Comparator' object has an attribute 'astext'
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=asc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads/14 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /api/leads/14 HTTP/1.1" 200 OK
+Iniciando decisão dec_889107037549
+Nenhum procedimento ativo, usando seletor
+Catálogo carregado com 13 automações
+Avaliando 13 automações do catálogo
+Automação elegível: ask_deposit_for_test
+Automação elegível: ask_deposit_permission_v3
+Automação selecionada: ask_deposit_for_test (prioridade: 0.85)
+Automação selecionada pelo catálogo
+Decisão dec_889107037549: PROCEDIMENTO executado
+Decisão dec_889107037549 concluída com 1 ações
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "POST /engine/decide HTTP/1.1" 200 OK
+Iniciando decisão dec_5701f8d7cb1c
+Nenhum procedimento ativo, usando seletor
+Avaliando 13 automações do catálogo
+Automação elegível: ask_deposit_for_test
+Automação elegível: ask_deposit_permission_v3
+Automação selecionada: ask_deposit_for_test (prioridade: 0.85)
+Automação selecionada pelo catálogo
+Decisão dec_5701f8d7cb1c: PROCEDIMENTO executado
+Decisão dec_5701f8d7cb1c concluída com 1 ações
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "POST /engine/decide HTTP/1.1" 200 OK
+Iniciando decisão dec_16d89c3fc80c
+Nenhum procedimento ativo, usando seletor
+Avaliando 13 automações do catálogo
+Nenhuma automação elegível encontrada
+Buscando resposta na base de conhecimento
+Consultando KB para: 'sim...'
+KB carregada com 27 entradas
+Nenhuma resposta relevante encontrada na KB
+Decisão dec_16d89c3fc80c: PROCEDIMENTO executado
+Decisão dec_16d89c3fc80c concluída com 1 ações
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "POST /engine/decide HTTP/1.1" 200 OK
+Recebido update do Telegram: 913341871
+Evento normalizado: {'platform': 'telegram', 'user_id': '1062650136', 'message_text': 'quero testar', 'type': 'text', 'raw': {'update_id': 913341871, 'message': {'message_id': 63, 'from': {'id': 1062650136, 'is_bot': False, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'language_code': 'pt-br'}, 'chat': {'id': 1062650136, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'type': 'private'}, 'date': 1756782293, 'text': 'quero testar'}}}
+Lead existente: ID=8, chat_id=1062650136
+🎯 Iniciando pipeline completo de processamento
+📊 Construindo snapshot do lead...
+Construindo snapshot para plataforma: telegram
+KB carregada: 27 seções
+Cache miss para tópico: teste, executando busca
+RAG: nenhum contexto encontrado
 Snapshot construído com 2 candidatos
 🔍 Executando intake inteligente...
 Iniciando intake agent
 Análise: confiança=0.80, estratégia=direct
 Tool verify_signup executado com sucesso
 Intake concluído com estratégia: direct
+🎯 Verificando confirmações LLM-first...
 🧠 Executando orquestrador de decisões...
-Iniciando decisão dec_51ed243d533e
+Iniciando decisão dec_a2802fbe7940
 Executando procedimento: liberar_teste
 Executando procedimento: liberar_teste
-Procedimentos carregados: 5
+Procedimentos carregados: 6
 Avaliando passo: Concorda em depositar
 Passo não satisfeito: Concorda em depositar - executando ação
-Catálogo carregado com 10 automações
 Executando automação: ask_deposit_for_test
-Decisão dec_51ed243d533e: PROCEDIMENTO executado
-Decisão dec_51ed243d533e concluída com 1 ações
+Decisão dec_a2802fbe7940: PROCEDIMENTO executado
+Decisão dec_a2802fbe7940 concluída com 1 ações
 ⚡ Aplicando plano com 1 ações...
-{"event": "apply_plan_start", "level": "info", "decision_id": "dec_51ed243d533e", "actions_count": 1, "has_idempotency": false}
-{"event": "action_execution_start", "level": "info", "action_id": "dec_51ed243d533e_action_0", "action_type": "message", "decision_id": "dec_51ed243d533e"}
-{"event": "action_execution_success", "level": "info", "action_id": "dec_51ed243d533e_action_0", "action_type": "message"}
-{"event": "apply_plan_success", "level": "info", "decision_id": "dec_51ed243d533e", "actions_executed": 1}
+{"event": "apply_plan_start", "level": "info", "decision_id": "dec_a2802fbe7940", "actions_count": 1, "has_idempotency": false}
+{"event": "action_execution_start", "level": "info", "action_id": "dec_a2802fbe7940_action_0", "action_type": "send_message", "action_type_raw": "message", "decision_id": "dec_a2802fbe7940"}
+Loaded 13 automations from catalog
+Contexto atualizado para lead 8
+Aguardando confirmação definido para lead 8: confirm_can_deposit
+Set waiting confirmation for lead 8: confirm_can_deposit (ttl: 30min)
+{"event": "action_execution_success", "level": "info", "action_id": "dec_a2802fbe7940_action_0", "action_type": "send_message"}
+{"event": "apply_plan_success", "level": "info", "decision_id": "dec_a2802fbe7940", "actions_executed": 1}
 HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 200 OK"
 Mensagem enviada com sucesso para chat 1062650136
 ✅ Mensagem do pipeline enviada com sucesso: Para liberar o teste, você consegue fazer um peque...
 Perfil do lead 8 atualizado: {'accounts': {'quotex': 'candidato', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
-🎉 Pipeline completo executado - Decisão: dec_51ed243d533e
-INFO:     127.0.0.1:40478 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
-WARNING:  StatReload detected changes in 'app/channels/telegram.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [23674]
-INFO:     Started server process [25461]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-Recebido update do Telegram: 913341850
-Evento normalizado: {'platform': 'telegram', 'user_id': '1062650136', 'message_text': 'sim', 'type': 'text', 'raw': {'update_id': 913341850, 'message': {'message_id': 21, 'from': {'id': 1062650136, 'is_bot': False, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'language_code': 'pt-br'}, 'chat': {'id': 1062650136, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'type': 'private'}, 'date': 1756743658, 'text': 'sim'}}}
+🎉 Pipeline completo executado - Decisão: dec_a2802fbe7940
+INFO:     91.108.5.152:0 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
+Recebido update do Telegram: 913341872
+Evento normalizado: {'platform': 'telegram', 'user_id': '1062650136', 'message_text': 'sim consigo', 'type': 'text', 'raw': {'update_id': 913341872, 'message': {'message_id': 65, 'from': {'id': 1062650136, 'is_bot': False, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'language_code': 'pt-br'}, 'chat': {'id': 1062650136, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'type': 'private'}, 'date': 1756782300, 'text': 'sim consigo'}}}
 Lead existente: ID=8, chat_id=1062650136
 🎯 Iniciando pipeline completo de processamento
 📊 Construindo snapshot do lead...
 Construindo snapshot para plataforma: telegram
+KB carregada: 27 seções
+Cache miss para tópico: df42ef34, executando busca
+RAG: nenhum contexto encontrado
+Snapshot construído com 1 candidatos
+🔍 Executando intake inteligente...
+Iniciando intake agent
+Análise: confiança=0.50, estratégia=passthrough
+Estratégia passthrough - sem execução de tools
+Intake concluído com estratégia: passthrough
+🎯 Verificando confirmações LLM-first...
+🧠 Executando orquestrador de decisões...
+Iniciando decisão dec_95cbd8846c16
+Nenhum procedimento ativo, usando seletor
+Avaliando 13 automações do catálogo
+Automação elegível: ask_deposit_for_test
+Automação elegível: ask_deposit_permission_v3
+Automação selecionada: ask_deposit_for_test (prioridade: 0.85)
+Automação selecionada pelo catálogo
+Decisão dec_95cbd8846c16: PROCEDIMENTO executado
+Decisão dec_95cbd8846c16 concluída com 1 ações
+⚡ Aplicando plano com 1 ações...
+{"event": "apply_plan_start", "level": "info", "decision_id": "dec_95cbd8846c16", "actions_count": 1, "has_idempotency": false}
+{"event": "action_execution_start", "level": "info", "action_id": "dec_95cbd8846c16_action_0", "action_type": "send_message", "action_type_raw": "message", "decision_id": "dec_95cbd8846c16"}
+{"event": "action_execution_success", "level": "info", "action_id": "dec_95cbd8846c16_action_0", "action_type": "send_message"}
+{"event": "apply_plan_success", "level": "info", "decision_id": "dec_95cbd8846c16", "actions_executed": 1}
+HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 200 OK"
+Mensagem enviada com sucesso para chat 1062650136
+✅ Mensagem do pipeline enviada com sucesso: Para liberar o teste, você consegue fazer um peque...
+Perfil do lead 8 atualizado: {'accounts': {'quotex': 'candidato', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
+🎉 Pipeline completo executado - Decisão: dec_95cbd8846c16
+INFO:     91.108.5.152:0 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59648 - "GET /api/leads?accounts_quotex=com_conta&page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 1496, in __getattr__
+    return getattr(self.comparator, key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Comparator' object has no attribute 'astext'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 398, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 70, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/applications.py", line 113, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 187, in __call__
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/cors.py", line 85, in __call__
+    await self.app(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 62, in wrapped_app
+    raise exc
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 51, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/starlette/routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/app/api/leads.py", line 105, in list_leads
+    query = query.filter(LeadProfile.accounts['quotex'].astext == accounts_quotex)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py", line 1498, in __getattr__
+    raise AttributeError(
+AttributeError: Neither 'BinaryExpression' object nor 'Comparator' object has an attribute 'astext'
+WARNING:  StatReload detected changes in 'app/api/leads.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [31646]
+INFO:     Started server process [7631]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [7631]
+INFO:     Started server process [7957]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/automation_hook.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [7957]
+INFO:     Started server process [8019]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/tools/apply_plan.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [8019]
+INFO:     Started server process [8130]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [8130]
+INFO:     Started server process [8661]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/tools/apply_plan.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [8661]
+INFO:     Started server process [9097]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/tools/apply_plan.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9097]
+INFO:     Started server process [9340]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/tools/apply_plan.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9340]
+INFO:     Started server process [9455]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/tools/apply_plan.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9455]
+INFO:     Started server process [9522]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9522]
+INFO:     Started server process [9595]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/api/leads.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9595]
+INFO:     Started server process [9849]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/tools/apply_plan.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [9849]
+INFO:     Started server process [11584]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+Recebido update do Telegram: 913341873
+Evento normalizado: {'platform': 'telegram', 'user_id': '1062650136', 'message_text': 'Quero testar', 'type': 'text', 'raw': {'update_id': 913341873, 'message': {'message_id': 67, 'from': {'id': 1062650136, 'is_bot': False, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'language_code': 'pt-br'}, 'chat': {'id': 1062650136, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'type': 'private'}, 'date': 1756784087, 'text': 'Quero testar'}}}
+Lead existente: ID=8, chat_id=1062650136
+🎯 Iniciando pipeline completo de processamento
+📊 Construindo snapshot do lead...
+Construindo snapshot para plataforma: telegram
+KB carregada: 27 seções
+Cache miss para tópico: teste, executando busca
+RAG: nenhum contexto encontrado
+Snapshot construído com 2 candidatos
+🔍 Executando intake inteligente...
+Iniciando intake agent
+Análise: confiança=0.80, estratégia=direct
+Tool verify_signup executado com sucesso
+Intake concluído com estratégia: direct
+🎯 Verificando confirmações LLM-first...
+🧠 Executando orquestrador de decisões...
+Iniciando decisão dec_e2c73290cc6c
+Executando procedimento: liberar_teste
+Executando procedimento: liberar_teste
+Procedimentos carregados: 6
+Avaliando passo: Concorda em depositar
+Passo não satisfeito: Concorda em depositar - executando ação
+Catálogo carregado com 13 automações
+Executando automação: ask_deposit_for_test
+Decisão dec_e2c73290cc6c: PROCEDIMENTO executado
+Decisão dec_e2c73290cc6c concluída com 1 ações
+⚡ Aplicando plano com 1 ações...
+{"event": "apply_plan_start", "level": "info", "decision_id": "dec_e2c73290cc6c", "actions_count": 1, "has_idempotency": false}
+{"event": "action_execution_start", "level": "info", "action_id": "dec_e2c73290cc6c_action_0", "action_type": "send_message", "action_type_raw": "message", "decision_id": "dec_e2c73290cc6c"}
+Automation hook error: name 'message_sent' is not defined
+{"event": "action_execution_success", "level": "info", "action_id": "dec_e2c73290cc6c_action_0", "action_type": "send_message"}
+{"event": "apply_plan_success", "level": "info", "decision_id": "dec_e2c73290cc6c", "actions_executed": 1}
+HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 200 OK"
+Mensagem enviada com sucesso para chat 1062650136
+✅ Mensagem do pipeline enviada com sucesso: Para liberar o teste, você consegue fazer um peque...
+Perfil do lead 8 atualizado: {'accounts': {'quotex': 'candidato', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
+🎉 Pipeline completo executado - Decisão: dec_e2c73290cc6c
+INFO:     91.108.5.152:0 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
+Recebido update do Telegram: 913341874
+Evento normalizado: {'platform': 'telegram', 'user_id': '1062650136', 'message_text': 'Sim', 'type': 'text', 'raw': {'update_id': 913341874, 'message': {'message_id': 69, 'from': {'id': 1062650136, 'is_bot': False, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'language_code': 'pt-br'}, 'chat': {'id': 1062650136, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'type': 'private'}, 'date': 1756784092, 'text': 'Sim'}}}
+Lead existente: ID=8, chat_id=1062650136
+🎯 Iniciando pipeline completo de processamento
+📊 Construindo snapshot do lead...
+Construindo snapshot para plataforma: telegram
+KB carregada: 27 seções
+Cache miss para tópico: e9064b74, executando busca
+RAG: nenhum contexto encontrado
 Snapshot construído com 0 candidatos
 🔍 Executando intake inteligente...
 Iniciando intake agent
 Análise: confiança=0.00, estratégia=passthrough
 Estratégia passthrough - sem execução de tools
 Intake concluído com estratégia: passthrough
+🎯 Verificando confirmações LLM-first...
 🧠 Executando orquestrador de decisões...
-Iniciando decisão dec_58b4864fa73d
+Iniciando decisão dec_e11905804171
 Nenhum procedimento ativo, usando seletor
-Catálogo carregado com 10 automações
-Avaliando 10 automações do catálogo
+Avaliando 13 automações do catálogo
 Nenhuma automação elegível encontrada
 Buscando resposta na base de conhecimento
-Consultando KB para: 'sim...'
+Consultando KB para: 'Sim...'
 KB carregada com 27 entradas
 Nenhuma resposta relevante encontrada na KB
-Decisão dec_58b4864fa73d: PROCEDIMENTO executado
-Decisão dec_58b4864fa73d concluída com 1 ações
+Decisão dec_e11905804171: PROCEDIMENTO executado
+Decisão dec_e11905804171 concluída com 1 ações
 ⚡ Aplicando plano com 1 ações...
-{"event": "apply_plan_start", "level": "info", "decision_id": "dec_58b4864fa73d", "actions_count": 1, "has_idempotency": false}
-{"event": "action_execution_start", "level": "info", "action_id": "dec_58b4864fa73d_action_0", "action_type": "send_message", "decision_id": "dec_58b4864fa73d"}
-{"event": "action_execution_error", "level": "error", "action_id": "dec_58b4864fa73d_action_0", "action_type": "send_message", "error": "object of type 'NoneType' has no len()"}
-{"event": "apply_plan_success", "level": "info", "decision_id": "dec_58b4864fa73d", "actions_executed": 1}
+{"event": "apply_plan_start", "level": "info", "decision_id": "dec_e11905804171", "actions_count": 1, "has_idempotency": false}
+{"event": "action_execution_start", "level": "info", "action_id": "dec_e11905804171_action_0", "action_type": "send_message", "action_type_raw": "send_message", "decision_id": "dec_e11905804171"}
+Automation hook error: name 'message_sent' is not defined
+{"event": "action_execution_success", "level": "info", "action_id": "dec_e11905804171_action_0", "action_type": "send_message"}
+{"event": "apply_plan_success", "level": "info", "decision_id": "dec_e11905804171", "actions_executed": 1}
 HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 200 OK"
 Mensagem enviada com sucesso para chat 1062650136
+✅ Mensagem do pipeline enviada com sucesso: Não entendi bem sua mensagem. Pode me explicar mel...
 Perfil do lead 8 atualizado: {'accounts': {'quotex': 'desconhecido', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
-🎉 Pipeline completo executado - Decisão: dec_58b4864fa73d
+🎉 Pipeline completo executado - Decisão: dec_e11905804171
+INFO:     91.108.5.152:0 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
+Recebido update do Telegram: 913341875
+Evento normalizado: {'platform': 'telegram', 'user_id': '1062650136', 'message_text': 'Consigo depositar', 'type': 'text', 'raw': {'update_id': 913341875, 'message': {'message_id': 71, 'from': {'id': 1062650136, 'is_bot': False, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'language_code': 'pt-br'}, 'chat': {'id': 1062650136, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'type': 'private'}, 'date': 1756784103, 'text': 'Consigo depositar'}}}
+Lead existente: ID=8, chat_id=1062650136
+🎯 Iniciando pipeline completo de processamento
+📊 Construindo snapshot do lead...
+Construindo snapshot para plataforma: telegram
+KB carregada: 27 seções
+Cache miss para tópico: depósito, executando busca
+RAG: nenhum contexto encontrado
+Snapshot construído com 1 candidatos
+🔍 Executando intake inteligente...
+Iniciando intake agent
+Análise: confiança=0.50, estratégia=passthrough
+Estratégia passthrough - sem execução de tools
+Intake concluído com estratégia: passthrough
+🎯 Verificando confirmações LLM-first...
+🧠 Executando orquestrador de decisões...
+Iniciando decisão dec_966d8ee5978e
+Nenhum procedimento ativo, usando seletor
+Avaliando 13 automações do catálogo
+Automação elegível: ask_deposit_for_test
+Automação elegível: deposit_help_detailed
+Automação elegível: ask_deposit_permission_v3
+Automação elegível: deposit_help_quick_v3
+Automação selecionada: ask_deposit_for_test (prioridade: 0.85)
+Automação selecionada pelo catálogo
+Decisão dec_966d8ee5978e: PROCEDIMENTO executado
+Decisão dec_966d8ee5978e concluída com 1 ações
+⚡ Aplicando plano com 1 ações...
+{"event": "apply_plan_start", "level": "info", "decision_id": "dec_966d8ee5978e", "actions_count": 1, "has_idempotency": false}
+{"event": "action_execution_start", "level": "info", "action_id": "dec_966d8ee5978e_action_0", "action_type": "send_message", "action_type_raw": "message", "decision_id": "dec_966d8ee5978e"}
+Automation hook error: name 'message_sent' is not defined
+{"event": "action_execution_success", "level": "info", "action_id": "dec_966d8ee5978e_action_0", "action_type": "send_message"}
+{"event": "apply_plan_success", "level": "info", "decision_id": "dec_966d8ee5978e", "actions_executed": 1}
+HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 200 OK"
+Mensagem enviada com sucesso para chat 1062650136
+✅ Mensagem do pipeline enviada com sucesso: Para liberar o teste, você consegue fazer um peque...
+Perfil do lead 8 atualizado: {'accounts': {'quotex': 'candidato', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
+🎉 Pipeline completo executado - Decisão: dec_966d8ee5978e
 INFO:     91.108.5.152:0 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
@@ -108,3 +1155,930 @@ INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200
 INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:c0a0:6f2a:bf17:f641:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads/8 HTTP/1.1" 200 OK
+Recebido update do Telegram: 913341876
+Evento normalizado: {'platform': 'telegram', 'user_id': '1062650136', 'message_text': 'sim', 'type': 'text', 'raw': {'update_id': 913341876, 'message': {'message_id': 73, 'from': {'id': 1062650136, 'is_bot': False, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'language_code': 'pt-br'}, 'chat': {'id': 1062650136, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'type': 'private'}, 'date': 1756823157, 'text': 'sim'}}}
+Lead existente: ID=8, chat_id=1062650136
+🎯 Iniciando pipeline completo de processamento
+📊 Construindo snapshot do lead...
+Construindo snapshot para plataforma: telegram
+KB carregada: 27 seções
+Cache miss para tópico: e9064b74, executando busca
+RAG: nenhum contexto encontrado
+Snapshot construído com 0 candidatos
+🔍 Executando intake inteligente...
+Iniciando intake agent
+Análise: confiança=0.00, estratégia=passthrough
+Estratégia passthrough - sem execução de tools
+Intake concluído com estratégia: passthrough
+🎯 Verificando confirmações LLM-first...
+🧠 Executando orquestrador de decisões...
+Iniciando decisão dec_de532e3cff78
+Nenhum procedimento ativo, usando seletor
+Avaliando 13 automações do catálogo
+Nenhuma automação elegível encontrada
+Buscando resposta na base de conhecimento
+Consultando KB para: 'sim...'
+Nenhuma resposta relevante encontrada na KB
+Decisão dec_de532e3cff78: PROCEDIMENTO executado
+Decisão dec_de532e3cff78 concluída com 1 ações
+⚡ Aplicando plano com 1 ações...
+{"event": "apply_plan_start", "level": "info", "decision_id": "dec_de532e3cff78", "actions_count": 1, "has_idempotency": false}
+{"event": "action_execution_start", "level": "info", "action_id": "dec_de532e3cff78_action_0", "action_type": "send_message", "action_type_raw": "send_message", "decision_id": "dec_de532e3cff78"}
+Automation hook error: name 'message_sent' is not defined
+{"event": "action_execution_success", "level": "info", "action_id": "dec_de532e3cff78_action_0", "action_type": "send_message"}
+{"event": "apply_plan_success", "level": "info", "decision_id": "dec_de532e3cff78", "actions_executed": 1}
+HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 200 OK"
+Mensagem enviada com sucesso para chat 1062650136
+✅ Mensagem do pipeline enviada com sucesso: Não entendi bem sua mensagem. Pode me explicar mel...
+Perfil do lead 8 atualizado: {'accounts': {'quotex': 'desconhecido', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
+🎉 Pipeline completo executado - Decisão: dec_de532e3cff78
+INFO:     91.108.5.152:0 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 404 Not Found
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /leads HTTP/1.1" 404 Not Found
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /leads HTTP/1.1" 404 Not Found
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads/14 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads/8 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'app/tools/apply_plan.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [11584]
+INFO:     Started server process [27449]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [27449]
+INFO:     Started server process [27644]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/automation_hook.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [27644]
+INFO:     Started server process [27817]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/channels/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [27817]
+INFO:     Started server process [28456]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/channels/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [28456]
+INFO:     Started server process [28690]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [28690]
+INFO:     Started server process [29506]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/confirmation_gate.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29506]
+INFO:     Started server process [29672]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/core/automation_hook.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29672]
+INFO:     Started server process [29788]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/channels/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [29788]
+INFO:     Started server process [30068]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/channels/telegram.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [30068]
+INFO:     Started server process [30189]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/tools/apply_plan.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [30189]
+INFO:     Started server process [30833]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 404 Not Found
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads/8 HTTP/1.1" 200 OK
+Recebido update do Telegram: 913341877
+Evento normalizado: {'platform': 'telegram', 'user_id': '1062650136', 'message_text': 'consigo fazer o deposito', 'type': 'text', 'raw': {'update_id': 913341877, 'message': {'message_id': 75, 'from': {'id': 1062650136, 'is_bot': False, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'language_code': 'pt-br'}, 'chat': {'id': 1062650136, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'type': 'private'}, 'date': 1756825852, 'text': 'consigo fazer o deposito'}}}
+Lead existente: ID=8, chat_id=1062650136
+🎯 Iniciando pipeline completo de processamento
+📊 Construindo snapshot do lead...
+Construindo snapshot para plataforma: telegram
+KB carregada: 27 seções
+Cache miss para tópico: depósito, executando busca
+Cached resultado para tópico: depósito
+RAG: encontrado contexto para tópico 'depósito'
+Snapshot construído com 2 candidatos
+🔍 Executando intake inteligente...
+Iniciando intake agent
+Análise: confiança=0.50, estratégia=passthrough
+Estratégia passthrough - sem execução de tools
+Intake concluído com estratégia: passthrough
+🎯 Verificando confirmações LLM-first...
+🧠 Executando orquestrador de decisões...
+Iniciando decisão dec_ddb901fc6600
+Nenhum procedimento ativo, usando seletor
+Catálogo carregado com 13 automações
+Avaliando 13 automações do catálogo
+Automação elegível: ask_deposit_for_test
+Automação elegível: ask_deposit_permission_v3
+Automação elegível: deposit_help_quick_v3
+Automação selecionada: ask_deposit_for_test (prioridade: 0.85)
+Automação selecionada pelo catálogo
+Decisão dec_ddb901fc6600: PROCEDIMENTO executado
+Decisão dec_ddb901fc6600 concluída com 1 ações
+⚡ Aplicando plano com 1 ações...
+{"event": "apply_plan_start", "level": "info", "decision_id": "dec_ddb901fc6600", "actions_count": 1, "has_idempotency": false}
+{"event": "action_execution_start", "level": "info", "action_id": "dec_ddb901fc6600_action_0", "action_type": "send_message", "action_type_raw": "message", "decision_id": "dec_ddb901fc6600"}
+🔧 [ApplyPlan] Calling automation hook: automation_id=None, lead_id=None, success=True
+🔧 [ApplyPlan] Missing automation_id (None) or lead_id (None) for hook
+{"event": "action_execution_success", "level": "info", "action_id": "dec_ddb901fc6600_action_0", "action_type": "send_message"}
+{"event": "apply_plan_success", "level": "info", "decision_id": "dec_ddb901fc6600", "actions_executed": 1}
+HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 200 OK"
+Mensagem enviada com sucesso para chat 1062650136
+✅ Mensagem do pipeline enviada com sucesso: Para liberar o teste, você consegue fazer um peque...
+Perfil do lead 8 atualizado: {'accounts': {'quotex': 'candidato', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
+🎉 Pipeline completo executado - Decisão: dec_ddb901fc6600
+INFO:     91.108.5.152:0 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 404 Not Found
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /leads HTTP/1.1" 404 Not Found
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /leads/ HTTP/1.1" 404 Not Found
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads/8 HTTP/1.1" 200 OK
+Recebido update do Telegram: 913341878
+Evento normalizado: {'platform': 'telegram', 'user_id': '1062650136', 'message_text': 'sim', 'type': 'text', 'raw': {'update_id': 913341878, 'message': {'message_id': 77, 'from': {'id': 1062650136, 'is_bot': False, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'language_code': 'pt-br'}, 'chat': {'id': 1062650136, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'type': 'private'}, 'date': 1756825974, 'text': 'sim'}}}
+Lead existente: ID=8, chat_id=1062650136
+🎯 Iniciando pipeline completo de processamento
+📊 Construindo snapshot do lead...
+Construindo snapshot para plataforma: telegram
+KB carregada: 27 seções
+Cache miss para tópico: e9064b74, executando busca
+RAG: nenhum contexto encontrado
+Snapshot construído com 0 candidatos
+🔍 Executando intake inteligente...
+Iniciando intake agent
+Análise: confiança=0.00, estratégia=passthrough
+Estratégia passthrough - sem execução de tools
+Intake concluído com estratégia: passthrough
+🎯 Verificando confirmações LLM-first...
+🧠 Executando orquestrador de decisões...
+Iniciando decisão dec_730b03b752b7
+Nenhum procedimento ativo, usando seletor
+Avaliando 13 automações do catálogo
+Nenhuma automação elegível encontrada
+Buscando resposta na base de conhecimento
+Consultando KB para: 'sim...'
+KB carregada com 27 entradas
+Nenhuma resposta relevante encontrada na KB
+Decisão dec_730b03b752b7: PROCEDIMENTO executado
+Decisão dec_730b03b752b7 concluída com 1 ações
+⚡ Aplicando plano com 1 ações...
+{"event": "apply_plan_start", "level": "info", "decision_id": "dec_730b03b752b7", "actions_count": 1, "has_idempotency": false}
+{"event": "action_execution_start", "level": "info", "action_id": "dec_730b03b752b7_action_0", "action_type": "send_message", "action_type_raw": "send_message", "decision_id": "dec_730b03b752b7"}
+🔧 [ApplyPlan] Calling automation hook: automation_id=None, lead_id=None, success=True
+🔧 [ApplyPlan] Missing automation_id (None) or lead_id (None) for hook
+{"event": "action_execution_success", "level": "info", "action_id": "dec_730b03b752b7_action_0", "action_type": "send_message"}
+{"event": "apply_plan_success", "level": "info", "decision_id": "dec_730b03b752b7", "actions_executed": 1}
+HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 200 OK"
+Mensagem enviada com sucesso para chat 1062650136
+✅ Mensagem do pipeline enviada com sucesso: Não entendi bem sua mensagem. Pode me explicar mel...
+Perfil do lead 8 atualizado: {'accounts': {'quotex': 'desconhecido', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
+🎉 Pipeline completo executado - Decisão: dec_730b03b752b7
+INFO:     91.108.5.152:0 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:447f:223:45b6:db4c:0 - "GET /api/leads/8 HTTP/1.1" 200 OK

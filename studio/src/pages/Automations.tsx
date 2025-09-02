@@ -158,6 +158,11 @@ export default function Automations() {
                 <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
                   <span className="font-medium">Preview:</span> {automation.output.text.slice(0, 100)}...
                 </div>
+                {automation.expects_reply && (
+                  <div className="text-xs text-purple-600 dark:text-purple-400 mt-1">
+                    🎯 Espera confirmação: {automation.expects_reply.target}
+                  </div>
+                )}
                 {automation.output.buttons && automation.output.buttons.length > 0 && (
                   <div className="flex gap-1">
                     {automation.output.buttons.slice(0, 2).map((button, index) => (

@@ -5,7 +5,10 @@ import type {
   HealthCheck,
   Procedure,
   Automation,
-  IntakeConfig 
+  IntakeConfig,
+  LeadsListResponse,
+  LeadDetail,
+  LeadsFilters 
 } from '../types';
 
 // Base URL do backend - usar caminhos relativos via proxy
@@ -104,6 +107,42 @@ export const apiService = {
     // TODO: Implementar quando backend tiver endpoint
     console.log('Salvando config intake:', config);
     return config;
+  },
+
+  // Endpoints para Leads
+  async getLeads(filters: LeadsFilters = {}): Promise<LeadsListResponse> {
+    const params = new URLSearchParams();
+    
+    // Adicionar parâmetros de filtro
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        if (Array.isArray(value)) {
+          value.forEach(v => params.append(`${key}[]`, v.toString()));
+        } else {
+          params.append(key, value.toString());
+        }
+      }
+    });
+
+    const response = await api.get(`/api/leads?${params.toString()}`);
+    return response.data;
+  },
+
+  async getLeadDetail(leadId: number): Promise<LeadDetail> {
+    const response = await api.get(`/api/leads/${leadId}`);
+    return response.data;
+  },
+
+  // Limpar sessão de um lead
+  async clearLeadSession(leadId: number): Promise<{ success: boolean; message: string }> {
+    const response = await api.delete(`/api/leads/${leadId}/session`);
+    return response.data;
+  },
+
+  // Deletar lead
+  async deleteLead(leadId: number): Promise<{ success: boolean; message: string }> {
+    const response = await api.delete(`/api/leads/${leadId}`);
+    return response.data;
   },
 };
 

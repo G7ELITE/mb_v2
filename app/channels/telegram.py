@@ -6,12 +6,15 @@ from fastapi import APIRouter, Header, Request, HTTPException
 from typing import Dict, Any
 import logging
 import httpx
+import time
 
 from app.settings import settings
 from app.channels.adapter import normalize_inbound_event
 from app.core.snapshot_builder import build_snapshot
 from app.core.intake_agent import run_intake  
+from app.core.confirmation_gate import get_confirmation_gate
 from app.core.orchestrator import decide_and_plan
+from app.data.schemas import Plan, Action
 from app.tools.apply_plan import apply_plan
 from app.infra.db import SessionLocal
 from app.data.repo import LeadRepository, EventRepository
@@ -152,15 +155,30 @@ async def webhook(request: Request, secret: str):
             logger.info("🔍 Executando intake inteligente...")
             enriched_env = await run_intake(snapshot_env)
             
-            # 4) Decisão e planejamento
-            logger.info("🧠 Executando orquestrador de decisões...")
-            plan = await decide_and_plan(enriched_env)
+            # 3.5) Gate de confirmação LLM-first
+            logger.info("🎯 Verificando confirmações LLM-first...")
+            confirmation_gate = get_confirmation_gate()
+            confirmation_result = await confirmation_gate.process_message(enriched_env)
+            
+            if confirmation_result.handled:
+                logger.info(f"✅ Confirmação processada: {confirmation_result.target} = {confirmation_result.polarity}")
+                # Se confirmação foi processada, usar as ações criadas pelo gate
+                plan = Plan(
+                    decision_id=f"confirm_{int(time.time())}",
+                    actions=confirmation_result.actions
+                )
+                plan.metadata = {"lead_id": lead_id}
+            else:
+                # 4) Decisão e planejamento normal
+                logger.info("🧠 Executando orquestrador de decisões...")
+                plan = await decide_and_plan(enriched_env)
             
             # 5) Aplicar plano de ações
             logger.info(f"⚡ Aplicando plano com {len(plan.actions)} ações...")
             pipeline_result = await apply_plan({
                 "decision_id": plan.decision_id,
-                "actions": [action.__dict__ if hasattr(action, '__dict__') else action for action in plan.actions]
+                "actions": [action.__dict__ if hasattr(action, '__dict__') else action for action in plan.actions],
+                "metadata": plan.metadata or {"lead_id": lead_id}
             })
             
             # Verificar se houve resposta do pipeline

@@ -8,6 +8,7 @@ import {
   DocumentTextIcon,
   BoltIcon,
   CloudArrowUpIcon,
+  UsersIcon,
   SunIcon,
   MoonIcon,
   Bars3Icon,
@@ -17,6 +18,7 @@ import { useTheme } from '../contexts/ThemeContext';
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: HomeIcon },
+  { name: 'Leads', href: '/leads', icon: UsersIcon },
   { name: 'Procedimentos', href: '/procedures', icon: DocumentTextIcon },
   { name: 'Automações', href: '/automations', icon: BoltIcon },
   { name: 'Intake & Âncoras', href: '/intake', icon: CogIcon },

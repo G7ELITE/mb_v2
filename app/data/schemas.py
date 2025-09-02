@@ -15,6 +15,7 @@ class Snapshot(BaseModel):
     agreements: Dict[str, Any] = Field(default_factory=dict)
     flags: Dict[str, Any] = Field(default_factory=dict)
     history_summary: str = ""
+    kb_context: Optional[Dict[str, Any]] = None  # {hits: [{texto, fonte, score}], topico}
 
 
 class Lead(BaseModel):
@@ -56,3 +57,46 @@ class TelegramUpdate(BaseModel):
     update_id: int
     message: Optional[Dict[str, Any]] = None
     callback_query: Optional[Dict[str, Any]] = None
+
+
+class ContextoLead(BaseModel):
+    """Schema para contexto persistente do lead."""
+    lead_id: int
+    procedimento_ativo: Optional[str] = None
+    etapa_ativa: Optional[str] = None
+    aguardando: Optional[Dict[str, Any]] = None
+    ultima_automacao_enviada: Optional[str] = None
+    ultimo_topico_kb: Optional[str] = None
+
+
+class AguardandoConfirmacao(BaseModel):
+    """Schema para estado de aguardando confirmação."""
+    tipo: str  # 'confirmacao'
+    fato: str  # qual fato está sendo confirmado
+    origem: str  # última pergunta feita
+    ttl: int  # timestamp de expiração
+
+
+class KbContext(BaseModel):
+    """Schema para contexto da KB anexado ao snapshot."""
+    hits: List[Dict[str, Any]]  # [{texto, fonte, score}]
+    topico: str
+
+
+class FilaRevisaoItem(BaseModel):
+    """Schema para item na fila de revisão humana."""
+    id: Optional[int] = None
+    lead_id: int
+    pergunta: str
+    resposta: str
+    fontes_kb: Optional[Dict[str, Any]] = None
+    automacao_equivalente: Optional[str] = None
+    pontuacao_similaridade: Optional[float] = None
+    contexto_do_lead: Optional[Dict[str, Any]] = None
+    aprovado: bool = False
+
+
+class ConfirmacaoCurta(BaseModel):
+    """Schema para resposta de LLM sobre confirmação curta."""
+    posicao: str  # 'afirmacao' | 'negacao' | 'incerto'
+    justificativa: str

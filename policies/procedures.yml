@@ -101,3 +101,22 @@
       condition: "false"
       do:
         automation: "provide_basic_solution"
+
+- id: onboarding_teste_v3
+  title: "Onboarding com confirmações inteligentes V3"
+  description: "Procedimento de onboarding usando confirmações LLM-first para maior conversão"
+  steps:
+    - name: "Verificar capacidade de depósito"
+      condition: "lead confirmou que pode depositar"
+      if_missing:
+        automation: "ask_deposit_permission_v3"
+    
+    - name: "Verificar conta na corretora"
+      condition: "tem conta criada ou confirmou criação"
+      if_missing:
+        automation: "signup_link_v3"
+    
+    - name: "Finalizar onboarding"
+      condition: "todas as etapas anteriores cumpridas"
+      do:
+        automation: "trial_unlock"

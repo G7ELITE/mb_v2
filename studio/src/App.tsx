@@ -10,6 +10,7 @@ import ProcedureEditor from './pages/ProcedureEditor';
 import Automations from './pages/Automations';
 import AutomationEditor from './pages/AutomationEditor';
 import Intake from './pages/Intake';
+import Leads from './pages/Leads';
 
 // Criar QueryClient para React Query
 const queryClient = new QueryClient({
@@ -50,6 +51,7 @@ function App() {
               <Route path="automations/new" element={<AutomationEditor />} />
               <Route path="automations/:id/edit" element={<AutomationEditor />} />
               <Route path="intake" element={<Intake />} />
+              <Route path="leads" element={<Leads />} />
               <Route path="publish" element={<PlaceholderPage title="Publicação" />} />
               <Route path="*" element={
                 <div className="text-center py-12">

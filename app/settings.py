@@ -15,6 +15,12 @@ class Settings(BaseSettings):
     TELEGRAM_WEBHOOK_SECRET: str = ""
     JWT_SECRET: str = ""
     
+    # Configurações do sistema de confirmação LLM-first
+    CONFIRM_AGENT_MODE: str = "llm_first"  # llm_first | hybrid | det_only
+    CONFIRM_AGENT_TIMEOUT_MS: int = 1000
+    CONFIRM_AGENT_THRESHOLD: float = 0.80
+    CONFIRM_AGENT_MAX_HISTORY: int = 10
+    
     model_config = {"env_file": ".env", "extra": "ignore"}
 
 

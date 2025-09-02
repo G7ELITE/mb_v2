@@ -79,3 +79,32 @@ class IdempotencyKey(Base):
     key: Mapped[str] = mapped_column(String, primary_key=True)
     response: Mapped[dict] = mapped_column(JSON)
     created_at: Mapped[str] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class ContextoLead(Base):
+    """Contexto persistente do lead entre turnos."""
+    __tablename__ = "contexto_lead"
+    
+    lead_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    procedimento_ativo: Mapped[str] = mapped_column(String, nullable=True)
+    etapa_ativa: Mapped[str] = mapped_column(String, nullable=True)
+    aguardando: Mapped[dict] = mapped_column(JSON, nullable=True)  # {tipo, fato, origem, ttl}
+    ultima_automacao_enviada: Mapped[str] = mapped_column(String, nullable=True)
+    ultimo_topico_kb: Mapped[str] = mapped_column(String, nullable=True)
+    atualizado_em: Mapped[str] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class FilaRevisao(Base):
+    """Fila de revisão humana para respostas geradas."""
+    __tablename__ = "fila_revisao"
+    
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    lead_id: Mapped[int] = mapped_column(Integer, index=True)
+    pergunta: Mapped[str] = mapped_column(String)
+    resposta: Mapped[str] = mapped_column(String)
+    fontes_kb: Mapped[dict] = mapped_column(JSON, nullable=True)
+    automacao_equivalente: Mapped[str] = mapped_column(String, nullable=True)
+    pontuacao_similaridade: Mapped[float] = mapped_column(nullable=True)
+    contexto_do_lead: Mapped[dict] = mapped_column(JSON, nullable=True)
+    aprovado: Mapped[bool] = mapped_column(default=False)
+    criado_em: Mapped[str] = mapped_column(DateTime(timezone=True), server_default=func.now())

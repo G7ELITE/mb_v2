@@ -65,17 +65,17 @@ export default function Dashboard() {
 
   const quickActions = [
     {
+      title: 'Ver Leads',
+      description: 'Gerenciar e visualizar leads',
+      href: '/leads',
+      icon: CogIcon,
+      color: 'bg-blue-500 hover:bg-blue-600'
+    },
+    {
       title: 'Criar Procedimento',
       description: 'Novo funil de passos para leads',
       href: '/procedures/new',
       icon: PlusIcon,
-      color: 'bg-blue-500 hover:bg-blue-600'
-    },
-    {
-      title: 'Catálogo de Automações',
-      description: 'Gerenciar mensagens automáticas',
-      href: '/automations',
-      icon: CogIcon,
       color: 'bg-green-500 hover:bg-green-600'
     },
     {

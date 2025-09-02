@@ -13,6 +13,10 @@ from app.data.schemas import Env, Plan, Action
 from app.core.selector import select_automation
 from app.core.procedures import run_procedure
 from app.core.fallback_kb import query_knowledge_base
+from app.core.resposta_curta import get_resposta_curta_service
+from app.core.contexto_lead import get_contexto_lead_service
+from app.core.comparador_semantico import get_comparador_semantico
+from app.core.fila_revisao import get_fila_revisao_service
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -35,6 +39,7 @@ async def decide_endpoint(env: Env) -> Plan:
 async def decide_and_plan(env: Env) -> Plan:
     """
     Decisão principal: analisa ambiente e gera plano de resposta.
+    Inclui verificação de resposta curta e contexto persistente.
     
     Args:
         env: Ambiente com lead, snapshot e contexto
@@ -45,7 +50,27 @@ async def decide_and_plan(env: Env) -> Plan:
     decision_id = generate_decision_id()
     logger.info(f"Iniciando decisão {decision_id}")
     
-    # Classificar tipo de interação
+    # Obter contexto persistente do lead
+    contexto_service = get_contexto_lead_service()
+    contexto_lead = None
+    if env.lead.id:
+        contexto_lead = await contexto_service.obter_contexto(env.lead.id)
+    
+    # Verificar se é resposta curta para confirmação pendente
+    resposta_curta_service = get_resposta_curta_service()
+    mensagem_atual = env.messages_window[-1].text if env.messages_window else ""
+    
+    posicao_resposta = await resposta_curta_service.interpretar_resposta(
+        mensagem_atual, contexto_lead, env.snapshot, env.messages_window
+    )
+    
+    if posicao_resposta:
+        # É uma resposta curta (sim/não), processar confirmação
+        plan = await handle_confirmacao_curta(env, contexto_lead, posicao_resposta, decision_id)
+        logger.info(f"Decisão {decision_id}: CONFIRMAÇÃO_CURTA processada ({posicao_resposta})")
+        return plan
+    
+    # Classificar tipo de interação normal
     interaction_type = classify_interaction(env)
     
     plan = Plan(decision_id=decision_id, actions=[])
@@ -53,19 +78,19 @@ async def decide_and_plan(env: Env) -> Plan:
     try:
         if interaction_type == "PROCEDIMENTO":
             # Fluxo de procedimento (funil de passos)
-            procedure_plan = await handle_procedure_flow(env)
+            procedure_plan = await handle_procedure_flow(env, contexto_lead)
             plan.actions = procedure_plan.get("actions", [])
             logger.info(f"Decisão {decision_id}: PROCEDIMENTO executado")
             
         elif interaction_type == "DÚVIDA":
-            # Fluxo de dúvida (catálogo + KB)
-            doubt_plan = await handle_doubt_flow(env)
+            # Fluxo de dúvida (catálogo + KB + comparador semântico)
+            doubt_plan = await handle_doubt_flow(env, contexto_lead)
             plan.actions = doubt_plan.get("actions", [])
             logger.info(f"Decisão {decision_id}: DÚVIDA processada")
             
         else:
             # Fallback genérico
-            fallback_plan = await handle_fallback_flow(env)
+            fallback_plan = await handle_fallback_flow(env, contexto_lead)
             plan.actions = fallback_plan.get("actions", [])
             logger.info(f"Decisão {decision_id}: FALLBACK ativado")
     
@@ -75,7 +100,9 @@ async def decide_and_plan(env: Env) -> Plan:
     
     plan.metadata = {
         "interaction_type": interaction_type,
-        "snapshot_summary": summarize_snapshot(env.snapshot)
+        "snapshot_summary": summarize_snapshot(env.snapshot),
+        "contexto_lead": contexto_lead.dict() if contexto_lead else None,
+        "decision_type": determine_decision_type(interaction_type, plan.actions)
     }
     
     logger.info(f"Decisão {decision_id} concluída com {len(plan.actions)} ações")
@@ -127,7 +154,7 @@ def classify_interaction(env: Env) -> str:
     return "FALLBACK"
 
 
-async def handle_procedure_flow(env: Env) -> Dict[str, Any]:
+async def handle_procedure_flow(env: Env, contexto_lead=None) -> Dict[str, Any]:
     """
     Lida com fluxo de procedimento (funil de passos).
     
@@ -146,7 +173,7 @@ async def handle_procedure_flow(env: Env) -> Dict[str, Any]:
     else:
         # Nenhum procedimento ativo, usar seletor
         logger.info("Nenhum procedimento ativo, usando seletor")
-        return await handle_doubt_flow(env)
+        return await handle_doubt_flow(env, contexto_lead)
 
 
 def determine_active_procedure(env: Env) -> str:
@@ -170,7 +197,7 @@ def determine_active_procedure(env: Env) -> str:
     return ""
 
 
-async def handle_doubt_flow(env: Env) -> Dict[str, Any]:
+async def handle_doubt_flow(env: Env, contexto_lead=None) -> Dict[str, Any]:
     """
     Lida com fluxo de dúvida (catálogo + KB).
     
@@ -199,10 +226,10 @@ async def handle_doubt_flow(env: Env) -> Dict[str, Any]:
         }
     
     # Fallback final
-    return await handle_fallback_flow(env)
+    return await handle_fallback_flow(env, contexto_lead)
 
 
-async def handle_fallback_flow(env: Env) -> Dict[str, Any]:
+async def handle_fallback_flow(env: Env, contexto_lead=None) -> Dict[str, Any]:
     """
     Fluxo de fallback quando não consegue classificar ou responder.
     
@@ -260,3 +287,65 @@ def summarize_snapshot(snapshot) -> Dict[str, Any]:
         "agreements_count": len([k for k, v in snapshot.agreements.items() if v]),
         "flags_count": len([k for k, v in snapshot.flags.items() if v])
     }
+
+
+async def handle_confirmacao_curta(env: Env, contexto_lead, posicao: str, decision_id: str) -> Plan:
+    """
+    Processa confirmação curta (sim/não).
+    
+    Args:
+        env: Ambiente atual
+        contexto_lead: Contexto persistente do lead
+        posicao: 'afirmacao' ou 'negacao'
+        decision_id: ID da decisão
+        
+    Returns:
+        Plan: Plano com resposta adequada
+    """
+    if not contexto_lead or not contexto_lead.aguardando:
+        return Plan(decision_id=decision_id, actions=[create_error_action()])
+    
+    aguardando = contexto_lead.aguardando
+    fato = aguardando.get("fato")
+    
+    # Aplicar confirmação
+    if posicao == "afirmacao":
+        # TODO: Aplicar set_facts com o fato confirmado
+        texto_resposta = "Perfeito! Vamos continuar então."
+    else:
+        # TODO: Aplicar set_facts com o fato negado
+        texto_resposta = "Entendi. Vamos ver outras opções."
+    
+    # Limpar estado aguardando
+    contexto_service = get_contexto_lead_service()
+    if env.lead.id:
+        await contexto_service.limpar_aguardando(env.lead.id)
+    
+    return Plan(
+        decision_id=decision_id,
+        actions=[Action(type="send_message", text=texto_resposta)]
+    )
+
+
+def determine_decision_type(interaction_type: str, actions: list) -> str:
+    """
+    Determina o tipo de decisão baseado no fluxo seguido.
+    
+    Args:
+        interaction_type: Tipo de interação
+        actions: Lista de ações executadas
+        
+    Returns:
+        Tipo de decisão para telemetria
+    """
+    if interaction_type == "PROCEDIMENTO":
+        return "PROCEDIMENTO"
+    elif interaction_type == "DÚVIDA":
+        # Verificar se usou automação ou resposta gerada
+        for action in actions:
+            if action.type == "send_message":
+                # TODO: Melhorar detecção baseada em metadata da action
+                return "CATALOGO"  # Por enquanto, assumir catálogo
+        return "RAG"
+    else:
+        return "KB_FALLBACK"

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
 import { 
   PlayIcon, 
  
@@ -19,6 +20,7 @@ interface SimulationForm {
 }
 
 export default function Simulator() {
+  const location = useLocation();
   const [result, setResult] = useState<SimulationResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>('');
@@ -31,6 +33,22 @@ export default function Simulator() {
       devMode: false
     }
   });
+
+  // Preencher com dados do lead se recebido via navegação
+  useEffect(() => {
+    if (location.state?.prefilledData) {
+      const { lead, snapshot, messages_window } = location.state.prefilledData;
+      
+      setValue('snapshot', snapshot);
+      
+      // Preencher mensagem com a última mensagem se disponível
+      if (messages_window && messages_window.length > 0) {
+        setValue('message', messages_window[messages_window.length - 1].text);
+      }
+      
+      console.log('Simulator preenchido com dados do lead:', lead);
+    }
+  }, [location.state, setValue]);
 
   const devMode = watch('devMode');
   const currentSnapshot = watch('snapshot');

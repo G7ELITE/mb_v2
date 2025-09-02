@@ -8,6 +8,8 @@
   eligibility: "não concordou em depositar e não depositou"
   priority: 0.85
   cooldown: 24h
+  expects_reply:
+    target: confirm_can_deposit
   output:
     type: message
     text: "Para liberar o teste, você consegue fazer um pequeno depósito? 💰"
@@ -113,6 +115,8 @@
   eligibility: "não foi explicado"
   priority: 0.70
   cooldown: 2h
+  expects_reply:
+    target: confirm_wants_test
   output:
     type: message
     text: |
@@ -139,6 +143,8 @@
   eligibility: "não tem conta"
   priority: 0.75
   cooldown: 24h
+  expects_reply:
+    target: confirm_has_broker
   output:
     type: message
     text: "Qual corretora você prefere? Ou quer uma recomendação?"
@@ -252,4 +258,52 @@
       • Configure o valor de entrada (recomendo começar com $1)
       • Acompanhe os sinais no nosso canal VIP
       • Use sempre a estratégia Gale conforme orientações
+
+- id: ask_deposit_permission_v3
+  topic: "confirmacao_deposito"
+  use_when: "o lead demonstrou interesse mas não confirmou capacidade de depositar"
+  eligibility: "não tem fato agreements.can_deposit definido"
+  priority: 0.80
+  cooldown: 48h
+  expects_reply:
+    target: confirm_can_deposit_v3
+  output:
+    type: message
+    text: "Para prosseguir com o robô de trading, você tem condições de fazer um depósito inicial na corretora? 💰"
+
+- id: signup_link_v3
+  topic: "criacao_conta"
+  use_when: "precisa orientar criação de conta com confirmação"
+  eligibility: "não tem conta em corretoras suportadas"
+  priority: 0.85
+  cooldown: 24h
+  expects_reply:
+    target: confirm_created_account_v3
+  output:
+    type: message
+    text: |
+      Vou te ajudar a criar uma conta na corretora! 🚀
+      
+      Siga este link para a Quotex (recomendada para iniciantes):
+      https://quotex.io/pt/?lid=123456
+      
+      Depois me confirme: conseguiu criar a conta?
+
+- id: deposit_help_quick_v3
+  topic: "ajuda_deposito"
+  use_when: "precisa de ajuda rápida para depositar"
+  eligibility: "quer depositar mas precisa de orientação"
+  priority: 0.75
+  cooldown: 12h
+  output:
+    type: message
+    text: |
+      📋 **Como fazer o depósito:**
+      
+      1️⃣ Acesse sua conta na corretora
+      2️⃣ Vá em "Depósito" ou "Adicionar fundos"
+      3️⃣ Escolha PIX (mais rápido)
+      4️⃣ Valor mínimo: R$ 20
+      
+      Depois me avise que depositou! ✅
 

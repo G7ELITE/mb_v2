@@ -3,8 +3,17 @@
 > vite --host 0.0.0.0 --cors
 
 
-  VITE v7.1.3  ready in 150 ms
+  VITE v7.1.3  ready in 295 ms
 
   ➜  Local:   http://localhost:5173/
   ➜  Network: http://10.255.255.254:5173/
   ➜  Network: http://172.19.253.203:5173/
+12:21:24 AM [vite] (client) hmr update /src/pages/Dashboard.tsx, /src/pages/Simulator.tsx, /src/pages/Leads.tsx, /src/components/LeadModal.tsx, /src/index.css
+12:21:40 AM [vite] (client) hmr update /src/components/LeadModal.tsx, /src/index.css
+12:21:47 AM [vite] (client) hmr update /src/components/LeadModal.tsx, /src/index.css
+12:22:15 AM [vite] (client) hmr update /src/components/LeadModal.tsx, /src/index.css
+12:22:34 AM [vite] (client) hmr update /src/components/LeadModal.tsx, /src/index.css
+12:23:03 AM [vite] (client) hmr update /src/components/LeadModal.tsx, /src/index.css
+12:24:57 AM [vite] (client) hmr update /src/components/LeadModal.tsx, /src/index.css
+12:24:57 AM [vite] (client) hmr update /src/pages/Dashboard.tsx, /src/pages/Simulator.tsx, /src/pages/Leads.tsx, /src/components/LeadModal.tsx, /src/index.css
+12:24:59 AM [vite] (client) hmr update /src/components/LeadModal.tsx, /src/index.css

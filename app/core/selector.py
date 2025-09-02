@@ -208,6 +208,7 @@ def convert_automation_to_action(automation: Dict[str, Any]) -> Dict[str, Any]:
     action = {
         "type": output.get("type", "message"),
         "text": output.get("text", ""),
+        "automation_id": automation.get("id")
     }
     
     # Adicionar botões se existirem

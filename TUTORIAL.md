@@ -1,5 +1,5 @@
 # 🎓 Tutorial ManyBlack Studio
-*Guia Completo para a Equipe Operacional*
+*Guia Completo para a Equipe Operacional - Atualizado com Novas Funcionalidades*
 
 ---
 
@@ -12,7 +12,8 @@
 5. [🎯 Intake & Âncoras - Capturando Intenções](#-intake--âncoras---capturando-intenções)
 6. [🧪 Simulador - Testando Conversas](#-simulador---testando-conversas)
 7. [🚀 Publicação - Enviando para Produção](#-publicação---enviando-para-produção)
-8. [💡 Dicas e Boas Práticas](#-dicas-e-boas-práticas)
+8. [🆕 Novas Funcionalidades](#-novas-funcionalidades)
+9. [💡 Dicas e Boas Práticas](#-dicas-e-boas-práticas)
 
 ---
 
@@ -347,6 +348,94 @@ Esperado: Explicação simples + oferecer ajuda
 
 ---
 
+## 🤖 Sistema de Confirmação Inteligente
+
+O **ManyBlack V2** possui um sistema avançado de confirmação que **entende respostas naturais** como "sim", "consigo", "não posso", etc., usando Inteligência Artificial.
+
+### 🎯 Como Funciona
+
+#### Detecção LLM-first + Fallback Determinístico
+- **GPT-4o-mini** analisa a mensagem do usuário para entender "sim/não"
+- Se o LLM falhar ou tiver baixa confiança, usa **regras determinísticas**
+- **Guardrails** garantem segurança: TTL, whitelist, limiar de confiança
+
+#### Automações com `expects_reply`
+```yaml
+- id: ask_deposit_permission_v3
+  expects_reply:
+    target: confirm_can_deposit_v3
+  output:
+    text: "Você tem condições de fazer um depósito inicial? 💰"
+```
+
+Quando essa automação é enviada, o sistema:
+1. **Automaticamente** cria um estado de "aguardando confirmação"
+2. Define TTL baseado na configuração do target (ex: 45 minutos)
+3. **Intercepta** a próxima mensagem do usuário
+
+#### Interpretação Inteligente
+```
+❌ Antes: "sim mas só amanhã" → não era confirmado
+✅ Agora: GPT entende contexto e nuances
+```
+
+**Exemplos de confirmações detectadas:**
+- ✅ **SIM**: "sim", "consigo", "posso", "quero", "aceito", "vou fazer"
+- ❌ **NÃO**: "não", "não consigo", "impossível", "não dá"
+- ❓ **AMBÍGUO**: "talvez", "vou pensar", "depois" → não confirma
+
+### ⚙️ Configuração de Targets
+
+No arquivo `policies/confirm_targets.yml`:
+
+```yaml
+confirm_can_deposit_v3:
+  max_age_minutes: 45  # TTL de 45 minutos
+  on_yes:
+    facts:
+      agreements.can_deposit: true
+      flags.ready_for_test: true
+  on_no:
+    facts:
+      agreements.can_deposit: false
+    automation: deposit_help_quick_v3  # Automação para "não"
+```
+
+### 🚀 Novo Procedimento V3
+
+**`onboarding_teste_v3`** demonstra o sistema de confirmação:
+
+1. **ask_deposit_permission_v3**: Pergunta sobre capacidade de depósito
+2. **signup_link_v3**: Orienta criação de conta (se necessário)
+3. **trial_unlock**: Libera acesso quando tudo estiver ok
+
+### 🧪 Como Testar no Simulador
+
+1. **Vá no Simulador** e carregue um perfil
+2. **Teste confirmações naturais**:
+   ```
+   Bot: "Você consegue fazer um depósito?"
+   Você: "sim, posso depositar"
+   Resultado: ✅ Fato definido automaticamente
+   ```
+3. **Teste negações**:
+   ```
+   Bot: "Conseguiu criar a conta?"
+   Você: "não consegui"
+   Resultado: ❌ Automação de ajuda disparada
+   ```
+4. **Ative modo DEV** para ver logs LLM vs Determinístico
+
+### 🔒 Guardrails de Segurança
+
+- **TTL**: Confirmações só são válidas por X minutos
+- **Whitelist**: Só targets configurados são aceitos
+- **Confiança**: LLM precisa ter ≥80% de confiança
+- **Determinístico**: Se LLM falhar, usa regras simples
+- **Idempotência**: Mesma confirmação só é processada uma vez
+
+---
+
 ## 🚀 Publicação - Enviando para Produção
 
 A **Publicação** é onde você "liga" suas mudanças para que leads reais vejam. ⚠️ **Cuidado**: tudo que publicar afeta o sistema real!
@@ -413,6 +502,124 @@ Se algo der errado após publicar:
 
 ---
 
+## 🆕 Novas Funcionalidades
+
+### 🧠 Contexto Persistente do Lead
+
+O sistema agora **mantém o estado entre turnos**, mesmo com reinicializações. Isso significa que:
+
+- **Confirmações pendentes** não se perdem ao reiniciar o sistema
+- **Procedimentos ativos** continuam de onde pararam
+- **Histórico de interações** é preservado automaticamente
+
+#### Como Funciona:
+- **Estado salvo**: `procedimento_ativo`, `etapa_ativa`, `aguardando`
+- **TTL automático**: Estados expiram após 30 minutos de inatividade
+- **Transparência**: Você pode ver o contexto atual no simulador
+
+### 💬 Sistema de Confirmação Inteligente
+
+O robô agora entende suas respostas de forma **muito mais natural** usando duas estratégias:
+
+#### 🎯 **Confirmação LLM-first** *(NOVO - Dezembro 2024)*
+- **Linguagem totalmente natural**: "consigo fazer o depósito sim", "não posso agora", "vou tentar"
+- **Contexto inteligente**: Sabe exatamente qual pergunta você está respondendo
+- **Alta precisão**: Só aplica mudanças quando tem 80%+ de certeza
+- **Sem reformulação**: Fale como conversaria normalmente com uma pessoa
+
+#### 📝 **Detecção Determinística** *(Fallback)*
+- **"Sim"** → Confirmação positiva
+- **"Não"** → Confirmação negativa  
+- **"Ok", "Claro", "Consigo"** → Também são entendidos como sim
+- **"Agora não", "Ainda não"** → Entendidos como não
+
+#### 🛡️ **Guardrails de Segurança**
+- **TTL**: Só confirma se a pergunta foi feita recentemente (≤30min)
+- **Confiança mínima**: Não aplica fatos se estiver incerto
+- **Fallback robusto**: Se LLM falhar, usa padrões simples
+
+### 🔍 RAG Inteligente por Turno
+
+Cada interação agora **inclui contexto da KB** automaticamente:
+
+#### Funcionalidades:
+- **1 busca por turno** anexada ao snapshot
+- **Cache por tópico** (60s) para eficiência
+- **Contexto relevante** para respostas mais precisas
+- **Top-3 resultados** mais relevantes
+
+#### Exemplo Prático:
+```
+Lead: "Como funciona o depósito?"
+Sistema: Busca na KB → Encontra guia de depósito → Resposta com contexto específico
+```
+
+### ⚖️ Comparador Semântico
+
+O sistema agora **prefere automações** quando a resposta gerada é similar:
+
+#### Como Funciona:
+- **Gera resposta** baseada no contexto + KB
+- **Compara** com automações candidatas
+- **Se similaridade ≥ 80%** → Usa automação (determinística)
+- **Se similaridade < 80%** → Usa resposta gerada + vai para revisão
+
+#### Benefícios:
+- **Mais controle** sobre respostas críticas
+- **Menos variação** em respostas importantes
+- **Fila de revisão** para melhorias contínuas
+
+### 📋 Fila de Revisão Humana
+
+Respostas geradas **vão para aprovação** antes de virarem automações:
+
+#### Processo:
+1. **Resposta gerada** é enviada ao lead
+2. **Item salvo** na fila de revisão com contexto completo
+3. **Equipe revisa** e pode aprovar/rejeitar/editar
+4. **Automação criada** apenas após aprovação
+
+#### Campos da Fila:
+- **Pergunta original** do lead
+- **Resposta gerada** pelo sistema
+- **Fontes da KB** utilizadas
+- **Automação similar** (se houver)
+- **Score de similaridade**
+- **Contexto completo** do lead
+
+### 🛡️ Envio Seguro de Mensagens
+
+O sistema agora **blindado contra erros** comuns:
+
+#### Proteções:
+- **Botões nulos** são ignorados automaticamente
+- **Mídia inválida** é filtrada
+- **Campos obrigatórios** validados
+- **Logs detalhados** para debugging
+
+#### Exemplo:
+```
+Antes: Erro "NoneType has no len()" com botões nulos
+Agora: Sistema normaliza e envia mensagem sem erro
+```
+
+### 📊 Telemetria Consistente
+
+**Padronização completa** de logs e métricas:
+
+#### Campos Padronizados:
+- **`action_type`**: Sempre "send_message" (não mais "message")
+- **`decision_type`**: CATALOGO, RAG, PROCEDIMENTO, KB_FALLBACK, CONFIRMACAO_CURTA
+- **`X-Idempotency-Key`**: Sempre aplicado para evitar duplicação
+- **Logs estruturados**: Com correlation_id e latências
+
+#### Benefícios:
+- **Métricas consistentes** para análise
+- **Debugging mais fácil** com logs padronizados
+- **Monitoramento confiável** de performance
+
+---
+
 ## 💡 Dicas e Boas Práticas
 
 ### 🎯 Estratégias Gerais
@@ -422,18 +629,21 @@ Se algo der errado após publicar:
 - **Seja direto**: Máximo 2-3 frases por mensagem
 - **Use emojis**: Mas com moderação (1-2 por mensagem)
 - **Teste muito**: Antes de publicar qualquer coisa
+- **Aproveite o comparador**: Crie automações para respostas críticas
 
 #### Para Procedimentos:
 - **Mantenha simples**: Máximo 5-6 passos
 - **Use português natural**: "lead tem mais de 18 anos"
 - **Configure timeouts**: Evite leads presos no funil
 - **Documente bem**: Descrições claras do objetivo
+- **Use confirmações por texto**: O sistema entende "sim/não" automaticamente
 
 #### Para o Intake:
 - **Monitore métricas**: Ajuste baseado em dados reais
 - **Adicione palavras**: Conforme identifica padrões novos
 - **Balance precisão vs. custo**: 70-80% é um bom meio termo
 - **Teste cenários edge**: Mensagens estranhas ou ambíguas
+- **Aproveite o RAG**: Contexto da KB melhora respostas automaticamente
 
 ### 🔧 Troubleshooting Comum
 
@@ -462,12 +672,17 @@ Se algo der errado após publicar:
 - **Tempo médio de resposta**: Está dentro do aceitável?
 - **Taxa de abandono**: Em que ponto leads desistem?
 - **Satisfação qualitativa**: Leads parecem satisfeitos?
+- **Hit rate do cache RAG**: Eficiência das buscas na KB
+- **Score médio de similaridade**: Qualidade do comparador semântico
+- **Volume da fila de revisão**: Quantas respostas precisam de aprovação
 
 #### Melhoria Contínua:
 - **Análise semanal**: Revise métricas e ajuste
 - **A/B testing**: Teste versões diferentes de mensagens
 - **Feedback do time**: Colete opinões dos operadores
 - **Monitore concorrência**: Como outros estão se comunicando?
+- **Revisão da fila**: Aprove respostas geradas para criar automações
+- **Ajuste de limiares**: Configure comparador baseado em performance
 
 ### 🤝 Colaboração com o Time
 
@@ -497,6 +712,11 @@ O **ManyBlack Studio** é uma ferramenta poderosa que coloca o controle da conve
 - ✅ **Testar tudo** antes que leads reais vejam
 - ✅ **Monitorar performance** e otimizar continuamente
 - ✅ **Colaborar com o time** de forma mais eficiente
+- ✅ **Manter contexto** entre turnos e reinicializações
+- ✅ **Entender respostas curtas** sem depender de botões
+- ✅ **Usar RAG inteligente** para respostas mais precisas
+- ✅ **Preferir automações** quando apropriado
+- ✅ **Revisar respostas geradas** antes de virarem automações
 
 ### 🚀 Próximos Passos
 
@@ -506,6 +726,10 @@ O **ManyBlack Studio** é uma ferramenta poderosa que coloca o controle da conve
 4. **Configure o intake** para seu contexto
 5. **Monte seu primeiro procedimento** completo
 6. **Monitore as métricas** e otimize
+7. **Teste confirmações por texto** ("sim/não")
+8. **Explore a fila de revisão** para melhorias
+9. **Ajuste limiares** do comparador semântico
+10. **Configure RAG** para seu contexto específico
 
 **Lembre-se**: a prática leva à perfeição. Quanto mais você usar o sistema, mais eficiente será em criar conversas automatizadas que realmente convertem! 🎯
 

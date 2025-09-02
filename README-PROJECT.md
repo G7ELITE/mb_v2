@@ -1,4 +1,4 @@
-# ManyBlack V2 — README-PROJECT (Atualizado • Backend + Frontend Studio)
+# ManyBlack V2 — README-PROJECT (Atualizado • Backend + Frontend Studio + Novas Funcionalidades)
 
 📋 **COMANDOS IMPORTANTES**
 
@@ -18,7 +18,7 @@ devbael@DESKTOP-7B8L8U5:~/mb-v2$ source .venv/bin/activate
 
 ## 🎯 Visão Geral do Projeto
 
-> **Status Atual**: Sistema completo com **Backend FastAPI** + **Frontend Studio** em produção
+> **Status Atual**: Sistema completo com **Backend FastAPI** + **Frontend Studio** + **Novas Funcionalidades Avançadas** em produção
 > 
 > **Arquitetura Principal**: 
 > - **🤖 Intake Agent** (inteligente) processa mensagens e enriquece fatos
@@ -26,6 +26,12 @@ devbael@DESKTOP-7B8L8U5:~/mb-v2$ source .venv/bin/activate
 > - **⚙️ Workers/Tools** executam verificações externas e ações
 > - **📚 Catálogo/Procedimentos** em **PT-BR** controlam respostas automáticas
 > - **🎨 ManyBlack Studio** interface visual para configuração e testes
+> - **🧠 Contexto Persistente** mantém estado entre turnos
+> - **💬 Entendimento de Respostas Curtas** via regex + LLM fallback
+> - **🔍 RAG Inteligente** por turno com cache
+> - **⚖️ Comparador Semântico** prefere automações quando similar
+> - **📋 Fila de Revisão Humana** para respostas geradas
+> - **🎯 Sistema de Confirmação LLM-first** entende 'sim/não' inteligentemente
 
 ### 🚀 Funcionalidades Implementadas
 
@@ -42,6 +48,15 @@ devbael@DESKTOP-7B8L8U5:~/mb-v2$ source .venv/bin/activate
 - ✅ **Catálogo expandido** com 10+ automações e knowledge base detalhada
 - ✅ **Modo escuro completo** com alto contraste
 - ✅ **Interface responsiva** e acessível
+- ✅ **Contexto persistente** do lead entre turnos e reinicializações
+- ✅ **Página de Leads** com filtros avançados e integração com simulador
+- ✅ **Entendimento de respostas curtas** ("sim/não") via regex e LLM fallback
+- ✅ **RAG por turno** com cache inteligente e contexto da KB
+- ✅ **Comparador semântico** que prefere automações quando similar (limiar 80%)
+- ✅ **Fila de revisão humana** para respostas geradas sem automação equivalente
+- ✅ **Envio seguro** de mensagens blindado contra nulos e botões inválidos
+- ✅ **Telemetria consistente** com action_type padronizado e idempotência
+- ✅ **Merge não-regressivo** do snapshot que não rebaixa fatos sem evidência melhor
 
 ---
 
@@ -113,6 +128,8 @@ npm run dev
 - 📱 Design responsivo e acessível
 - 🔄 Integração em tempo real com o backend
 - 🧪 Simulador de conversas integrado
+- 👥 Página de Leads com filtros avançados
+- 🤖 Sistema de confirmação LLM-first
 
 **🌐 Nova Implementação Ngrok Unificado:**
 ```bash
@@ -226,6 +243,9 @@ source .venv/bin/activate
 # Executar todos os testes
 pytest
 
+# Testes do sistema de confirmação LLM-first
+pytest tests/test_confirmation_gate.py -v
+
 # Com verbosidade
 pytest -v
 
@@ -286,6 +306,14 @@ app/
     procedures.py             # Runtime de procedimentos (passos ordenados)
     fallback_kb.py            # Fallback com KB (RAG-lite) + guardrails
     planner.py                # Render de automações → actions, guardrails
+    contexto_lead.py          # Contexto persistente do lead entre turnos
+    resposta_curta.py         # Entendimento de respostas curtas (sim/não)
+    confirmation_gate.py      # Gate de confirmação LLM-first com guardrails
+    automation_hook.py        # Hook para expects_reply automático
+    rag_service.py            # RAG por turno com cache inteligente
+    comparador_semantico.py   # Comparação semântica vs automações
+    fila_revisao.py           # Fila de revisão humana para respostas geradas
+    config_melhorias.py       # Configurações centralizadas das melhorias
   tools/
     verify_signup.py          # Verifica cadastro (corretora)
     check_deposit.py          # Consulta status de depósito
@@ -302,14 +330,94 @@ app/
     redis_client.py           # Cliente Redis (opcional)
     logging.py                # Logs JSON estruturados
   policies/
-    catalog.yml               # Automações em PT-BR
+    catalog.yml               # Automações em PT-BR (com expects_reply)
     procedures.yml            # Procedimentos em PT-BR
+    confirm_targets.yml       # Targets de confirmação LLM-first
     policy_intake.yml         # Política do Intake Agent (budget/thresholds)
     kb.md                     # Base de conhecimento (fallback)
 tests/
   unit/ integration/ e2e/
+  test_melhorias.py           # Testes das novas funcionalidades
 alembic/
 requirements.txt
+MELHORIAS_IMPLEMENTADAS.md    # Documentação das melhorias
+```
+
+---
+
+## 4.1) Sistema de Confirmação LLM-first
+
+### 🎯 Visão Geral
+
+O sistema de confirmação inteligente intercepta mensagens antes do orquestrador para detectar e processar confirmações (sim/não) automaticamente usando **LLM-first com fallback determinístico**.
+
+### 🔧 Componentes Principais
+
+#### **ConfirmationGate** (`app/core/confirmation_gate.py`)
+- **Gate único** no pipeline chamado ANTES do `decide_and_plan`
+- **LLM-first**: Usa GPT-4o-mini com function calling para interpretar confirmações
+- **Fallback determinístico**: Reconhece padrões simples se LLM falhar/timeout
+- **Guardrails**: TTL, whitelist de targets, limiar de confiança (0.80)
+
+#### **AutomationHook** (`app/core/automation_hook.py`)
+- **Hook automático** após envio de automações com `expects_reply`
+- **Seta estado `aguardando`** baseado no target da confirmação
+- **TTL dinâmico** baseado na configuração do target
+
+#### **Targets de Confirmação** (`policies/confirm_targets.yml`)
+```yaml
+confirm_can_deposit:
+  max_age_minutes: 30
+  on_yes:
+    facts:
+      agreements.can_deposit: true
+  on_no:
+    facts:
+      agreements.can_deposit: false
+    automation: deposit_help_detailed
+```
+
+### 🎛️ Configurações ENV
+
+```bash
+# Modo de operação
+CONFIRM_AGENT_MODE=llm_first  # llm_first | hybrid | det_only
+
+# Parâmetros de performance  
+CONFIRM_AGENT_TIMEOUT_MS=1000      # Timeout do LLM
+CONFIRM_AGENT_THRESHOLD=0.80       # Limiar de confiança mínima
+CONFIRM_AGENT_MAX_HISTORY=10       # Máximo de mensagens no contexto
+```
+
+### 📊 Fluxo de Decisão
+
+1. **Pergunta enviada**: Automação com `expects_reply.target` → seta `aguardando` automaticamente
+2. **Resposta recebida**: Gate verifica se há confirmação pendente
+3. **LLM Analysis**: GPT interpreta mensagem com contexto estruturado
+4. **Guardrails**: Valida confiança, TTL, whitelist de targets
+5. **Aplicação**: Define fatos, limpa `aguardando`, dispara automação (se NO)
+6. **Fallback**: Se LLM falhar, usa padrões determinísticos
+
+### 🔒 Segurança e Confiabilidade
+
+- **Determinismo**: Side-effects críticos só aplicados com alta confiança
+- **TTL**: Confirmações só válidas dentro do prazo configurado
+- **Idempotência**: Integração mantém idempotência do pipeline existente
+- **Rollback**: Flag global para desativar (fallback para fluxo atual)
+
+### 📈 Telemetria
+
+```json
+{
+  "event": "confirmation_processed",
+  "lead_id": 123,
+  "target": "confirm_can_deposit", 
+  "polarity": "yes",
+  "confidence": 0.92,
+  "source": "llm",
+  "latency_ms": 847,
+  "outcome": "applied"
+}
 ```
 
 ---
@@ -480,6 +588,8 @@ steps:
 - `journey_event(id, lead_id, type, payload JSONB, created_at)`
 - `lead_touchpoint(id, lead_id, utm_id, event, ts)`
 - `idempotency_key(key PK, response JSONB, created_at)`
+- `contexto_lead(lead_id PK, procedimento_ativo, etapa_ativa, aguardando JSONB, ultima_automacao_enviada, ultimo_topico_kb, atualizado_em)`
+- `fila_revisao(id, lead_id, pergunta, resposta, fontes_kb JSONB, automacao_equivalente, pontuacao_similaridade, contexto_do_lead JSONB, aprovado, criado_em)`
 
 Índices: `(lead_id, created_at desc)` + `GIN` em JSONB.
 
@@ -500,6 +610,10 @@ steps:
 - **Concorrência**: coalescer 1.5–3s por lead; mutex por lead; ordem garantida.  
 - **Orçamento**: Intake (`1 LLM + 2 tools`, ≤3s), Orquestrador (`1 LLM`, ≤2s).  
 - **Logs**: JSON com `lead_id`, `turn_id`, `decision_id`, `latência`, `tools_used`.
+- **Contexto persistente**: TTL 30min para estados voláteis; merge não-regressivo.
+- **RAG**: Cache 60s por tópico; top-k=3 resultados; busca semântica.
+- **Comparador semântico**: Limiar 80% para preferir automações; timeout 3s para geração.
+- **Resposta curta**: Timeout 1.5s para LLM fallback; regex para detecção direta.
 
 ---
 

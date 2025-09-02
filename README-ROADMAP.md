@@ -1,12 +1,12 @@
-# ManyBlack V2 — README-ROADMAP (✅ Completo • Backend + Frontend Studio)
+# ManyBlack V2 — README-ROADMAP (✅ Completo • Backend + Frontend Studio + Novas Funcionalidades)
 
-> **🎯 Status Atual**: ✅ **Fase 1 Completa** - Sistema totalmente funcional com backend FastAPI e frontend React
+> **🎯 Status Atual**: ✅ **Fase 1 Completa** - Sistema totalmente funcional com backend FastAPI, frontend React e funcionalidades avançadas
 > 
 > **Visão**: Plataforma completa de conversão/atendimento orientada a **contexto**, com interface visual amigável em português para equipes operacionais. Dois tipos de interação por turno: **Dúvida** (resposta pontual, controlada por catálogo) e **Procedimento** (funis flexíveis passo a passo).  
 > 
 > **Arquitetura**: **Intake Agent** (inteligente) processa mensagens e executa ferramentas; **Orquestrador** decide com base em **Lead Snapshot** enriquecido; **Workers/Tools** realizam verificações externas; **ManyBlack Studio** permite configuração visual em **PT‑BR**.
 > 
-> **✨ Novidades**: Interface visual completa, modo escuro, simulador integrado, dashboard em tempo real
+> **✨ Novidades**: Interface visual completa, modo escuro, simulador integrado, dashboard em tempo real, contexto persistente, entendimento de respostas curtas, RAG inteligente, comparador semântico, fila de revisão humana
 
 ---
 
@@ -35,6 +35,16 @@
 - **React Query** para cache e sincronização
 - **React Hook Form** para formulários otimizados
 - **Heroicons** para ícones consistentes
+
+### 🆕 Novas Funcionalidades Avançadas
+- **🧠 Contexto Persistente**: Estado mantido entre turnos e reinicializações
+- **💬 Entendimento de Respostas Curtas**: "sim/não" via regex + LLM fallback
+- **🔍 RAG Inteligente**: Busca na KB por turno com cache otimizado
+- **⚖️ Comparador Semântico**: Prefere automações quando similar (limiar 80%)
+- **📋 Fila de Revisão Humana**: Respostas geradas vão para aprovação
+- **🛡️ Envio Seguro**: Blindagem contra nulos e botões inválidos
+- **📊 Telemetria Consistente**: Logs padronizados e idempotência
+- **🔄 Merge Não-Regressivo**: Não rebaixa fatos sem evidência melhor
 
 ---
 
@@ -67,19 +77,19 @@
 [ Telegram / WhatsApp ]
         │
         ▼
-[ Webhook ] ──► [ Snapshot Builder ] ──► [ Intake Agent ] ──► [ Orquestrador ] ──► [ Apply Plan ]
-                                   │                        (decide/planeja)        (batch idempotente)
-                                   └──► [ Workers/Tools (verify_signup, check_deposit) ]
-                                            ▲
-                                            └── Atualizam estado e disparam turno de sistema
+[ Webhook ] ──► [ Snapshot Builder + RAG ] ──► [ Intake Agent ] ──► [ Orquestrador + Contexto ] ──► [ Apply Plan ]
+                                   │                        │                                    │
+                                   └──► [ Workers/Tools (verify_signup, check_deposit) ]         │
+                                   │                                                             │
+                                   └──► [ Resposta Curta + Comparador Semântico ] ───────────────┘
 ```
 
 **Papéis**  
-- **Snapshot Builder (determinístico)**: normaliza evento (canal), extrai evidências (regex/âncoras), funde com estado e **não decide**. Pode enfileirar jobs para workers e marcar `pending_ops`.  
+- **Snapshot Builder (determinístico)**: normaliza evento (canal), extrai evidências (regex/âncoras), funde com estado, executa RAG por turno, **não decide**. Pode enfileirar jobs para workers e marcar `pending_ops`.  
 - **Intake Agent (inteligente)**: usa contexto do fluxo (passo ativo, histórico curto) + padrões confiáveis (e‑mail/ID por corretora) + 1 chamada LLM para desambiguar e **executa até 2 tools** (paralelas quando útil).  
-- **Orquestrador**: lê o snapshot e decide **Dúvida** x **Procedimento**; escolhe automação/checkpoint; constrói **plano**; **não verifica** externamente.  
+- **Orquestrador**: lê o snapshot, verifica contexto persistente, processa respostas curtas, decide **Dúvida** x **Procedimento**; escolhe automação/checkpoint; constrói **plano**; **não verifica** externamente.  
 - **Workers/Tools**: executam verificações; ao concluir, **persistem fatos** e disparam **turno de sistema** com o snapshot atualizado.  
-- **Apply Plan**: aplica ações (texto, mídia, botões com tracking) em batch idempotente.
+- **Apply Plan**: aplica ações (texto, mídia, botões com tracking) em batch idempotente com blindagem contra nulos.
 
 ---
 
@@ -115,7 +125,13 @@
     "history_summary": "Perguntou OTC; disse que vai depositar; quer testar.",
     "verifications": [
       {"kind":"signup","broker":"nyrion","input":{"account_id":"8989453289"},"outcome":"verified","confidence":0.92}
-    ]
+    ],
+    "kb_context": {
+      "hits": [
+        {"texto": "Para depositar, acesse...", "fonte": "KB: Depósitos", "score": 0.85}
+      ],
+      "topico": "depósito"
+    }
   },
   "messages_window": [{"id":"m1","text":"quero testar"}],
   "apply": true,
@@ -126,6 +142,7 @@
 **Observações**  
 - Concordância do lead vale como fato: `agreements.can_deposit=true` (não usamos saldo).  
 - `verifications[]` documenta o que o Intake/Workers checaram (auditoria).
+- `kb_context` contém contexto da KB anexado automaticamente por turno.
 
 ---
 
@@ -275,6 +292,8 @@ intake_policy:
 - `journey_event(id, lead_id, type, payload JSONB, created_at)`
 - `lead_touchpoint(id, lead_id, utm_id, event, ts)`
 - `idempotency_key(key PK, response JSONB, created_at)`
+- `contexto_lead(lead_id PK, procedimento_ativo, etapa_ativa, aguardando JSONB, ultima_automacao_enviada, ultimo_topico_kb, atualizado_em)`
+- `fila_revisao(id, lead_id, pergunta, resposta, fontes_kb JSONB, automacao_equivalente, pontuacao_similaridade, contexto_do_lead JSONB, aprovado, criado_em)`
 
 **Índices**: `(lead_id, created_at desc)`; `GIN` em JSONB (`accounts/deposit/agreements`).
 
@@ -308,6 +327,10 @@ intake_policy:
 - **Idempotência**: `decision_id` + `X-Idempotency-Key`.  
 - **Circuit breakers**: para tools externas quando erro ≥ limiar.  
 - **Cache curto**: TTL 60s para checks externos frequentes.  
+- **Contexto persistente**: TTL 30min para estados voláteis; merge não-regressivo.
+- **RAG**: Cache 60s por tópico; top-k=3 resultados; busca semântica.
+- **Comparador semântico**: Limiar 80% para preferir automações; timeout 3s para geração.
+- **Resposta curta**: Timeout 1.5s para LLM fallback; regex para detecção direta.
 - **SLIs/SLOs**:  
   - p95 latência do turno: **≤ 2.5s** (orquestrador), **≤ 3.5s** (intake).  
   - Taxa de sucesso de apply: **≥ 99.5%**.  
@@ -443,5 +466,12 @@ id_patterns:
 - **Dúvidas** respondidas por catálogo/KB.  
 - **Planos idempotentes**; **logs** e **eventos** persistidos.  
 - p95 **≤ 3.5s** (Intake) / **≤ 2.5s** (Orquestrador).
+- **Contexto persistente** mantido entre turnos e reinicializações.
+- **Respostas curtas** ("sim/não") entendidas via regex e LLM fallback.
+- **RAG por turno** com contexto da KB anexado ao snapshot.
+- **Comparador semântico** prefere automações quando similar (limiar 80%).
+- **Fila de revisão** para respostas geradas sem automação equivalente.
+- **Envio seguro** blindado contra nulos e botões inválidos.
+- **Telemetria consistente** com action_type padronizado e idempotência.
 
 **FIM — README-ROADMAP**

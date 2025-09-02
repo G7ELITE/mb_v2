@@ -70,6 +70,7 @@ async def run_procedure(proc_id: str, env: Env) -> Dict[str, Any]:
             logger.info("Todos os passos satisfeitos - executando ação final")
             action = await execute_automation(final_action, env)
             if action:
+                # action já contém automation_id via convert_automation_to_action
                 actions.append(action)
         else:
             # Procedimento completo sem ação final

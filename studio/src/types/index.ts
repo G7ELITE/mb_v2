@@ -84,6 +84,9 @@ export interface Automation {
   eligibility: string;
   priority: number;
   cooldown: string;
+  expects_reply?: {
+    target: string;
+  };
   output: {
     type: string;
     text: string;
@@ -123,6 +126,87 @@ export interface SimulationResult {
 export interface HealthCheck {
   status: string;
   env: string;
+}
+
+// Tipos para a página de Leads
+export interface LeadListItem {
+  id: number;
+  name?: string;
+  channel: string;
+  platform_user_id: string;
+  lang: string;
+  created_at?: string;
+  last_activity_at?: string;
+  events_24h: number;
+  accounts: Record<string, string>;
+  deposit: Record<string, any>;
+  agreements: Record<string, any>;
+  flags: Record<string, any>;
+  tags: string[];
+  procedure: {
+    active?: string;
+    step?: string;
+  };
+}
+
+export interface LeadDetail extends LeadListItem {
+  snapshot: {
+    accounts: Record<string, string>;
+    deposit: Record<string, any>;
+    agreements: Record<string, any>;
+    flags: Record<string, any>;
+    tags: string[];
+  };
+  procedure: {
+    active?: string;
+    step?: string;
+    waiting?: any;
+  };
+  events_recent: Array<{
+    id: number;
+    event_type: string;
+    payload: any;
+    created_at: string;
+  }>;
+}
+
+export interface LeadsListResponse {
+  items: LeadListItem[];
+  total: number;
+  page: number;
+  page_size: number;
+  total_pages: number;
+}
+
+export interface LeadsFilters {
+  q?: string;
+  created_from?: string;
+  created_to?: string;
+  last_active_from?: string;
+  last_active_to?: string;
+  channel?: string;
+  lang?: string;
+  deposit_status?: string;
+  accounts_quotex?: string;
+  accounts_nyrion?: string;
+  agreements_can_deposit?: boolean;
+  agreements_wants_test?: boolean;
+  tags?: string[];
+  not_tags?: string[];
+  procedure_active?: string;
+  procedure_step?: string;
+  inactive_gt_hours?: number;
+  pending_ops?: boolean;
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_content?: string;
+  mock?: boolean;
+  min_events_24h?: number;
+  page?: number;
+  page_size?: number;
+  sort_by?: string;
+  sort_dir?: 'asc' | 'desc';
 }
 
 // Tipos para autocomplete
