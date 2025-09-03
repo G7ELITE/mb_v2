@@ -1,0 +1,76 @@
+---
+# Targets de Confirmação - ManyBlack V2
+# Define targets para confirmações LLM-first com guardrails
+
+confirm_can_deposit:
+  max_age_minutes: 30
+  on_yes:
+    facts:
+      agreements.can_deposit: true
+  on_no:
+    facts:
+      agreements.can_deposit: false
+    automation: deposit_help_detailed
+
+confirm_created_account:
+  max_age_minutes: 30
+  on_yes:
+    facts:
+      accounts.quotex: "candidato"
+  on_no:
+    facts:
+      flags.needs_account_help: true
+    automation: signup_link
+
+confirm_wants_test:
+  max_age_minutes: 15
+  on_yes:
+    facts:
+      agreements.wants_test: true
+  on_no:
+    facts:
+      flags.not_interested_test: true
+    automation: explain_robot
+
+confirm_deposit_done:
+  max_age_minutes: 60
+  on_yes:
+    facts:
+      deposit.status: "pending"
+  on_no:
+    facts:
+      flags.deposit_help_needed: true
+    automation: deposit_help_detailed
+
+confirm_has_broker:
+  max_age_minutes: 20
+  on_yes:
+    facts:
+      flags.has_existing_account: true
+  on_no:
+    facts:
+      flags.needs_broker_recommendation: true
+    automation: ask_broker_preference
+
+confirm_can_deposit_v3:
+  max_age_minutes: 45
+  on_yes:
+    facts:
+      agreements.can_deposit: true
+      flags.ready_for_test: true
+  on_no:
+    facts:
+      agreements.can_deposit: false
+      flags.needs_deposit_help: true
+    automation: deposit_help_quick_v3
+
+confirm_created_account_v3:
+  max_age_minutes: 60
+  on_yes:
+    facts:
+      accounts.quotex: "criada"
+      flags.account_ready: true
+  on_no:
+    facts:
+      flags.account_creation_failed: true
+    automation: signup_link_v3
