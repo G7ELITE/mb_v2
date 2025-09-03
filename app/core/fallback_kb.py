@@ -20,13 +20,13 @@ _KB_CACHE: Optional[List[Dict[str, str]]] = None
 
 async def query_knowledge_base(env: Env) -> Optional[str]:
     """
-    Consulta a base de conhecimento para responder dúvidas.
+    Consulta a base de conhecimento para responder dúvidas usando LLM + contexto.
     
     Args:
         env: Ambiente com snapshot e mensagem
         
     Returns:
-        Resposta da KB ou None se não encontrou
+        Resposta inteligente baseada na KB ou None se não encontrou
     """
     if not env.messages_window:
         return None
@@ -34,23 +34,70 @@ async def query_knowledge_base(env: Env) -> Optional[str]:
     query = env.messages_window[-1].text
     logger.info(f"Consultando KB para: '{query[:50]}...'")
     
-    # Carregar e buscar na KB
-    kb_entries = load_knowledge_base()
+    # Usar o RAG service para buscar contexto
+    from app.core.rag_service import get_rag_service
+    rag_service = get_rag_service()
+    kb_context = await rag_service.buscar_contexto_kb(query, top_k=3)
     
-    if not kb_entries:
-        logger.warning("KB vazia ou não carregada")
+    if not kb_context or not kb_context.hits:
+        logger.info("Nenhum contexto encontrado na KB")
         return None
     
-    # Buscar entrada mais relevante
-    best_match = find_best_match(query, kb_entries)
-    
-    if best_match:
-        response = best_match["content"]
-        logger.info(f"Resposta encontrada na KB (score: {best_match.get('score', 0):.2f})")
-        return response
-    
-    logger.info("Nenhuma resposta relevante encontrada na KB")
-    return None
+    # Gerar resposta inteligente usando LLM + contexto
+    try:
+        from openai import AsyncOpenAI
+        from app.settings import settings
+        
+        if not settings.OPENAI_API_KEY:
+            logger.warning("OpenAI API key não configurada, usando resposta simples")
+            return kb_context.hits[0]["texto"]
+        
+        client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
+        
+        # Montar contexto da KB
+        kb_text = "\n".join([
+            f"- {hit['texto'][:200]}... (fonte: {hit['fonte']})"
+            for hit in kb_context.hits[:3]
+        ])
+        
+        # Template melhorado
+        prompt = f"""Você é um assistente do ManyBlack, um robô de sinais para opções binárias.
+
+Contexto do lead:
+- Contas: {env.snapshot.accounts if env.snapshot else 'desconhecido'}
+- Status: {env.snapshot.deposit.get('status', 'nenhum') if env.snapshot else 'nenhum'}
+
+Informações da base de conhecimento:
+{kb_text}
+
+Pergunta do usuário: "{query}"
+
+Responda de forma:
+- Clara e objetiva
+- Usando as informações da base de conhecimento
+- Em português brasileiro
+- Amigável e profissional
+- Máximo 2 parágrafos
+
+Resposta:"""
+
+        response = await client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=300,
+            temperature=0.3
+        )
+        
+        resposta = response.choices[0].message.content.strip()
+        logger.info(f"Resposta gerada pela LLM usando KB: {resposta[:100]}...")
+        return resposta
+        
+    except Exception as e:
+        logger.error(f"Erro ao gerar resposta com LLM: {e}")
+        # Fallback: usar melhor hit da KB
+        best_hit = kb_context.hits[0]
+        logger.info(f"Usando fallback simples da KB (score: {best_hit.get('score', 0):.2f})")
+        return f"📚 {best_hit['texto']}"
 
 
 def load_knowledge_base() -> List[Dict[str, str]]:

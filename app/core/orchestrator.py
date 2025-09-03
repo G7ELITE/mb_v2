@@ -131,8 +131,9 @@ def classify_interaction(env: Env) -> str:
     ]
     
     doubt_signals = [
-        "como", "onde", "quando", "que", "dúvida", "ajuda",
-        "não entendi", "explicar", "?", "funciona", "faz"
+        "como", "onde", "quando", "que", "qual", "quanto", "dúvida", "ajuda",
+        "não entendi", "explicar", "?", "funciona", "faz", "valor", "preciso",
+        "posso", "consegue", "saber", "informação"
     ]
     
     # Verificar contexto de procedimento ativo
@@ -169,7 +170,15 @@ async def handle_procedure_flow(env: Env, contexto_lead=None) -> Dict[str, Any]:
     
     if procedure_id:
         logger.info(f"Executando procedimento: {procedure_id}")
-        return await run_procedure(procedure_id, env)
+        procedure_result = await run_procedure(procedure_id, env)
+        
+        # BUGFIX: Se procedimento falhou (não encontrado), fazer fallback para DÚVIDA
+        if (procedure_result.get("decision_id") == "proc_error" or 
+            len(procedure_result.get("actions", [])) == 0):
+            logger.warning(f"Procedimento {procedure_id} falhou, fazendo fallback para DÚVIDA")
+            return await handle_doubt_flow(env, contexto_lead)
+        
+        return procedure_result
     else:
         # Nenhum procedimento ativo, usar seletor
         logger.info("Nenhum procedimento ativo, usando seletor")
@@ -273,6 +282,7 @@ async def handle_doubt_flow(env: Env, contexto_lead=None) -> Dict[str, Any]:
 async def handle_fallback_flow(env: Env, contexto_lead=None) -> Dict[str, Any]:
     """
     Fluxo de fallback quando não consegue classificar ou responder.
+    NOVA LÓGICA: Tenta usar KB antes de fallback genérico.
     
     Args:
         env: Ambiente atual
@@ -300,6 +310,22 @@ async def handle_fallback_flow(env: Env, contexto_lead=None) -> Dict[str, Any]:
     is_simple_confirmation = any(word in current_message for word in [
         "sim", "yes", "não", "no", "ok", "certo", "correto", "exato"
     ])
+    
+    # NOVA LÓGICA: Se catálogo/procedimentos vazios, tentar KB primeiro
+    if catalog_empty and procedures_empty and not is_simple_confirmation and len(current_message.strip()) >= 3:
+        logger.info("Catálogo/procedimentos vazios, tentando fallback para KB")
+        kb_response = await query_knowledge_base(env)
+        if kb_response:
+            log_structured("info", "orchestrator_fallback", {
+                "reason": "kb_used",
+                "catalog_empty": catalog_empty,
+                "procedures_empty": procedures_empty,
+                "message_length": len(current_message),
+                "lead_id": env.lead.id if env.lead else None
+            })
+            return {
+                "actions": [Action(type="send_message", text=kb_response)]
+            }
     
     # Handle different fallback scenarios
     message = None

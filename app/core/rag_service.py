@@ -160,7 +160,7 @@ class RagService:
             # Score combinado (mais peso para palavras em comum)
             score = (palavras_comuns * 0.7) + (similaridade_seq * 0.3)
             
-            if score > 0.1:  # Threshold mínimo
+            if score > 0.05:  # Threshold mínimo reduzido
                 hits_com_score.append({
                     "texto": secao["texto"],
                     "fonte": secao["fonte"],
