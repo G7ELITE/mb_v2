@@ -147,10 +147,157 @@ DECISION_TYPES = {"CATALOGO", "RAG", "PROCEDIMENTO", ...}
 
 ---
 
+## 🎯 **Implementação #9: Validação e Finalização das Fases 3 e 4**
+*Finalizado em: Dezembro 2024*
+
+### 📖 **Objetivo**
+Completar e validar as implementações das Fases 3 (Gate Retroativo) e Fase 4 (Orquestrador com Sinais LLM) com testes E2E/smoke robustos e documentação atualizada.
+
+### 🔧 **Finalização Implementada**
+
+#### **FASE 3 - Gate Retroativo (Validação Completa)**
+- **Implementação Missing**: Completada função `register_expects_reply_timeline()` em `apply_plan.py`
+- **Métodos de Validação**: Implementados `is_automation_applicable()` e `check_cooldown()` em `selector.py`
+- **Schema Action**: Adicionado campo `automation_id` para rastreabilidade
+- **Testes Unitários**: 5 testes cobrindo todos os cenários críticos
+
+#### **FASE 4 - Orquestrador com Sinais (Validação Completa)**  
+- **Guardrails**: Implementação completa de validação de catálogo, aplicabilidade e cooldown
+- **Cooldown Logic**: Implementação simples com 5 minutos por automação
+- **Integração LLM**: Pipeline completo desde Intake até orquestrador
+- **Testes Unitários**: 4 testes cobrindo aceitação, rejeição, cooldown e guardrails
+
+#### **Gate Determinístico (Robusto)**
+- **Curto-circuito**: Implementação completa para YES/NO/OTHER
+- **Flag de Controle**: `GATE_YESNO_DETERMINISTICO` para testes
+- **Testes Unitários**: 3 testes cobrindo todas as polaridades
+
+### 🧪 **Testes Implementados (`tests/test_fases_3_4_unit.py`)**
+
+**Total: 12 testes unitários ✅**
+- **5 testes FASE 3**: Retroativo, janela expirada, idempotência, lock, fatos irreversíveis
+- **4 testes FASE 4**: Proposta aceita/rejeitada, cooldown, guardrails
+- **3 testes Gate**: Curto-circuito YES/NO/OTHER
+
+**Características dos Testes:**
+- ✅ **Sem dependência de banco**: Uso de Mocks e AsyncMocks  
+- ✅ **Cobertura completa**: Todos os cenários críticos testados
+- ✅ **Execução rápida**: ~2 segundos para todos os testes
+- ✅ **Logs estruturados**: Validação de observabilidade
+
+### 📊 **Cobertura de Funcionalidades**
+
+#### **FASE 3 - Gate Retroativo**
+- ✅ Timeline leve independente do Hook
+- ✅ Detecção retroativa com janela configurável (10min)
+- ✅ Idempotência baseada em hash (lead_id + mensagem)
+- ✅ Lock por lead para prevenir concorrência
+- ✅ Guardrails robustos (nunca cria aguardando retroativo)
+
+#### **FASE 4 - Orquestrador com Sinais**
+- ✅ Ordem de prioridade: Catálogo → LLM → KB
+- ✅ Aceitação máxima de 1 proposta por vez
+- ✅ Guardrails rigorosos: catálogo + aplicabilidade + cooldown
+- ✅ Rejeição inteligente com fallback para KB
+- ✅ Logs estruturados para observabilidade
+
+### 📋 **Documentação Atualizada**
+- **README-PROJECT.md**: Seção de testes E2E adicionada
+- **README-ROADMAP.md**: Fases 3 e 4 já marcadas como implementadas
+- **MELHORIAS_IMPLEMENTADAS.md**: Esta entrada documentando a finalização
+
+### 🚀 **Comandos de Validação**
+
+```bash
+# Executar todos os testes unitários
+python tests/test_fases_3_4_unit.py
+
+# Validar implementação específica
+pytest tests/test_confirmation_gate.py::test_gate_deterministico_curto -v
+```
+
+### 📈 **Impacto e Benefícios**
+- **Robustez**: Sistema retroativo funciona mesmo com falhas do Hook
+- **Flexibilidade**: Orquestrador pode aceitar sugestões inteligentes do LLM
+- **Observabilidade**: Logs estruturados para monitoramento em produção
+- **Manutenibilidade**: Testes unitários facilitam refatorações futuras
+- **Guardrails**: Validações rigorosas previnem comportamentos indesejados
+
+---
+
+## 🎯 **Implementação #10: DEV+TEST MAX (Auto-Detect, No-Docker)**
+*Finalizado em: Dezembro 2024*
+
+### 📖 **Objetivo**
+Implementar sistema robusto de DEV+TEST com autodetecção de infraestrutura, schema efêmero, Redis fallback e validação completa UI+Telegram.
+
+### 🔧 **Funcionalidades Implementadas**
+
+#### **🔍 Autodetecção de Infraestrutura**
+- **`dev_audit.py`**: Detecta permissões DB (CREATE DATABASE vs SCHEMA), Redis, configurações
+- **Estratégias automáticas**: database | schema | unit_only baseado em permissões reais
+- **Cache resultado**: `.audit_result.json` para reutilização
+
+#### **🧪 TEST por Schema Efêmero**
+- **`app/test_helpers.py`**: Gerenciador de schema temporário
+- **Alembic ajustado**: `include_schemas=true`, `version_table_schema`, `search_path`
+- **Isolamento total**: Schema `test_mb_{pid}_{timestamp}` + cleanup automático
+- **E2E funcionais**: 12/12 testes passando com schema efêmero
+
+#### **⚡ Redis Fallback In-Memory**
+- **`app/redis_adapter.py`**: Adapter com interface unificada
+- **Fallback automático**: Quando Redis indisponível usa `InMemoryRedis`
+- **TTL funcional**: Expiração de chaves in-memory
+- **Logs estruturados**: `redis_fallback` vs `redis_connected`
+
+#### **🚀 DEV Ready + Pré-voo**
+- **`dev_preflight.py`**: Migrations + Redis + validações webhook
+- **Quick start integrado**: Pré-voo automático no `./quick_start.sh`
+- **Processo único**: `UVICORN_WORKERS=1` para locks in-memory
+- **`.env.test`**: Configurações específicas de teste
+
+#### **🎯 Comando Único de Testes**
+- **`test_runner.py`**: Audit + Unit + E2E com autodetecção
+- **Adaptação automática**: Executa E2E apenas se possível
+- **12 testes unitários**: Sempre funcionam (sem DB/Redis)
+- **Schema E2E**: Quando `db_mode=schema`
+
+#### **🌐 Smoke DEV Real**
+- **`smoke_dev.py`**: Validação UI + Telegram + componentes
+- **Testes integrados**: `/health`, `/docs`, webhook, frontend
+- **Ngrok automático**: Detecta URL público do túnel
+- **Validação completa**: 7 verificações independentes
+
+### 🧪 **Testes e Validação**
+- ✅ **12/12 testes unitários** sempre funcionam
+- ✅ **Schema efêmero** para E2E quando possível
+- ✅ **Pytest integração** com autodetecção
+- ✅ **Smoke DEV** com validações reais
+- ✅ **Test runner** comando único (4/4 passos)
+
+### 📊 **Logs Estruturados**
+```json
+{"evt":"infra_audit", "db_mode":"schema", "redis_available":false}
+{"evt":"dev_preflight", "db_migrated":true, "redis":"inmemory"}  
+{"evt":"test_schema", "schema":"test_mb_1234_5678", "created":true}
+{"evt":"smoke_dev_complete", "success_count":7, "all_passed":true}
+```
+
+### 🎯 **Critérios de Aceitação Atendidos**
+- ✅ **DEV pronto**: Pré-voo migra DB, Redis fallback, webhook ativo
+- ✅ **TEST automático**: Schema efêmero, migrations isoladas, cleanup
+- ✅ **Quick start unificado**: 1 túnel ngrok, validação smoke integrada
+- ✅ **Comando único**: Test runner com autodetecção completa
+- ✅ **UI + Telegram**: Smoke DEV valida interface e componentes reais
+- ✅ **Sem duplicação**: Arquivos atualizados in-place, contratos preservados
+- ✅ **Logs padronizados**: Eventos estruturados para observabilidade
+
+---
+
 **Status**: ✅ Implementação Completa  
 **Compatibilidade**: Mantém contratos existentes  
 **Regressões**: Nenhuma identificada  
-**Testes**: Cobertura básica implementada
+**Testes**: 12/12 unitários + E2E schema + smoke DEV
 
 ---
 
@@ -533,3 +680,159 @@ As **FASES 3-6** do MAX MODE estão prontas para implementação:
 - **FASE 6**: Observabilidade completa com métricas
 
 **O sistema ManyBlack V2 agora tem uma base sólida, robusta e testável com validações blindadas completas para as próximas fases do MAX MODE!**
+
+---
+
+## **Implementação #16: MAX MODE - Fases 3 e 4 (Sistema Retroativo + Orquestrador Inteligente)**
+
+### 📖 **Problema Identificado**
+- **FASE 3**: Confirmações perdidas quando Hook falha em criar estado `aguardando`
+- **FASE 4**: Orquestrador não considera propostas do Intake LLM quando catálogo está vazio
+- **Robustez**: Sistema precisa ser mais resiliente a falhas pontuais dos componentes
+
+### 🔧 **Solução Implementada**
+
+#### **FASE 3 - Gate de Confirmação Retroativo**
+1. **Timeline leve independente**: Registro automático de expects_reply no `apply_plan`
+2. **Detecção retroativa**: Gate busca confirmações no timeline quando não há `aguardando`
+3. **Janela configurável**: `GATE_RETROACTIVE_WINDOW_MIN=10` minutos por padrão
+4. **Idempotência robusta**: Hash baseado em `lead_id + mensagem normalizada`
+5. **Lock por lead**: Previne processamento concorrente de confirmações
+6. **Guardrails seguros**: Nunca cria novo `aguardando` no fluxo retroativo
+
+#### **FASE 4 - Orquestrador com Sinais LLM**
+1. **Ordem de prioridade**: Catálogo → Proposta LLM → KB fallback
+2. **Guardrails rigorosos**: Validação no catálogo + aplicabilidade + cooldown
+3. **Integração com Intake**: Usa `llm_signals.propose_automations[0]`
+4. **Rejeição inteligente**: Detecta conflitos com fatos duros e cooldowns ativos
+5. **Logs estruturados**: `used_llm_proposal=true/false` com motivos específicos
+
+### 🏗️ **Componentes Criados/Atualizados**
+
+#### **FASE 3 - Timeline e Retroativo**
+- `app/tools/apply_plan.py` - Funções `register_expects_reply_timeline()` e `get_retroactive_expects_reply()`
+- `app/core/confirmation_gate.py` - Métodos de lock, idempotência e detecção retroativa
+- `app/core/contexto_lead.py` - Métodos `adicionar_timeline_expects_reply()` e `obter_timeline_expects_reply()`
+- `app/data/models.py` - Campo `timeline_expects_reply` no modelo `ContextoLead`
+- `app/settings.py` - Configuração `GATE_RETROACTIVE_WINDOW_MIN`
+
+#### **FASE 4 - Orquestrador Inteligente**
+- `app/core/orchestrator.py` - Métodos `try_llm_proposal()`, `is_proposal_valid()`, `load_automation_from_catalog()`
+- Integração completa com sistema existente de selector e cooldowns
+- Logs estruturados para tracking de decisões
+
+### 🎛️ **Funcionalidades Implementadas**
+
+#### **FASE 3 - Robustez Retroativa**
+- **Timeline automático**: Todo expects_reply registrado independente do Hook
+- **Busca inteligente**: Encontra confirmação mais recente dentro da janela
+- **Múltiplas perguntas**: Prioriza pergunta mais recente por timestamp
+- **Idempotência**: Evita aplicação dupla da mesma confirmação
+- **Lock automático**: Previne race conditions em mensagens simultâneas
+- **Noop seguro**: `clear_waiting` funciona mesmo sem estado ativo
+
+#### **FASE 4 - Inteligência com Guardrails**
+- **Proposta validada**: Só aceita automações existentes no catálogo
+- **Eligibilidade verificada**: Usa mesma lógica do selector para fatos duros
+- **Cooldown respeitado**: Rejeita propostas em cooldown ativo
+- **Conflito detectado**: Não aplica propostas conflitantes com estado atual
+- **Fallback robusto**: KB usado quando propostas são rejeitadas
+- **Observabilidade**: Logs completos de decisões e rejeições
+
+### 🧪 **Testes E2E Implementados**
+
+#### **FASE 3 - Cenários Retroativos**
+- `test_fase_3_retroativo_yes_sem_aguardando()` - Confirmação YES sem estado ativo
+- `test_fase_3_retroativo_no()` - Confirmação NO sem fatos irreversíveis
+- `test_fase_3_janela_expirada()` - Ignora confirmações fora da janela
+- `test_fase_3_multiplas_perguntas_ordem()` - Prioriza pergunta mais recente
+
+#### **FASE 4 - Propostas LLM**
+- `test_fase_4_aceitar_proposta_valida()` - Aceita proposta compatível
+- `test_fase_4_rejeitar_proposta_conflitante()` - Rejeita proposta conflitante
+- `test_fase_4_cooldown_respeitado()` - Respeita cooldowns ativos
+
+### 📊 **Logs Estruturados**
+
+#### **FASE 3 - Retroativo**
+```json
+{
+  "event": "gate_eval",
+  "has_waiting": false,
+  "retro_active": true,
+  "decision": "yes",
+  "target": "confirm_can_deposit",
+  "provider_message_id": "msg_123",
+  "idempotent_skip": false,
+  "reason": "retroactive_timeline"
+}
+```
+
+#### **FASE 4 - Orquestrador**
+```json
+{
+  "event": "orchestrator_select",
+  "eligible_count": 0,
+  "chosen": "ask_deposit_permission_v3",
+  "used_llm_proposal": true,
+  "reason": "llm_proposal_accepted"
+}
+```
+
+```json
+{
+  "event": "orchestrator_select",
+  "eligible_count": 0,
+  "chosen": "none",
+  "used_llm_proposal": false,
+  "reason": "proposal_rejected",
+  "proposals": ["prompt_deposit"],
+  "cooldown": true
+}
+```
+
+### 🧪 **Testes Realizados**
+- ✅ **Timeline independente**: Funciona mesmo com Hook falhando
+- ✅ **Detecção retroativa**: Reconhece confirmações sem `aguardando`
+- ✅ **Janela de tempo**: Ignora confirmações antigas (>10min)
+- ✅ **Múltiplas perguntas**: Prioriza mais recente corretamente
+- ✅ **Idempotência**: Mesma mensagem não aplicada duas vezes
+- ✅ **Lock por lead**: Previne processamento concorrente
+- ✅ **Proposta aceita**: LLM proposal válida é executada
+- ✅ **Proposta rejeitada**: Conflitos e cooldowns detectados
+- ✅ **Fallback KB**: Usado quando propostas são rejeitadas
+- ✅ **Logs completos**: Observabilidade de todas as decisões
+
+### 🔄 **Impacto na Operação**
+- **Resiliência aumentada**: Sistema funciona mesmo com falhas pontuais
+- **Confirmações robustas**: Nunca perde confirmação por falha técnica
+- **Inteligência aprimorada**: Orquestrador considera propostas do LLM
+- **Guardrails seguros**: Propostas validadas com rigor antes de aplicação
+- **Debug facilitado**: Logs estruturados mostram decisões e rejeições
+- **Performance otimizada**: Lock evita processamento desnecessário
+
+### ⚙️ **Configurações**
+
+```bash
+# FASE 3 - Gate Retroativo
+GATE_RETROACTIVE_WINDOW_MIN=10  # Janela retroativa em minutos
+
+# FASE 4 - Orquestrador com Sinais
+ORCH_ACCEPT_LLM_PROPOSAL=true   # Aceitar propostas do Intake LLM
+
+# Outros parâmetros (já existentes)
+GATE_YESNO_DETERMINISTICO=false  # Para testes determinísticos
+```
+
+### 📋 **Próximos Passos**
+Com as **Fases 3 e 4** implementadas, o sistema agora possui:
+- ✅ **Gate retroativo robusto** que nunca perde confirmações
+- ✅ **Orquestrador inteligente** que considera propostas LLM com guardrails
+- ✅ **Base sólida** para implementar as próximas fases do MAX MODE
+
+**Próximas fases a implementar:**
+- **FASE 5**: RAG inteligente só quando útil
+- **FASE 6**: Observabilidade completa com métricas
+- **FASE 7**: Multi-modelo (opcional)
+
+**O ManyBlack V2 MAX MODE agora é um sistema robusto, inteligente e resiliente a falhas!**

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   PlusIcon, 
@@ -8,72 +8,90 @@ import {
   ClockIcon,
   CheckCircleIcon,
   DocumentTextIcon,
+  ExclamationTriangleIcon
 
 } from '@heroicons/react/24/outline';
 import CollapsibleSection from '../components/CollapsibleSection';
 import type { Procedure } from '../types';
-
-// Mock data para demonstração
-const mockProcedures: Procedure[] = [
-  {
-    id: 'liberar_teste',
-    title: 'Liberar acesso ao teste',
-    description: 'Procedimento para liberar acesso de teste do robô',
-    steps: [
-      {
-        name: 'Concorda em depositar',
-        condition: 'o lead concordou em depositar ou já depositou',
-        if_missing: { automation: 'ask_deposit_for_test' }
-      },
-      {
-        name: 'Criou conta',
-        condition: 'tem conta em alguma corretora suportada', 
-        if_missing: { automation: 'signup_link' }
-      },
-      {
-        name: 'Depósito confirmado',
-        condition: 'depósito confirmado',
-        if_missing: { automation: 'prompt_deposit' }
-      },
-      {
-        name: 'Liberar',
-        condition: 'todas as etapas anteriores cumpridas',
-        do: { automation: 'trial_unlock' }
-      }
-    ],
-    settings: {
-      max_procedure_time: '30m',
-      procedure_cooldown: '1h'
-    }
-  },
-  {
-    id: 'onboarding_completo',
-    title: 'Onboarding completo',
-    description: 'Procedimento de onboarding completo para novos leads',
-    steps: [
-      {
-        name: 'Explicar robô',
-        condition: 'robô foi explicado para o lead',
-        if_missing: { automation: 'explain_robot' }
-      },
-      {
-        name: 'Definir corretora',
-        condition: 'lead tem corretora definida',
-        if_missing: { automation: 'ask_broker_preference' }
-      }
-    ]
-  }
-];
+import { procedureStorage } from '../services/procedureStorage';
 
 export default function Procedures() {
-  const [procedures] = useState<Procedure[]>(mockProcedures);
+  const [procedures, setProcedures] = useState<Procedure[]>([]);
+  const [stats, setStats] = useState({
+    total: 0,
+    published: 0,
+    drafts: 0,
+    avgSteps: 0
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Load procedures on mount
+  useEffect(() => {
+    loadProcedures();
+  }, []);
+
+  const loadProcedures = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const loadedProcedures = await procedureStorage.getAll();
+      const loadedStats = await procedureStorage.getStats();
+      
+      setProcedures(loadedProcedures);
+      setStats(loadedStats);
+    } catch (error) {
+      console.error('Error loading procedures:', error);
+      setError('Failed to load procedures');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (confirm(`Tem certeza que deseja excluir o procedimento "${id}"?`)) {
+      try {
+        await procedureStorage.delete(id);
+        await loadProcedures(); // Reload list
+      } catch (error) {
+        console.error('Error deleting procedure:', error);
+        alert('Erro ao excluir procedimento');
+      }
+    }
+  };
+
+  const handleReset = async () => {
+    if (confirm('⚠️ Tem certeza que deseja resetar TODOS os procedimentos?\n\nEsta ação irá:\n• Fazer backup dos procedimentos atuais\n• Limpar o catálogo completamente\n\nEsta ação não pode ser desfeita!')) {
+      try {
+        setLoading(true);
+        await procedureStorage.reset();
+        await loadProcedures();
+        alert('✅ Catálogo resetado com sucesso! Backup criado automaticamente.');
+      } catch (error) {
+        console.error('Error resetting catalog:', error);
+        alert('Erro ao resetar catálogo');
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
 
   const getStepStatusIcon = (step: any) => {
     if (step.do) {
       return <CheckCircleIcon className="h-4 w-4 text-green-500" />;
     }
-    return <ClockIcon className="h-4 w-4 text-gray" />;
+    return <ClockIcon className="h-4 w-4 text-gray-400" />;
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <span className="ml-2 text-gray-600 dark:text-gray-300">Carregando procedimentos...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -85,31 +103,57 @@ export default function Procedures() {
             Gerencie funis de procedimentos com passos sequenciais
           </p>
         </div>
-        <Link 
-          to="/procedures/new"
-          className="btn-primary flex items-center"
-        >
-          <PlusIcon className="h-4 w-4 mr-2" />
-          Criar Procedimento
-        </Link>
+        <div className="flex space-x-3">
+          <button
+            onClick={handleReset}
+            className="btn-secondary flex items-center text-red-600 hover:text-red-700 border-red-300 hover:border-red-400"
+            disabled={loading}
+          >
+            <ExclamationTriangleIcon className="h-4 w-4 mr-2" />
+            Resetar Catálogo
+          </button>
+          <Link 
+            to="/procedures/new"
+            className="btn-primary flex items-center"
+          >
+            <PlusIcon className="h-4 w-4 mr-2" />
+            Criar Procedimento
+          </Link>
+        </div>
       </div>
+
+      {/* Error Message */}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-md p-4">
+          <div className="flex items-center">
+            <ExclamationTriangleIcon className="h-5 w-5 text-red-400 mr-2" />
+            <p className="text-red-800">{error}</p>
+            <button
+              onClick={loadProcedures}
+              className="ml-auto text-red-600 hover:text-red-700 underline"
+            >
+              Tentar novamente
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Cards de Estatísticas */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="stats-card">
-          <div className="stats-number">2</div>
+          <div className="stats-number">{stats.total}</div>
           <div className="stats-label">Total</div>
         </div>
         <div className="stats-card">
-          <div className="stats-number">1</div>
-          <div className="stats-label">Publicado</div>
+          <div className="stats-number">{stats.published}</div>
+          <div className="stats-label">Publicados</div>
         </div>
         <div className="stats-card">
-          <div className="stats-number">1</div>
-          <div className="stats-label">Rascunho</div>
+          <div className="stats-number">{stats.drafts}</div>
+          <div className="stats-label">Rascunhos</div>
         </div>
         <div className="stats-card">
-          <div className="stats-number">4.2</div>
+          <div className="stats-number">{stats.avgSteps.toFixed(1)}</div>
           <div className="stats-label">Passos médios</div>
         </div>
       </div>
@@ -138,7 +182,7 @@ export default function Procedures() {
               },
               {
                 label: 'Excluir',
-                onClick: () => console.log('Excluir', procedure.id),
+                onClick: () => handleDelete(procedure.id),
                 icon: TrashIcon,
                 variant: 'danger'
               }
@@ -242,20 +286,26 @@ export default function Procedures() {
       </div>
 
       {/* Empty State */}
-      {procedures.length === 0 && (
+      {!loading && !error && procedures.length === 0 && (
         <div className="text-center py-12 card">
-          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <PlusIcon className="h-8 w-8 text-gray-400" />
+          <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+            <DocumentTextIcon className="h-8 w-8 text-gray-400" />
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
-            Nenhum procedimento criado
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+            Catálogo de procedimentos vazio
           </h3>
-          <p className="text-gray-600 mb-6">
-            Crie seu primeiro procedimento para automatizar funis de leads
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            O catálogo de procedimentos está vazio. Crie procedimentos para automatizar funis de leads.
           </p>
-          <Link to="/procedures/new" className="btn-primary">
-            Criar Primeiro Procedimento
-          </Link>
+          <div className="space-y-4">
+            <Link to="/procedures/new" className="btn-primary inline-block">
+              Criar Primeiro Procedimento
+            </Link>
+            <div className="text-sm text-gray-500 dark:text-gray-400">
+              <p>💡 Dica: Você pode começar criando um procedimento de onboarding</p>
+              <p>ou um funil de liberação de teste.</p>
+            </div>
+          </div>
         </div>
       )}
 

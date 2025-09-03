@@ -1055,6 +1055,148 @@ from app.core.intake_agent import run_intake_always_llm
 {"event":"gate_short_circuit", "used":true, "polarity":"yes"}
 ```
 
+#### **FASES 3 e 4: Sistema Retroativo + Orquestrador Inteligente**
+
+#### **FASE 3: Gate de Confirmação Retroativo**
+```bash
+# Teste retroativo YES sem aguardando
+python -c "
+import asyncio
+from tests.test_confirmation_gate import test_fase_3_retroativo_yes_sem_aguardando
+asyncio.run(test_fase_3_retroativo_yes_sem_aguardando())
+"
+
+# Teste retroativo NO
+python -c "
+import asyncio  
+from tests.test_confirmation_gate import test_fase_3_retroativo_no
+asyncio.run(test_fase_3_retroativo_no())
+"
+
+# Teste janela expirada
+python -c "
+import asyncio
+from tests.test_confirmation_gate import test_fase_3_janela_expirada
+asyncio.run(test_fase_3_janela_expirada())
+"
+
+# Teste múltiplas perguntas (ordem)
+python -c "
+import asyncio
+from tests.test_confirmation_gate import test_fase_3_multiplas_perguntas_ordem
+asyncio.run(test_fase_3_multiplas_perguntas_ordem())
+"
+```
+
+**Validações esperadas:**
+- ✅ `retro_active == True` para confirmações sem `aguardando`
+- ✅ `idempotent_skip == False` na primeira execução
+- ✅ Facts persistidos corretamente (`agreements.can_deposit = true`)
+- ✅ `clear_waiting` executado sem erro (noop se não existe)
+
+#### **FASE 4: Orquestrador com Sinais LLM**
+```bash
+# Teste aceitar proposta válida
+python -c "
+import asyncio
+from tests.test_confirmation_gate import test_fase_4_aceitar_proposta_valida
+asyncio.run(test_fase_4_aceitar_proposta_valida())
+"
+
+# Teste rejeitar proposta conflitante
+python -c "
+import asyncio
+from tests.test_confirmation_gate import test_fase_4_rejeitar_proposta_conflitante  
+asyncio.run(test_fase_4_rejeitar_proposta_conflitante())
+"
+
+# Teste cooldown respeitado
+python -c "
+import asyncio
+from tests.test_confirmation_gate import test_fase_4_cooldown_respeitado
+asyncio.run(test_fase_4_cooldown_respeitado())
+"
+```
+
+**Validações esperadas:**
+- ✅ `used_llm_proposal == True` quando proposta é aceita
+- ✅ `used_llm_proposal == False` quando proposta é rejeitada
+- ✅ `reason` contém motivo específico (cooldown, conflito, etc.)
+- ✅ Fallback para KB quando propostas são rejeitadas
+
+### **Configurações Adicionais - Fases 3 e 4**
+
+#### **FASE 3 - Gate Retroativo**
+```bash
+# Janela retroativa em minutos
+export GATE_RETROACTIVE_WINDOW_MIN=10
+```
+
+#### **FASE 4 - Orquestrador com Sinais**
+```bash
+# Aceitar propostas do Intake LLM
+export ORCH_ACCEPT_LLM_PROPOSAL=true
+```
+
+### **Logs de Debug - Fases 3 e 4**
+
+#### **FASE 3 - Retroativo**
+```json
+{
+  "event": "gate_eval",
+  "has_waiting": false,
+  "retro_active": true,
+  "decision": "yes",
+  "target": "confirm_can_deposit",
+  "provider_message_id": "msg_123",
+  "idempotent_skip": false,
+  "reason": "retroactive_timeline"
+}
+```
+
+#### **FASE 4 - Orquestrador**
+```json
+{
+  "event": "orchestrator_select",
+  "eligible_count": 0,
+  "chosen": "ask_deposit_permission_v3",
+  "used_llm_proposal": true,
+  "reason": "llm_proposal_accepted"
+}
+```
+
+```json
+{
+  "event": "orchestrator_select",
+  "eligible_count": 0,
+  "chosen": "none",
+  "used_llm_proposal": false,
+  "reason": "proposal_rejected",
+  "proposals": ["prompt_deposit"],
+  "cooldown": true
+}
+```
+
+### **Troubleshooting - Fases 3 e 4**
+
+#### **Gate retroativo não funciona**
+```
+Confirmação perdida mesmo com timeline
+```
+**Soluções**:
+1. Verificar se `GATE_RETROACTIVE_WINDOW_MIN` está configurado
+2. Verificar se timeline está sendo salvo nos logs
+3. Verificar se mensagem está dentro da janela de tempo (10min padrão)
+
+#### **Orquestrador não aceita propostas LLM**
+```
+Catalogo vazio mas não usa proposta do Intake
+```
+**Soluções**:
+1. Verificar se `ORCH_ACCEPT_LLM_PROPOSAL=true`
+2. Verificar se proposta existe no catálogo YAML
+3. Verificar se não há cooldown ativo para a proposta
+
 ---
 
-**🎉 Parabéns! Você agora domina o ManyBlack Studio e pode criar automações poderosas!**
+**🎉 Parabéns! Você agora domina o ManyBlack Studio MAX MODE e pode criar automações poderosas e inteligentes!**

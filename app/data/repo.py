@@ -17,6 +17,10 @@ class LeadRepository:
         """Busca lead por platform_user_id."""
         return self.db.query(Lead).filter(Lead.platform_user_id == platform_user_id).first()
     
+    def get_by_id(self, lead_id: int) -> Optional[Lead]:
+        """Busca lead por ID."""
+        return self.db.query(Lead).filter(Lead.id == lead_id).first()
+    
     def create_lead(self, platform_user_id: str, name: Optional[str] = None, lang: str = "pt-BR") -> Lead:
         """Cria um novo lead."""
         lead = Lead(platform_user_id=platform_user_id, name=name, lang=lang)

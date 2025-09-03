@@ -1,148 +1,163 @@
 import type { Automation } from '../types';
+import yaml from 'js-yaml';
 
-const STORAGE_KEY = 'manyblack_automations';
+const API_BASE_URL = 'http://localhost:8000';
+const STORAGE_KEY = 'manyblack_automations_cache';
 
-// Automações padrão do sistema
-const defaultAutomations: Automation[] = [
-  {
-    id: 'ask_deposit_for_test',
-    topic: 'teste',
-    eligibility: 'não concordou em depositar e não depositou',
-    priority: 0.85,
-    cooldown: '24h',
-    output: {
-      type: 'message',
-      text: 'Para liberar o teste, você consegue fazer um pequeno depósito? 💰',
-      buttons: [
-        {
-          id: 'btn_yes_deposit',
-          label: 'Sim, consigo',
-          kind: 'callback',
-          set_facts: { 'agreements.can_deposit': true },
-          track: { event: 'click_yes_deposit', utm_passthrough: true }
-        },
-        {
-          id: 'btn_help_deposit',
-          label: 'Como deposito?',
-          kind: 'url',
-          url: '${deposit_help_link}',
-          track: { event: 'open_deposit_help' }
-        }
-      ]
-    }
-  },
-  {
-    id: 'signup_link',
-    topic: 'conta',
-    eligibility: 'não tem conta em alguma corretora suportada',
-    priority: 0.90,
-    cooldown: '12h',
-    output: {
-      type: 'message',
-      text: 'Primeiro você precisa criar uma conta na corretora! 📊\n\nRecomendo a Quotex - é mais fácil para iniciantes:',
-      buttons: [
-        {
-          id: 'btn_quotex_signup',
-          label: 'Criar conta Quotex',
-          kind: 'url',
-          url: 'https://quotex.io/pt/?lid=123456',
-          track: { event: 'signup_quotex_click' }
-        }
-      ]
-    }
-  },
-  {
-    id: 'trial_unlock',
-    topic: 'liberacao',
-    eligibility: 'todas as etapas anteriores cumpridas',
-    priority: 1.0,
-    cooldown: '0h',
-    output: {
-      type: 'message',
-      text: '🎉 Parabéns! Seu acesso foi liberado!\n\nAgora você pode usar o robô de sinais. Lembrando:\n• Opera em M5\n• Usa estratégia Gale\n• Acompanhe sempre o mercado\n\nBoa sorte e bons trades! 📈'
-    }
-  }
-];
+// Cache local para performance
+let automationsCache: Automation[] | null = null;
+let cacheTimestamp = 0;
+const CACHE_TTL = 30000; // 30 seconds
 
+// Backend API integration service
 export const automationStorage = {
-  // Carregar todas as automações
-  getAll(): Automation[] {
+  // Load all automations from backend
+  async getAll(): Promise<Automation[]> {
+    // Check cache first
+    const now = Date.now();
+    if (automationsCache && (now - cacheTimestamp) < CACHE_TTL) {
+      return automationsCache;
+    }
+
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (!stored) {
-        // Primeira vez - inicializar com padrões
-        this.setAll(defaultAutomations);
-        return defaultAutomations;
+      const response = await fetch('/policies/catalog.yml');
+      
+      if (!response.ok) {
+        console.warn('Catalog file not found, returning empty array');
+        automationsCache = [];
+        cacheTimestamp = now;
+        return [];
       }
-      return JSON.parse(stored);
+
+      const yamlText = await response.text();
+      const automations = yaml.load(yamlText) as Automation[] || [];
+      
+      // Cache the result
+      automationsCache = Array.isArray(automations) ? automations : [];
+      cacheTimestamp = now;
+      
+      return automationsCache;
     } catch (error) {
-      console.error('Erro ao carregar automações:', error);
-      return defaultAutomations;
+      console.error('Error loading automations:', error);
+      
+      // Try to load from localStorage cache as fallback
+      try {
+        const cached = localStorage.getItem(STORAGE_KEY);
+        if (cached) {
+          return JSON.parse(cached);
+        }
+      } catch {}
+      
+      return [];
     }
   },
 
-  // Salvar todas as automações
-  setAll(automations: Automation[]): void {
+  // Save all automations to backend
+  async setAll(automations: Automation[]): Promise<void> {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(automations));
+      const yamlContent = yaml.dump(automations, { 
+        defaultFlowStyle: false, 
+        noRefs: true 
+      });
+      
+      const response = await fetch('/api/catalog/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: yamlContent })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to save automations: ${response.statusText}`);
+      }
+
+      // Update cache
+      automationsCache = automations;
+      cacheTimestamp = Date.now();
+      
+      // Also save to localStorage as backup
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(automations));
+      } catch {}
+
     } catch (error) {
-      console.error('Erro ao salvar automações:', error);
-      throw new Error('Erro ao salvar automações no localStorage');
+      console.error('Error saving automations:', error);
+      throw new Error('Failed to save automations to backend');
     }
   },
 
-  // Adicionar nova automação
-  add(automation: Automation): void {
-    const automations = this.getAll();
+  // Add new automation
+  async add(automation: Automation): Promise<void> {
+    const automations = await this.getAll();
     
-    // Verificar se ID já existe
+    // Check if ID already exists
     if (automations.some(a => a.id === automation.id)) {
-      throw new Error(`Automação com ID "${automation.id}" já existe`);
+      throw new Error(`Automation with ID "${automation.id}" already exists`);
     }
     
     automations.push(automation);
-    this.setAll(automations);
+    await this.setAll(automations);
   },
 
-  // Atualizar automação existente
-  update(id: string, automation: Automation): void {
-    const automations = this.getAll();
+  // Update existing automation
+  async update(id: string, automation: Automation): Promise<void> {
+    const automations = await this.getAll();
     const index = automations.findIndex(a => a.id === id);
     
     if (index === -1) {
-      throw new Error(`Automação com ID "${id}" não encontrada`);
+      throw new Error(`Automation with ID "${id}" not found`);
     }
     
     automations[index] = automation;
-    this.setAll(automations);
+    await this.setAll(automations);
   },
 
-  // Buscar automação por ID
-  getById(id: string): Automation | null {
-    const automations = this.getAll();
+  // Find automation by ID
+  async getById(id: string): Promise<Automation | null> {
+    const automations = await this.getAll();
     return automations.find(a => a.id === id) || null;
   },
 
-  // Deletar automação
-  delete(id: string): void {
-    const automations = this.getAll();
+  // Delete automation
+  async delete(id: string): Promise<void> {
+    const automations = await this.getAll();
     const filtered = automations.filter(a => a.id !== id);
     
     if (filtered.length === automations.length) {
-      throw new Error(`Automação com ID "${id}" não encontrada`);
+      throw new Error(`Automation with ID "${id}" not found`);
     }
     
-    this.setAll(filtered);
+    await this.setAll(filtered);
   },
 
-  // Resetar para padrões
-  reset(): void {
-    this.setAll(defaultAutomations);
+  // Reset catalog via API
+  async reset(): Promise<void> {
+    try {
+      const response = await fetch('/api/catalog/reset', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          create_backup_first: true,
+          keep_confirm_targets: true
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Reset failed: ${response.statusText}`);
+      }
+
+      // Clear cache
+      automationsCache = [];
+      cacheTimestamp = Date.now();
+      
+    } catch (error) {
+      console.error('Error resetting catalog:', error);
+      throw new Error('Failed to reset catalog');
+    }
   },
 
-  // Estatísticas
-  getStats() {
-    const automations = this.getAll();
+  // Get statistics
+  async getStats(): Promise<any> {
+    const automations = await this.getAll();
     return {
       total: automations.length,
       highPriority: automations.filter(a => a.priority >= 0.8).length,
@@ -151,7 +166,23 @@ export const automationStorage = {
     };
   },
 
+  // Get catalog statistics from API
+  async getCatalogStats(): Promise<any> {
+    try {
+      const response = await fetch('/api/catalog/stats');
+      if (!response.ok) {
+        throw new Error(`Failed to get stats: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error getting catalog stats:', error);
+      return await this.getStats(); // Fallback to local stats
+    }
+  },
+
   calculateAvgCooldown(automations: Automation[]): string {
+    if (automations.length === 0) return '0h';
+    
     const cooldowns = automations.map(a => {
       const match = a.cooldown.match(/(\d+)h/);
       return match ? parseInt(match[1]) : 0;
@@ -159,5 +190,11 @@ export const automationStorage = {
     
     const avg = cooldowns.reduce((sum, val) => sum + val, 0) / cooldowns.length;
     return `${Math.round(avg)}h`;
+  },
+
+  // Clear cache
+  clearCache(): void {
+    automationsCache = null;
+    cacheTimestamp = 0;
   }
 };

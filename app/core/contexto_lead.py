@@ -149,6 +149,57 @@ class ContextoLeadService:
             return False
         
         return int(time.time()) > aguardando["ttl"]
+    
+    async def adicionar_timeline_expects_reply(self, lead_id: int, entry: Dict[str, Any]) -> None:
+        """
+        FASE 3: Adiciona entrada no timeline de expects_reply.
+        
+        Args:
+            lead_id: ID do lead
+            entry: Entrada do timeline
+        """
+        contexto_db = self.db.query(ContextoLead).filter(
+            ContextoLead.lead_id == lead_id
+        ).first()
+        
+        if not contexto_db:
+            contexto_db = ContextoLead(lead_id=lead_id)
+            self.db.add(contexto_db)
+        
+        # Obter timeline atual ou criar novo
+        timeline_atual = contexto_db.timeline_expects_reply or []
+        
+        # Adicionar nova entrada
+        timeline_atual.append(entry)
+        
+        # Manter apenas últimas 10 entradas para não crescer indefinidamente
+        if len(timeline_atual) > 10:
+            timeline_atual = timeline_atual[-10:]
+        
+        contexto_db.timeline_expects_reply = timeline_atual
+        contexto_db.atualizado_em = datetime.utcnow()
+        self.db.commit()
+        
+        logger.info(f"Timeline expects_reply atualizado para lead {lead_id}: {len(timeline_atual)} entradas")
+    
+    async def obter_timeline_expects_reply(self, lead_id: int) -> Optional[list]:
+        """
+        FASE 3: Obtém timeline de expects_reply do lead.
+        
+        Args:
+            lead_id: ID do lead
+            
+        Returns:
+            Lista de entradas do timeline ou None
+        """
+        contexto_db = self.db.query(ContextoLead).filter(
+            ContextoLead.lead_id == lead_id
+        ).first()
+        
+        if not contexto_db:
+            return None
+        
+        return contexto_db.timeline_expects_reply or []
 
 
 def get_contexto_lead_service(db: Session = next(get_db())) -> ContextoLeadService:

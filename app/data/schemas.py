@@ -16,6 +16,7 @@ class Snapshot(BaseModel):
     flags: Dict[str, Any] = Field(default_factory=dict)
     history_summary: str = ""
     kb_context: Optional[Dict[str, Any]] = None  # {hits: [{texto, fonte, score}], topico}
+    llm_signals: Dict[str, Any] = Field(default_factory=dict)  # Sinais do LLM para Fase 4
 
 
 class Lead(BaseModel):
@@ -43,6 +44,7 @@ class Action(BaseModel):
     media: Optional[Dict[str, Any]] = None
     track: Optional[Dict[str, Any]] = None
     set_facts: Optional[Dict[str, Any]] = None
+    automation_id: Optional[str] = None  # FASE 4: ID da automação que gerou a ação
 
 
 class Plan(BaseModel):

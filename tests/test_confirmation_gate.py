@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 
 # Imports do sistema
 try:
-    from app.core.confirmation_gate import ConfirmationGate, ConfirmationResult
+    from app.core.confirmation_gate import ConfirmationGate, ConfirmationResult, get_confirmation_gate
     from app.core.automation_hook import AutomationHook
     from app.data.schemas import Env, Lead, Message, Action
 except ImportError:
@@ -20,6 +20,7 @@ except ImportError:
     ConfirmationResult = None
     AutomationHook = None
     Action = type('Action', (), {})
+    get_confirmation_gate = None
 
 
 @pytest.mark.skipif(ConfirmationGate is None, reason="Dependencies not available")
@@ -987,6 +988,449 @@ def mock_open_yaml(data_dict):
         return mock_file
     
     return mock_open_func
+
+
+# ============================================================================
+# TESTES E2E - FASES 3 e 4 (RETROATIVO + ORQUESTRADOR COM SINAIS)
+# ============================================================================
+
+@pytest.mark.asyncio
+async def test_fase_3_retroativo_yes_sem_aguardando():
+    """
+    FASE 3 E2E: Retroativo YES sem aguardando ativo
+    """
+    try:
+        print("🧪 Testando FASE 3 — Retroativo YES sem aguardando...")
+        
+        lead_id = 30
+        
+        # 1. Registrar entrada no timeline (simular envio de expects_reply)
+        from app.tools.apply_plan import register_expects_reply_timeline
+        
+        await register_expects_reply_timeline(
+            automation_id='ask_deposit_for_test',
+            lead_id=lead_id,
+            provider_message_id='msg_retro_123',
+            prompt_text='Para liberar o teste, você consegue fazer um pequeno depósito?'
+        )
+        print("✅ Timeline registrado")
+        
+        # 2. Verificar que timeline foi salvo
+        from app.tools.apply_plan import get_retroactive_expects_reply
+        timeline_entry = await get_retroactive_expects_reply(lead_id, 10)
+        assert timeline_entry is not None, "Timeline não foi registrado"
+        assert timeline_entry['target'] == 'confirm_can_deposit', "Target incorreto no timeline"
+        print(f"✅ Timeline válido: {timeline_entry['target']}")
+        
+        # 3. Simular que NÃO há aguardando ativo (simular falha do Hook)
+        from app.core.contexto_lead import get_contexto_lead_service
+        contexto_service = get_contexto_lead_service()
+        
+        # Garantir que não há aguardando
+        await contexto_service.atualizar_contexto(lead_id, aguardando=None)
+        
+        # 4. Simular mensagem do usuário "sim"
+        class MockEnv:
+            def __init__(self):
+                self.lead = type('Lead', (), {'id': lead_id})()
+                self.messages_window = [
+                    type('Message', (), {'text': 'sim', 'sender': 'user'})()
+                ]
+                self.snapshot = type('Snapshot', (), {})()
+        
+        env = MockEnv()
+        gate = get_confirmation_gate()
+        result = await gate.process_message(env)
+        
+        # 5. Validar que detectou retroativo
+        assert result.handled == True, "Gate não processou confirmação retroativa"
+        assert result.polarity == "yes", f"Polarity incorreta: {result.polarity}"
+        assert len(result.actions) >= 2, "Ações insuficientes"
+        
+        # 6. Aplicar ações e verificar persistência
+        apply_results = await apply_actions_for_test(result.actions, lead_id)
+        
+        # 7. Validar persistência
+        assert apply_results["set_facts"] == True, "Facts não foram persistidos"
+        assert apply_results["clear_waiting"] == True, "Clear waiting não foi executado"
+        
+        contexto_final = await contexto_service.obter_contexto(lead_id)
+        assert contexto_final.aguardando is None, "Aguardando não foi limpo"
+        
+        # 8. Verificar fatos persistidos
+        from app.data.repo import LeadRepository
+        from app.data.database import SessionLocal
+        db = SessionLocal()
+        try:
+            repo = LeadRepository(db)
+            profile = repo.get_lead_profile(lead_id)
+            if profile:
+                agreements = profile.agreements or {}
+                assert agreements.get('can_deposit') == True, "Fato agreements.can_deposit não foi persistido"
+        finally:
+            db.close()
+        
+        print("✅ FASE 3 E2E — Retroativo YES: funcionando perfeitamente!")
+        
+    except Exception as e:
+        print(f"❌ Erro no teste retroativo: {e}")
+        import traceback
+        traceback.print_exc()
+        raise
+
+
+@pytest.mark.asyncio
+async def test_fase_3_retroativo_no():
+    """
+    FASE 3 E2E: Retroativo NO
+    """
+    try:
+        print("🧪 Testando FASE 3 — Retroativo NO...")
+        
+        lead_id = 31
+        
+        # 1. Registrar entrada no timeline
+        from app.tools.apply_plan import register_expects_reply_timeline
+        
+        await register_expects_reply_timeline(
+            automation_id='ask_deposit_for_test',
+            lead_id=lead_id,
+            provider_message_id='msg_retro_no_123',
+            prompt_text='Para liberar o teste, você consegue fazer um pequeno depósito?'
+        )
+        
+        # 2. Simular mensagem "agora não"
+        class MockEnv:
+            def __init__(self):
+                self.lead = type('Lead', (), {'id': lead_id})()
+                self.messages_window = [
+                    type('Message', (), {'text': 'agora não', 'sender': 'user'})()
+                ]
+                self.snapshot = type('Snapshot', (), {})()
+        
+        env = MockEnv()
+        gate = get_confirmation_gate()
+        result = await gate.process_message(env)
+        
+        # 3. Validar
+        assert result.handled == True, "Gate não processou confirmação retroativa"
+        assert result.polarity == "no", f"Polarity incorreta: {result.polarity}"
+        
+        # 4. Verificar que não criou fatos irreversíveis
+        # (NO não deve gerar can_deposit=true, por exemplo)
+        has_irreversible_facts = False
+        for action in result.actions:
+            if action.type == "set_facts" and hasattr(action, 'set_facts'):
+                facts = action.set_facts or {}
+                if facts.get('agreements.can_deposit') == True:
+                    has_irreversible_facts = True
+        
+        assert not has_irreversible_facts, "NO não deve gerar fatos irreversíveis (can_deposit=true)"
+        
+        print("✅ FASE 3 E2E — Retroativo NO: sem fatos irreversíveis!")
+        
+    except Exception as e:
+        print(f"❌ Erro no teste retroativo NO: {e}")
+        import traceback
+        traceback.print_exc()
+        raise
+
+
+@pytest.mark.asyncio
+async def test_fase_3_janela_expirada():
+    """
+    FASE 3 E2E: Janela retroativa expirada
+    """
+    try:
+        print("🧪 Testando FASE 3 — Janela expirada...")
+        
+        lead_id = 32
+        
+        # 1. Registrar entrada no timeline com timestamp antigo
+        from app.core.contexto_lead import get_contexto_lead_service
+        import time
+        
+        contexto_service = get_contexto_lead_service()
+        
+        # Entrada com timestamp de 15 minutos atrás (fora da janela de 10 min)
+        old_entry = {
+            "target": "confirm_can_deposit",
+            "automation_id": "ask_deposit_for_test",
+            "provider_message_id": "msg_old_123",
+            "prompt_text": "Pergunta antiga",
+            "created_at": int(time.time()) - 900  # 15 minutos atrás
+        }
+        
+        await contexto_service.adicionar_timeline_expects_reply(lead_id, old_entry)
+        
+        # 2. Simular mensagem "sim"
+        class MockEnv:
+            def __init__(self):
+                self.lead = type('Lead', (), {'id': lead_id})()
+                self.messages_window = [
+                    type('Message', (), {'text': 'sim', 'sender': 'user'})()
+                ]
+                self.snapshot = type('Snapshot', (), {})()
+        
+        env = MockEnv()
+        gate = get_confirmation_gate()
+        result = await gate.process_message(env)
+        
+        # 3. Validar que não detectou como retroativo (janela expirada)
+        assert result.handled == False, "Gate processou confirmação com janela expirada"
+        assert result.reason == "no_pending_confirmations", "Motivo incorreto para janela expirada"
+        
+        print("✅ FASE 3 E2E — Janela expirada: corretamente ignorada!")
+        
+    except Exception as e:
+        print(f"❌ Erro no teste janela expirada: {e}")
+        import traceback
+        traceback.print_exc()
+        raise
+
+
+@pytest.mark.asyncio 
+async def test_fase_3_multiplas_perguntas_ordem():
+    """
+    FASE 3 E2E: Múltiplas perguntas — ordem correta
+    """
+    try:
+        print("🧪 Testando FASE 3 — Múltiplas perguntas ordem...")
+        
+        lead_id = 33
+        import time
+        
+        from app.core.contexto_lead import get_contexto_lead_service
+        contexto_service = get_contexto_lead_service()
+        
+        # 1. Registrar 2 entradas no timeline (A mais antiga, B mais recente)
+        entry_a = {
+            "target": "confirm_created_account",  # Pergunta A
+            "automation_id": "ask_broker_preference",
+            "provider_message_id": "msg_a",
+            "prompt_text": "Que corretora você prefere?",
+            "created_at": int(time.time()) - 300  # 5 min atrás
+        }
+        
+        entry_b = {
+            "target": "confirm_can_deposit",  # Pergunta B (mais recente)
+            "automation_id": "ask_deposit_for_test",
+            "provider_message_id": "msg_b", 
+            "prompt_text": "Você consegue fazer um depósito?",
+            "created_at": int(time.time()) - 60   # 1 min atrás
+        }
+        
+        await contexto_service.adicionar_timeline_expects_reply(lead_id, entry_a)
+        await contexto_service.adicionar_timeline_expects_reply(lead_id, entry_b)
+        
+        # 2. Simular resposta do usuário
+        class MockEnv:
+            def __init__(self):
+                self.lead = type('Lead', (), {'id': lead_id})()
+                self.messages_window = [
+                    type('Message', (), {'text': 'sim', 'sender': 'user'})()
+                ]
+                self.snapshot = type('Snapshot', (), {})()
+        
+        env = MockEnv()
+        gate = get_confirmation_gate()
+        result = await gate.process_message(env)
+        
+        # 3. Validar que considerou a pergunta B (mais recente)
+        assert result.handled == True, "Gate não processou confirmação"
+        assert result.target == "confirm_can_deposit", f"Target incorreto: {result.target} (deveria ser da pergunta B)"
+        
+        print("✅ FASE 3 E2E — Múltiplas perguntas: corretamente priorizou a mais recente!")
+        
+    except Exception as e:
+        print(f"❌ Erro no teste múltiplas perguntas: {e}")
+        import traceback
+        traceback.print_exc()
+        raise
+
+
+@pytest.mark.asyncio
+async def test_fase_4_aceitar_proposta_valida():
+    """
+    FASE 4 E2E: Aceitar 1 proposta LLM válida
+    """
+    try:
+        print("🧪 Testando FASE 4 — Aceitar proposta LLM válida...")
+        
+        # 1. Criar ambiente mock onde catálogo não acha elegível
+        class MockSnapshot:
+            def __init__(self):
+                self.accounts = {'quotex': 'desconhecido', 'nyrion': 'desconhecido'}
+                self.deposit = {'status': 'nenhum', 'amount': None}
+                self.agreements = {'can_deposit': False, 'wants_test': False}  # Sem querer teste
+                self.flags = {'explained': False}
+                # FASE 4: Sinais LLM
+                self.llm_signals = {
+                    'intents': ['preciso de ajuda', 'quer fazer deposito'],
+                    'polarity': 'other',
+                    'targets': {},
+                    'facts': [],
+                    'propose_automations': ['ask_deposit_permission_v3'],  # Proposta válida
+                    'needs_clarifying': False,
+                    'used_samples': 2,
+                    'agreement_score': 1.0
+                }
+        
+        class MockEnv:
+            def __init__(self):
+                self.lead = type('Lead', (), {'id': 40})()
+                self.messages_window = [
+                    type('Message', (), {'text': 'Preciso de ajuda para fazer um depósito', 'sender': 'user'})()
+                ]
+                self.snapshot = MockSnapshot()
+                self.candidates = {}
+        
+        env = MockEnv()
+        
+        # 2. Executar doubt_flow do orquestrador
+        from app.core.orchestrator import handle_doubt_flow
+        
+        # Mock do selector para retornar None (sem automação elegível)
+        with patch('app.core.selector.select_automation', return_value=None):
+            # Mock das validações de proposta
+            with patch('app.core.orchestrator.is_proposal_valid', return_value=True):
+                with patch('app.core.orchestrator.load_automation_from_catalog') as mock_load:
+                    # Mock da automação válida
+                    mock_automation = {
+                        'id': 'ask_deposit_permission_v3',
+                        'output': {
+                            'text': 'Posso te ajudar com o depósito! Primeiro, me confirma...'
+                        }
+                    }
+                    mock_load.return_value = mock_automation
+                    
+                    with patch('app.core.orchestrator.convert_automation_config_to_action') as mock_convert:
+                        mock_convert.return_value = {
+                            'type': 'send_message',
+                            'text': 'Posso te ajudar com o depósito! Primeiro, me confirma...',
+                            'automation_id': 'ask_deposit_permission_v3'
+                        }
+                        
+                        result = await handle_doubt_flow(env)
+        
+        # 3. Validar que aceitou proposta LLM
+        assert len(result['actions']) == 1, "Deve retornar 1 ação"
+        action = result['actions'][0]
+        # A automação retornada pode ser diferente dependendo do que está no catálogo
+        assert hasattr(action, 'automation_id'), "Deve ter automation_id"
+        assert action.automation_id is not None, "automation_id não deve ser None"
+        assert action.type == 'send_message', "Tipo de ação incorreto"
+        
+        print("✅ FASE 4 E2E — Proposta aceita: LLM proposal funcionando!")
+        
+    except Exception as e:
+        print(f"❌ Erro no teste proposta válida: {e}")
+        import traceback
+        traceback.print_exc()
+        raise
+
+
+@pytest.mark.asyncio
+async def test_fase_4_rejeitar_proposta_conflitante():
+    """
+    FASE 4 E2E: Rejeitar proposta conflitante
+    """
+    try:
+        print("🧪 Testando FASE 4 — Rejeitar proposta conflitante...")
+        
+        # 1. Criar ambiente onde proposta LLM conflita com estado atual
+        class MockSnapshot:
+            def __init__(self):
+                self.accounts = {'quotex': 'ativa', 'nyrion': 'ativa'}
+                self.deposit = {'status': 'confirmado', 'amount': 50}  # Já tem depósito
+                self.agreements = {'can_deposit': True, 'wants_test': True}  # Já quer teste
+                self.flags = {'explained': True}
+                # Proposta inadequada para o contexto
+                self.llm_signals = {
+                    'propose_automations': ['prompt_deposit'],  # Inadequada (já tem depósito)
+                    'polarity': 'other'
+                }
+        
+        class MockEnv:
+            def __init__(self):
+                self.lead = type('Lead', (), {'id': 41})()
+                self.messages_window = []  # Já tem messages_window
+                self.snapshot = MockSnapshot()
+        
+        env = MockEnv()
+        
+        # 2. Executar doubt_flow
+        from app.core.orchestrator import handle_doubt_flow
+        
+        with patch('app.core.selector.select_automation', return_value=None):
+            # Mock que proposta não é aplicável (conflitante)
+            with patch('app.core.orchestrator.is_proposal_valid', return_value=False):
+                with patch('app.core.fallback_kb.query_knowledge_base', return_value="Como posso ajudar?"):
+                    result = await handle_doubt_flow(env)
+        
+        # 3. Validar que rejeitou proposta e usou KB
+        assert len(result['actions']) == 1, "Deve retornar 1 ação (KB)"
+        action = result['actions'][0]
+        assert action.type == 'send_message', "Deve usar KB fallback"
+        assert action.text == "Como posso ajudar?", "Deve usar resposta do KB"
+        
+        print("✅ FASE 4 E2E — Proposta rejeitada: Conflito detectado corretamente!")
+        
+    except Exception as e:
+        print(f"❌ Erro no teste proposta conflitante: {e}")
+        import traceback
+        traceback.print_exc()
+        raise
+
+
+@pytest.mark.asyncio
+async def test_fase_4_cooldown_respeitado():
+    """
+    FASE 4 E2E: Cooldown respeitado
+    """
+    try:
+        print("🧪 Testando FASE 4 — Cooldown respeitado...")
+        
+        # 1. Ambiente com proposta em cooldown
+        class MockSnapshot:
+            def __init__(self):
+                self.accounts = {'quotex': 'desconhecido'}
+                self.deposit = {'status': 'nenhum'}
+                self.agreements = {'wants_test': False}
+                self.llm_signals = {
+                    'propose_automations': ['ask_deposit_for_test'],  # Em cooldown
+                }
+        
+        class MockEnv:
+            def __init__(self):
+                self.lead = type('Lead', (), {'id': 42})()
+                self.messages_window = []  # Adicionar messages_window
+                self.snapshot = MockSnapshot()
+        
+        env = MockEnv()
+        
+        # 2. Executar doubt_flow
+        from app.core.orchestrator import handle_doubt_flow
+        
+        with patch('app.core.selector.select_automation', return_value=None):
+            # Mock que está no catálogo mas em cooldown
+            with patch('app.core.orchestrator.load_automation_from_catalog', return_value={'id': 'ask_deposit_for_test'}):
+                with patch('app.core.orchestrator.check_automation_cooldown', return_value=False):  # Em cooldown
+                    with patch('app.core.fallback_kb.query_knowledge_base', return_value="Aguarde antes de tentar novamente"):
+                        result = await handle_doubt_flow(env)
+        
+        # 3. Validar que rejeitou por cooldown
+        assert len(result['actions']) == 1, "Deve usar KB fallback"
+        action = result['actions'][0]
+        assert action.type == 'send_message', "Deve usar KB por cooldown"
+        
+        print("✅ FASE 4 E2E — Cooldown: Respeitado corretamente!")
+        
+    except Exception as e:
+        print(f"❌ Erro no teste cooldown: {e}")
+        import traceback
+        traceback.print_exc()
+        raise
 
 
 if __name__ == "__main__":

@@ -2,3 +2,28 @@
 .env
 .env
 .env
+
+# Python / cache
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Node/Vite
+node_modules/
+studio/node_modules/
+dist/
+build/
+
+# Logs / artefatos locais
+*.log
+backend.log
+frontend.log
+dump.rdb
+ngrok.log
+.audit_result.json
+
+# Ambiente/segredos/venv
+.env
+.env.*
+!.env.example
+.venv/

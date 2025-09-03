@@ -60,96 +60,143 @@ class ConfirmationGate:
         """
         start_time = time.time()
         
-        # Verificar se tem contexto de aguardando
-        contexto_lead = None
-        if env.lead.id:
-            contexto_lead = await self.contexto_service.obter_contexto(env.lead.id)
+        # FASE 3 - Lock por lead_id para evitar processamento concorrente
+        lock_acquired = await self._acquire_lead_lock(env.lead.id)
+        if not lock_acquired:
+            logger.info(f"Lead {env.lead.id} lock busy - skipping confirmation processing")
+            return ConfirmationResult(handled=False, reason="lead_locked")
         
-        pending_confirmations = await self._get_pending_confirmations(contexto_lead, env)
-        
-        if not pending_confirmations:
-            return ConfirmationResult(handled=False, reason="no_pending_confirmations")
-        
-        # Extrair mensagem atual
-        current_message = ""
-        if env.messages_window:
-            current_message = env.messages_window[-1].text
-        
-        if not current_message:
-            return ConfirmationResult(handled=False, reason="empty_message")
-        
-        # Determinar se é retroativo
-        is_retroactive = any(conf.get("source") == "retroactive" for conf in pending_confirmations)
-        
-        # Verificar curto-circuito determinístico para respostas curtas
-        if settings.GATE_YESNO_DETERMINISTICO and self._is_short_response(current_message):
-            short_result = self._deterministic_short_response(current_message, pending_confirmations)
-            if short_result:
-                # Log estruturado para observabilidade
-                logger.info(f"{{'event':'gate_short_circuit', 'used':True, 'polarity':'{short_result.polarity}'}}")
-                
-                # Criar ações baseadas no resultado
-                actions = await self._create_confirmation_actions(short_result, env.lead.id)
-                short_result.actions = actions
-                
-                return short_result
-        
-        # Tentar LLM primeiro se habilitado
-        if settings.CONFIRM_AGENT_MODE in ["llm_first", "hybrid"] and self.openai_client:
-            try:
-                llm_result = await self._try_llm_confirmation(
-                    current_message, env.messages_window, pending_confirmations, env.snapshot
-                )
-                
-                if llm_result.handled:
-                    # Aplicar outcome se confiança suficiente
-                    if llm_result.confidence >= settings.CONFIRM_AGENT_THRESHOLD:
-                        actions = await self._create_confirmation_actions(llm_result, env.lead.id)
-                        llm_result.actions = actions
-                        
-                        # Log estruturado para observabilidade
-                        logger.info(f"{{'event':'gate_eval', 'has_waiting':True, 'retro_active':{is_retroactive}, 'decision':'{llm_result.polarity}', 'reason_summary':'llm_classification'}}")
-                        
-                        # Log telemetria
-                        latency_ms = int((time.time() - start_time) * 1000)
-                        await self._log_confirmation_telemetry(
-                            env.lead.id, llm_result, latency_ms, "applied"
-                        )
-                        
-                        return llm_result
-                    else:
-                        # Confiança baixa - não aplicar
-                        logger.info(f"LLM confidence too low: {llm_result.confidence} < {settings.CONFIRM_AGENT_THRESHOLD}")
-                        return ConfirmationResult(handled=False, reason="low_confidence")
-                        
-            except Exception as e:
-                logger.warning(f"LLM confirmation failed: {str(e)}")
-                # Continuar para fallback determinístico
-        
-        # Fallback determinístico
-        if settings.CONFIRM_AGENT_MODE in ["llm_first", "hybrid", "det_only"]:
-            fallback_result = await self._try_deterministic_confirmation(
-                current_message, pending_confirmations
-            )
+        try:
+            # Verificar idempotência
+            current_message = ""
+            if env.messages_window:
+                current_message = env.messages_window[-1].text
             
-            if fallback_result.handled:
-                actions = await self._create_confirmation_actions(fallback_result, env.lead.id)
-                fallback_result.actions = actions
-                
-                # Log estruturado para observabilidade
-                logger.info(f"{{'event':'gate_eval', 'has_waiting':True, 'retro_active':{is_retroactive}, 'decision':'{fallback_result.polarity}', 'reason_summary':'deterministic_fallback'}}")
-                
-                # Log telemetria
-                latency_ms = int((time.time() - start_time) * 1000)
-                await self._log_confirmation_telemetry(
-                    env.lead.id, fallback_result, latency_ms, "applied"
+            idempotency_key = self._build_idempotency_key(env.lead.id, current_message)
+            if await self._check_idempotency(idempotency_key):
+                logger.info(f"Idempotent response found for key: {idempotency_key}")
+                return ConfirmationResult(handled=False, reason="idempotent_skip")
+            
+            # Verificar se tem contexto de aguardando
+            contexto_lead = None
+            if env.lead.id:
+                contexto_lead = await self.contexto_service.obter_contexto(env.lead.id)
+            
+            pending_confirmations = await self._get_pending_confirmations(contexto_lead, env)
+            
+            if not pending_confirmations:
+                return ConfirmationResult(handled=False, reason="no_pending_confirmations")
+            
+            if not current_message:
+                return ConfirmationResult(handled=False, reason="empty_message")
+            
+            # Determinar se é retroativo
+            is_retroactive = any(conf.get("source") == "retroactive" for conf in pending_confirmations)
+            
+            # Verificar curto-circuito determinístico para respostas curtas
+            if settings.GATE_YESNO_DETERMINISTICO and self._is_short_response(current_message):
+                short_result = self._deterministic_short_response(current_message, pending_confirmations)
+                if short_result:
+                    # Log estruturado para observabilidade
+                    from app.infra.logging import log_structured
+                    log_structured("info", "gate_short_circuit", {
+                        "used": True, 
+                        "polarity": short_result.polarity
+                    })
+                    
+                    # Criar ações baseadas no resultado
+                    actions = await self._create_confirmation_actions(short_result, env.lead.id)
+                    short_result.actions = actions
+                    
+                    # Salvar para idempotência
+                    await self._store_idempotency(idempotency_key, short_result)
+                    
+                    return short_result
+            
+            # Tentar LLM primeiro se habilitado
+            if settings.CONFIRM_AGENT_MODE in ["llm_first", "hybrid"] and self.openai_client:
+                try:
+                    llm_result = await self._try_llm_confirmation(
+                        current_message, env.messages_window, pending_confirmations, env.snapshot
+                    )
+                    
+                    if llm_result.handled:
+                        # Aplicar outcome se confiança suficiente
+                        if llm_result.confidence >= settings.CONFIRM_AGENT_THRESHOLD:
+                            actions = await self._create_confirmation_actions(llm_result, env.lead.id)
+                            llm_result.actions = actions
+                            
+                            # Log estruturado para observabilidade
+                            from app.infra.logging import log_structured
+                            log_structured("info", "gate_eval", {
+                                "has_waiting": True, 
+                                "retro_active": is_retroactive, 
+                                "decision": llm_result.polarity, 
+                                "reason_summary": "llm_classification"
+                            })
+                            
+                            # Salvar para idempotência
+                            await self._store_idempotency(idempotency_key, llm_result)
+                            
+                            # Log telemetria
+                            latency_ms = int((time.time() - start_time) * 1000)
+                            await self._log_confirmation_telemetry(
+                                env.lead.id, llm_result, latency_ms, "applied"
+                            )
+                            
+                            return llm_result
+                        else:
+                            # Confiança baixa - não aplicar
+                            logger.info(f"LLM confidence too low: {llm_result.confidence} < {settings.CONFIRM_AGENT_THRESHOLD}")
+                            return ConfirmationResult(handled=False, reason="low_confidence")
+                            
+                except Exception as e:
+                    logger.warning(f"LLM confirmation failed: {str(e)}")
+                    # Continuar para fallback determinístico
+            
+            # Fallback determinístico
+            if settings.CONFIRM_AGENT_MODE in ["llm_first", "hybrid", "det_only"]:
+                fallback_result = await self._try_deterministic_confirmation(
+                    current_message, pending_confirmations
                 )
                 
-                return fallback_result
-        
-        # Se chegou aqui, nenhum método funcionou
-        logger.info(f"{{'event':'gate_eval', 'has_waiting':True, 'retro_active':{is_retroactive}, 'decision':'unknown', 'reason_summary':'no_method_succeeded'}}")
-        return ConfirmationResult(handled=False, reason="no_match")
+                if fallback_result.handled:
+                    actions = await self._create_confirmation_actions(fallback_result, env.lead.id)
+                    fallback_result.actions = actions
+                    
+                    # Log estruturado para observabilidade
+                    from app.infra.logging import log_structured
+                    log_structured("info", "gate_eval", {
+                        "has_waiting": True, 
+                        "retro_active": is_retroactive, 
+                        "decision": fallback_result.polarity, 
+                        "reason_summary": "deterministic_fallback"
+                    })
+                    
+                    # Salvar para idempotência
+                    await self._store_idempotency(idempotency_key, fallback_result)
+                    
+                    # Log telemetria
+                    latency_ms = int((time.time() - start_time) * 1000)
+                    await self._log_confirmation_telemetry(
+                        env.lead.id, fallback_result, latency_ms, "applied"
+                    )
+                    
+                    return fallback_result
+            
+            # Se chegou aqui, nenhum método funcionou
+            from app.infra.logging import log_structured
+            log_structured("info", "gate_eval", {
+                "has_waiting": True, 
+                "retro_active": is_retroactive, 
+                "decision": "unknown", 
+                "reason_summary": "no_method_succeeded"
+            })
+            return ConfirmationResult(handled=False, reason="no_match")
+            
+        finally:
+            # Liberar lock
+            await self._release_lead_lock(env.lead.id)
     
     async def _get_automation_config(self, automation_id: str) -> Optional[Dict[str, Any]]:
         """
@@ -217,25 +264,24 @@ class ConfirmationGate:
                             "provider_message_id": aguardando.get("provider_message_id")
                         })
         
-        # Verificar retroativo: se não há aguardando ativo, verificar última automação recente
-        if not pending and contexto_lead and contexto_lead.ultima_automacao_enviada:
-            # Verificar se a última automação foi enviada nos últimos 10 minutos
-            current_time = int(time.time())
-            # TODO: Implementar verificação de timestamp da última automação
-            # Por enquanto, assumir que se não há aguardando mas há última automação, pode ser retroativo
-            automation_id = contexto_lead.ultima_automacao_enviada
-            automation_config = await self._get_automation_config(automation_id)
+        # FASE 3 - Verificar retroativo usando timeline de expects_reply
+        if not pending:
+            from app.tools.apply_plan import get_retroactive_expects_reply
             
-            if automation_config and automation_config.get("expects_reply"):
-                target = automation_config["expects_reply"].get("target")
+            window_minutes = settings.GATE_RETROACTIVE_WINDOW_MIN
+            retroactive_entry = await get_retroactive_expects_reply(env.lead.id, window_minutes)
+            
+            if retroactive_entry:
+                target = retroactive_entry.get("target")
                 if target and self._is_target_valid(target):
                     pending.append({
                         "target": target,
                         "source": "retroactive",
-                        "timestamp": current_time - 600,  # 10 minutos atrás
-                        "automation_id": automation_id,
-                        "prompt_text": automation_config.get("output", {}).get("text", ""),
-                        "reason": "retroactive_detection"
+                        "timestamp": retroactive_entry.get("created_at", 0),
+                        "automation_id": retroactive_entry.get("automation_id"),
+                        "prompt_text": retroactive_entry.get("prompt_text", ""),
+                        "provider_message_id": retroactive_entry.get("provider_message_id"),
+                        "reason": "retroactive_timeline"
                     })
         
         return pending
@@ -688,6 +734,130 @@ Regras:
             "outcome": outcome,
             "reason": result.reason
         })
+    
+    # FASE 3 - Métodos de lock e idempotência
+    
+    async def _acquire_lead_lock(self, lead_id: int) -> bool:
+        """
+        Adquire lock simples por lead_id para evitar processamento concorrente.
+        
+        Args:
+            lead_id: ID do lead
+            
+        Returns:
+            True se lock foi adquirido
+        """
+        # Implementação simples usando timestamp
+        # Em produção, seria melhor usar Redis com TTL
+        lock_key = f"confirmation_lock_{lead_id}"
+        current_time = int(time.time())
+        
+        try:
+            # Verificar se já existe lock
+            if hasattr(self, '_locks'):
+                existing_lock = self._locks.get(lock_key, 0)
+                if current_time - existing_lock < 30:  # Lock válido por 30 segundos
+                    return False
+            else:
+                self._locks = {}
+            
+            # Adquirir lock
+            self._locks[lock_key] = current_time
+            return True
+            
+        except Exception as e:
+            logger.warning(f"Error acquiring lock for lead {lead_id}: {e}")
+            return True  # Permitir processamento se não conseguir obter lock
+    
+    async def _release_lead_lock(self, lead_id: int) -> None:
+        """
+        Libera lock do lead.
+        
+        Args:
+            lead_id: ID do lead
+        """
+        try:
+            lock_key = f"confirmation_lock_{lead_id}"
+            if hasattr(self, '_locks') and lock_key in self._locks:
+                del self._locks[lock_key]
+        except Exception as e:
+            logger.warning(f"Error releasing lock for lead {lead_id}: {e}")
+    
+    def _build_idempotency_key(self, lead_id: int, message: str) -> str:
+        """
+        Constrói chave de idempotência para evitar aplicar mesma confirmação duas vezes.
+        
+        Args:
+            lead_id: ID do lead
+            message: Mensagem do usuário
+            
+        Returns:
+            Chave de idempotência
+        """
+        import hashlib
+        
+        # Normalizar mensagem para idempotência
+        normalized_message = message.lower().strip()
+        
+        # Criar hash da combinação lead_id + mensagem normalizada
+        data = f"confirmation_{lead_id}_{normalized_message}"
+        return hashlib.md5(data.encode()).hexdigest()
+    
+    async def _check_idempotency(self, idempotency_key: str) -> bool:
+        """
+        Verifica se já processamos esta confirmação (idempotência).
+        
+        Args:
+            idempotency_key: Chave de idempotência
+            
+        Returns:
+            True se já foi processado
+        """
+        try:
+            # Implementação simples usando cache em memória
+            # Em produção, seria melhor usar Redis
+            if not hasattr(self, '_idempotency_cache'):
+                self._idempotency_cache = {}
+            
+            current_time = int(time.time())
+            
+            # Verificar se existe e não expirou (TTL de 10 minutos)
+            if idempotency_key in self._idempotency_cache:
+                timestamp = self._idempotency_cache[idempotency_key]
+                if current_time - timestamp < 600:  # 10 minutos
+                    return True
+                else:
+                    # Limpar entrada expirada
+                    del self._idempotency_cache[idempotency_key]
+            
+            return False
+            
+        except Exception as e:
+            logger.warning(f"Error checking idempotency: {e}")
+            return False
+    
+    async def _store_idempotency(self, idempotency_key: str, result: ConfirmationResult) -> None:
+        """
+        Armazena resultado para idempotência.
+        
+        Args:
+            idempotency_key: Chave de idempotência
+            result: Resultado da confirmação
+        """
+        try:
+            if not hasattr(self, '_idempotency_cache'):
+                self._idempotency_cache = {}
+            
+            current_time = int(time.time())
+            self._idempotency_cache[idempotency_key] = current_time
+            
+            # Limpar entradas antigas (manter apenas últimas 100)
+            if len(self._idempotency_cache) > 100:
+                sorted_items = sorted(self._idempotency_cache.items(), key=lambda x: x[1])
+                self._idempotency_cache = dict(sorted_items[-100:])
+            
+        except Exception as e:
+            logger.warning(f"Error storing idempotency: {e}")
 
 
 # Instância global do gate

@@ -15,6 +15,7 @@ from app.channels.whatsapp import router as wa_router
 from app.core.orchestrator import router as engine_router  
 from app.tools.apply_plan import router as apply_router
 from app.api.leads import router as leads_router
+from app.api.catalog_reset import router as catalog_reset_router
 
 
 @asynccontextmanager
@@ -82,6 +83,7 @@ app.include_router(wa_router, prefix="/channels/whatsapp", tags=["channels:whats
 app.include_router(engine_router, prefix="/engine", tags=["engine"])
 app.include_router(apply_router, prefix="/api/tools", tags=["apply"])
 app.include_router(leads_router, prefix="/api", tags=["leads"])
+app.include_router(catalog_reset_router, tags=["catalog"])
 
 
 if __name__ == "__main__":

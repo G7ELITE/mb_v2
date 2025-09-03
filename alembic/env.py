@@ -62,11 +62,32 @@ def run_migrations_online() -> None:
     """
     # Use engine from app configuration
     connectable = engine
+    
+    # Configurações para schema efêmero em TEST
+    configure_kwargs = {
+        "connection": None,
+        "target_metadata": target_metadata
+    }
+    
+    # Verificar se está em modo TEST com schema efêmero
+    test_schema_mode = os.getenv('TEST_SCHEMA_MODE') == 'true'
+    test_schema_name = os.getenv('TEST_SCHEMA_NAME')
+    
+    if test_schema_mode and test_schema_name:
+        # Configurar para schema de teste
+        configure_kwargs.update({
+            "include_schemas": True,
+            "version_table_schema": test_schema_name
+        })
+        print(f"🧪 Alembic: usando schema de teste '{test_schema_name}'")
 
     with connectable.connect() as connection:
-        context.configure(
-            connection=connection, target_metadata=target_metadata
-        )
+        # Configurar search_path para schema de teste
+        if test_schema_mode and test_schema_name:
+            connection.execute(f'SET search_path TO "{test_schema_name}", public')
+        
+        configure_kwargs["connection"] = connection
+        context.configure(**configure_kwargs)
 
         with context.begin_transaction():
             context.run_migrations()

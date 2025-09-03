@@ -235,7 +235,7 @@ def _build_intake_context(message: str, env: Env, use_rag: bool) -> str:
     context_parts = [
         f"Mensagem do usuário: {message}",
         f"Lead ID: {env.lead.id if env.lead else 'N/A'}",
-        f"Plataforma: {env.lead.platform if env.lead else 'N/A'}"
+        f"Plataforma: telegram"  # Inferir plataforma ou usar constante
     ]
     
     # Adicionar snapshot se disponível
@@ -488,10 +488,7 @@ def _apply_llm_signals_to_env(env: Env, llm_result: Dict[str, Any]) -> Env:
     """
     # Adicionar sinais do LLM ao snapshot
     if hasattr(env, 'snapshot') and env.snapshot:
-        # Adicionar campo para sinais do LLM
-        if not hasattr(env.snapshot, 'llm_signals'):
-            env.snapshot.llm_signals = {}
-        
+        # Atualizar sinais do LLM no snapshot (campo já existe no schema)
         env.snapshot.llm_signals.update({
             "intents": llm_result.get("intents", []),
             "polarity": llm_result.get("polarity", "other"),

@@ -195,6 +195,14 @@ async def execute_action(
                         provider_message_id=provider_message_id,
                         prompt_text=prompt_text
                     )
+                    
+                    # FASE 3 - Registrar no timeline leve para retroativo (independente do Hook)
+                    await register_expects_reply_timeline(
+                        automation_id=automation_id,
+                        lead_id=lead_id,
+                        provider_message_id=provider_message_id,
+                        prompt_text=prompt_text
+                    )
                 else:
                     logger.warning(f"🔧 [ApplyPlan] Missing automation_id ({automation_id}) or lead_id ({lead_id}) for hook")
             except Exception as hook_error:
@@ -584,3 +592,115 @@ def normalizar_action_para_envio(action: Dict[str, Any]) -> Dict[str, Any]:
     
     logger.debug(f"Action normalizada: {len(buttons_validados)} botões, {len(media_validada)} mídias")
     return action_normalizada
+
+
+async def register_expects_reply_timeline(
+    automation_id: str,
+    lead_id: int,
+    provider_message_id: Optional[str] = None,
+    prompt_text: Optional[str] = None
+) -> None:
+    """
+    FASE 3: Registra entrada no timeline leve para detecção retroativa.
+    
+    Args:
+        automation_id: ID da automação
+        lead_id: ID do lead
+        provider_message_id: ID da mensagem do provedor
+        prompt_text: Texto da mensagem enviada
+    """
+    try:
+        import yaml
+        import time
+        
+        # Carregar catálogo para verificar expects_reply
+        try:
+            with open("policies/catalog.yml", "r", encoding="utf-8") as f:
+                catalog = yaml.safe_load(f)
+        except Exception as e:
+            logger.warning(f"Erro ao carregar catálogo para timeline: {e}")
+            return
+        
+        # Buscar automação no catálogo
+        automation = None
+        for item in catalog:
+            if item.get("id") == automation_id:
+                automation = item
+                break
+        
+        if not automation:
+            return  # Automação não encontrada no catálogo
+        
+        # Verificar se tem expects_reply
+        expects_reply = automation.get("expects_reply")
+        if not expects_reply:
+            return  # Não é uma automação que espera resposta
+        
+        target = expects_reply.get("target")
+        if not target:
+            return  # Target não definido
+        
+        # Registrar no timeline de expects_reply 
+        # Usando Redis ou contexto_lead (implementação simples via contexto_lead)
+        from app.core.contexto_lead import get_contexto_lead_service
+        
+        contexto_service = get_contexto_lead_service()
+        
+        # Criar entrada do timeline
+        timeline_entry = {
+            "target": target,
+            "automation_id": automation_id,
+            "provider_message_id": provider_message_id,
+            "prompt_text": prompt_text,
+            "created_at": int(time.time())
+        }
+        
+        # Salvar no timeline (vamos usar um campo separado no contexto_lead)
+        await contexto_service.adicionar_timeline_expects_reply(lead_id, timeline_entry)
+        
+        logger.info(f"📋 [Timeline] Registered expects_reply: lead_id={lead_id}, target={target}, automation_id={automation_id}")
+        
+    except Exception as e:
+        logger.warning(f"Erro ao registrar timeline expects_reply: {e}")
+
+
+async def get_retroactive_expects_reply(lead_id: int, window_minutes: int = 10) -> Optional[Dict[str, Any]]:
+    """
+    FASE 3: Busca a entrada mais recente de expects_reply dentro da janela retroativa.
+    
+    Args:
+        lead_id: ID do lead
+        window_minutes: Janela retroativa em minutos
+        
+    Returns:
+        Entrada mais recente ou None
+    """
+    try:
+        import time
+        from app.core.contexto_lead import get_contexto_lead_service
+        
+        contexto_service = get_contexto_lead_service()
+        timeline = await contexto_service.obter_timeline_expects_reply(lead_id)
+        
+        if not timeline:
+            return None
+        
+        # Filtrar por janela de tempo
+        now = int(time.time())
+        window_seconds = window_minutes * 60
+        
+        recent_entries = []
+        for entry in timeline:
+            created_at = entry.get("created_at", 0)
+            if now - created_at <= window_seconds:
+                recent_entries.append(entry)
+        
+        if not recent_entries:
+            return None
+        
+        # Retornar a mais recente (maior timestamp)
+        return max(recent_entries, key=lambda x: x.get("created_at", 0))
+        
+    except Exception as e:
+        logger.warning(f"Erro ao buscar timeline retroativo: {e}")
+        return None

@@ -7,7 +7,8 @@ import {
   TrashIcon,
   ClockIcon,
   BoltIcon,
-  CogIcon
+  CogIcon,
+  ExclamationTriangleIcon
 } from '@heroicons/react/24/outline';
 import CollapsibleSection from '../components/CollapsibleSection';
 import type { Automation } from '../types';
@@ -21,31 +22,56 @@ export default function Automations() {
     avgCooldown: '0h',
     topics: 0
   });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Carregar automações
+  // Load automations
   useEffect(() => {
     loadAutomations();
   }, []);
 
-  const loadAutomations = () => {
+  const loadAutomations = async () => {
     try {
-      const loadedAutomations = automationStorage.getAll();
-      const loadedStats = automationStorage.getStats();
+      setLoading(true);
+      setError(null);
+      
+      const loadedAutomations = await automationStorage.getAll();
+      const loadedStats = await automationStorage.getStats();
+      
       setAutomations(loadedAutomations);
       setStats(loadedStats);
     } catch (error) {
-      console.error('Erro ao carregar automações:', error);
+      console.error('Error loading automations:', error);
+      setError('Failed to load automations');
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (confirm(`Tem certeza que deseja excluir a automação "${id}"?`)) {
       try {
-        automationStorage.delete(id);
-        loadAutomations(); // Recarregar lista
+        await automationStorage.delete(id);
+        await loadAutomations(); // Reload list
       } catch (error) {
-        console.error('Erro ao excluir automação:', error);
+        console.error('Error deleting automation:', error);
         alert('Erro ao excluir automação');
+      }
+    }
+  };
+
+  const handleReset = async () => {
+    if (confirm('⚠️ Tem certeza que deseja resetar TODAS as automações?\n\nEsta ação irá:\n• Fazer backup das automações atuais\n• Limpar o catálogo completamente\n\nEsta ação não pode ser desfeita!')) {
+      try {
+        setLoading(true);
+        await automationStorage.reset();
+        await loadAutomations();
+        alert('✅ Catálogo resetado com sucesso! Backup criado automaticamente.');
+      } catch (error) {
+        console.error('Error resetting catalog:', error);
+        alert('Erro ao resetar catálogo');
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -55,6 +81,15 @@ export default function Automations() {
     if (priority >= 0.7) return 'Média';
     return 'Baixa';
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <span className="ml-2 text-gray-600 dark:text-gray-300">Carregando automações...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -66,14 +101,40 @@ export default function Automations() {
             Gerencie mensagens automáticas do catálogo
           </p>
         </div>
-        <Link 
-          to="/automations/new"
-          className="btn-primary flex items-center"
-        >
-          <PlusIcon className="h-4 w-4 mr-2" />
-          Criar Automação
-        </Link>
+        <div className="flex space-x-3">
+          <button
+            onClick={handleReset}
+            className="btn-secondary flex items-center text-red-600 hover:text-red-700 border-red-300 hover:border-red-400"
+            disabled={loading}
+          >
+            <ExclamationTriangleIcon className="h-4 w-4 mr-2" />
+            Resetar Catálogo
+          </button>
+          <Link 
+            to="/automations/new"
+            className="btn-primary flex items-center"
+          >
+            <PlusIcon className="h-4 w-4 mr-2" />
+            Criar Automação
+          </Link>
+        </div>
       </div>
+
+      {/* Error Message */}
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-md p-4">
+          <div className="flex items-center">
+            <ExclamationTriangleIcon className="h-5 w-5 text-red-400 mr-2" />
+            <p className="text-red-800">{error}</p>
+            <button
+              onClick={loadAutomations}
+              className="ml-auto text-red-600 hover:text-red-700 underline"
+            >
+              Tentar novamente
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Cards de Estatísticas */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -235,20 +296,26 @@ export default function Automations() {
       </div>
 
       {/* Empty State */}
-      {automations.length === 0 && (
+      {!loading && !error && automations.length === 0 && (
         <div className="text-center py-12 card">
-          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
             <BoltIcon className="h-8 w-8 text-gray-400" />
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
-            Nenhuma automação criada
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+            Catálogo vazio
           </h3>
-          <p className="text-gray-600 mb-6">
-            Crie automações para responder automaticamente aos leads
+          <p className="text-gray-600 dark:text-gray-300 mb-6">
+            O catálogo de automações está vazio. Crie automações para responder automaticamente aos leads.
           </p>
-          <Link to="/automations/new" className="btn-primary">
-            Criar Primeira Automação
-          </Link>
+          <div className="space-y-4">
+            <Link to="/automations/new" className="btn-primary inline-block">
+              Criar Primeira Automação
+            </Link>
+            <div className="text-sm text-gray-500 dark:text-gray-400">
+              <p>💡 Dica: Você pode começar criando uma automação de boas-vindas</p>
+              <p>ou uma pergunta que espera confirmação do lead.</p>
+            </div>
+          </div>
         </div>
       )}
 

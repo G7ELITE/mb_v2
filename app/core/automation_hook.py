@@ -96,7 +96,13 @@ class AutomationHook:
             logger.info(f"🪝 [AutomationHook] Automation {automation_id} configured with expects_reply.target={target}")
             
             # Log estruturado para observabilidade
-            logger.info(f"{{'event':'hook_waiting_set', 'automation_id':'{automation_id}', 'lead_id':{lead_id}, 'target':'{target}', 'ttl_seconds':{ttl_seconds}}}")
+            from app.infra.logging import log_structured
+            log_structured("info", "hook_waiting_set", {
+                "automation_id": automation_id, 
+                "lead_id": lead_id, 
+                "target": target, 
+                "ttl_seconds": ttl_seconds
+            })
             
         except Exception as e:
             logger.error(f"Error in automation hook: {str(e)}")

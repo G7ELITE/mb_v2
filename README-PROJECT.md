@@ -530,6 +530,300 @@ CONFIRM_AGENT_MAX_HISTORY=10       # Máximo de mensagens no contexto
 
 ---
 
+## 4.2) MAX MODE — Fases 3 e 4 (Sistema Retroativo + Orquestrador Inteligente)
+
+### 🚀 Visão Geral
+
+As **Fases 3 e 4** implementam funcionalidades avançadas de robustez e inteligência no pipeline de confirmações e decisões.
+
+### 📋 **FASE 3 — Gate de Confirmação Retroativo**
+
+#### **🎯 Objetivo**
+Reconhecer confirmações (`sim/não`) mesmo quando o Hook falha em criar o estado `aguardando`, usando um timeline leve independente.
+
+#### **🔧 Componentes**
+
+**Timeline Leve** (`app/tools/apply_plan.py`)
+- **Registro automático**: Toda automação com `expects_reply` é registrada no timeline independentemente do Hook
+- **Estrutura**: `{target, automation_id, provider_message_id, prompt_text, created_at}`
+- **Persistência**: Campo `timeline_expects_reply` no `ContextoLead`
+
+**Gate Retroativo** (`app/core/confirmation_gate.py`)
+- **Fluxo duplo**: Verifica `aguardando` normal + busca retroativa no timeline
+- **Janela de tempo**: Configurável via `GATE_RETROACTIVE_WINDOW_MIN` (padrão: 10 minutos)
+- **Idempotência**: Hash baseado em `lead_id + mensagem normalizada` evita aplicação dupla
+- **Lock por lead**: Previne processamento concorrente de confirmações
+
+#### **⚙️ Configurações**
+
+```bash
+# Janela retroativa em minutos
+GATE_RETROACTIVE_WINDOW_MIN=10
+
+# Outros parâmetros do Gate
+GATE_YESNO_DETERMINISTICO=false  # Para testes
+```
+
+#### **📊 Logs Retroativos**
+
+```json
+{
+  "event": "gate_eval",
+  "has_waiting": false,
+  "retro_active": true,
+  "decision": "yes",
+  "target": "confirm_can_deposit",
+  "provider_message_id": "msg_123",
+  "idempotent_skip": false,
+  "reason": "retroactive_timeline"
+}
+```
+
+#### **🔒 Guardrails**
+
+- ✅ **Nunca cria novo `aguardando`** no fluxo retroativo
+- ✅ **`clear_waiting` é noop** se não existir estado
+- ✅ **Aplicação única** por combinação de lead + mensagem
+- ✅ **Lock automático** durante processamento por lead
+
+### 🧠 **FASE 4 — Orquestrador com Sinais LLM**
+
+#### **🎯 Objetivo**
+Quando o catálogo não encontra automações elegíveis, considerar **1 proposta** do Intake LLM com guardrails rígidos.
+
+#### **🔧 Fluxo Inteligente**
+
+**Ordem de Prioridade** (`app/core/orchestrator.py`)
+1. **Catálogo primeiro**: Aplicar automações baseadas em fatos duros
+2. **Proposta LLM**: Se catálogo vazio, considerar `llm_signals.propose_automations[0]`
+3. **Guardrails**: Validar existência no catálogo + aplicabilidade + cooldown
+4. **KB Fallback**: Se proposta rejeitada, usar base de conhecimento
+
+#### **🛡️ Guardrails**
+
+```python
+# Validação rigorosa de propostas LLM
+is_in_catalog(automation_id)           # Deve existir no catálogo YAML
+is_applicable(automation_id, snapshot) # Eligibilidade com fatos duros
+cooldown_ok(automation_id, lead_id)    # Respeitar cooldown ativo (5min padrão)
+```
+
+**Implementação** (`app/core/orchestrator.py`)
+- `is_proposal_valid()`: Executa todos os guardrails sequencialmente
+- `load_automation_from_catalog()`: Carrega configuração YAML dinamicamente
+- `check_cooldown()`: Implementação simples com 5min de cooldown por automação
+
+#### **⚙️ Configuração**
+
+```bash
+# Ativar aceitação de propostas LLM
+ORCH_ACCEPT_LLM_PROPOSAL=true
+```
+
+#### **📊 Logs do Orquestrador**
+
+```json
+{
+  "event": "orchestrator_select",
+  "eligible_count": 0,
+  "chosen": "ask_deposit_permission_v3",
+  "used_llm_proposal": true,
+  "reason": "llm_proposal_accepted"
+}
+```
+
+```json
+{
+  "event": "orchestrator_select", 
+  "eligible_count": 0,
+  "chosen": "none",
+  "used_llm_proposal": false,
+  "reason": "proposal_rejected",
+  "proposals": ["prompt_deposit"],
+  "cooldown": true
+}
+```
+
+#### **🔄 Integração com Intake**
+
+O Intake LLM (FASE 2) popula `llm_signals.propose_automations` que o Orquestrador (FASE 4) pode aceitar:
+
+```json
+{
+  "llm_signals": {
+    "intents": ["quer fazer deposito", "precisa de ajuda"],
+    "polarity": "other",
+    "propose_automations": ["ask_deposit_permission_v3"],
+    "used_samples": 2,
+    "agreement_score": 1.0
+  }
+}
+```
+
+## 🚀 **DEV+TEST MAX (No-Docker, Auto-Detect)**
+
+### **🔍 Quick Audit & Setup**
+
+```bash
+# Audit completa (DB, Redis, configurações)
+python3 dev_audit.py
+
+# Pré-voo DEV (migrations, Redis fallback, webhook)
+python3 dev_preflight.py
+
+# Test Runner (audit + unit + E2E com autodetecção)
+python3 test_runner.py
+
+# Quick Start integrado (pré-voo + ngrok + smoke DEV)
+./quick_start.sh
+```
+
+### **🧠 Autodetecção de Infraestrutura**
+
+O sistema detecta automaticamente:
+- **PostgreSQL**: Permissões CREATE DATABASE vs CREATE SCHEMA
+- **Redis**: Disponibilidade (fallback in-memory automático)
+- **Scripts**: Túnel ngrok unificado
+- **Configurações**: Precedência .env vs env vars
+
+**Estratégias de Teste:**
+- `db_mode=database` → Usar DB de teste separado
+- `db_mode=schema` → Schema temporário efêmero ✅ (atual)
+- `db_mode=unit_only` → Apenas testes unitários
+
+### **🧪 Schema Efêmero para E2E**
+
+Quando não pode criar database:
+- Cria schema temporário: `test_mb_{pid}_{timestamp}`
+- Configura Alembic: `include_schemas=true`, `version_table_schema`
+- Define `search_path` em todas as conexões
+- Executa migrations no schema isolado
+- Cleanup automático: `DROP SCHEMA CASCADE`
+
+### **⚡ Redis Fallback In-Memory**
+
+**DEV/TEST:** Fallback automático quando Redis não disponível
+- **Redis disponível**: `{"evt":"redis_connected", "mode":"real"}`
+- **Redis indisponível**: `{"evt":"redis_fallback", "mode":"inmemory"}` 
+- **Interface unificada**: `set()`, `get()`, `exists()`, `delete()`
+- **TTL funcional**: Expiração de chaves in-memory
+
+**PROD:** Redis real obrigatório (sem fallback)
+
+**WSL Setup:**
+```bash
+# Subir Redis para DEV
+redis-server --daemonize yes
+redis-cli ping  # PONG
+
+# Sistema detecta automaticamente e usa Redis real
+```
+
+### 🧪 **Testes E2E — Fases 3 e 4**
+
+#### **Testes Unitários** (`tests/test_fases_3_4_unit.py`)
+
+**FASE 3 - Gate Retroativo:**
+- ✅ Retroativo YES sem aguardando ativo  
+- ✅ Retroativo NO (sem fatos irreversíveis)
+- ✅ Janela retroativa expirada (corretamente ignorada)
+- ✅ Idempotência (skip de confirmações duplicadas)
+- ✅ Lock por lead (previne processamento concorrente)
+
+**FASE 4 - Orquestrador com Sinais:**
+- ✅ Aceitar 1 proposta LLM válida
+- ✅ Rejeitar proposta conflitante (com fallback)
+- ✅ Respeitar cooldown ativo
+- ✅ Validar guardrails do catálogo
+
+**Gate Determinístico:**
+- ✅ Curto-circuito YES ("sim", "ok", "👍", "claro")
+- ✅ Curto-circuito NO ("não", "agora não")  
+- ✅ Curto-circuito OTHER ("depois", "talvez")
+
+#### **Executar Testes**
+
+```bash
+# Testes unitários (sem banco de dados)
+python tests/test_fases_3_4_unit.py
+
+# Testes com pytest (precisa do banco de teste)
+pytest tests/test_confirmation_gate.py -v
+```
+
+#### **FASE 3 — Comandos de Teste**
+
+```bash
+# Teste retroativo YES sem aguardando
+python -c "
+import asyncio
+from tests.test_confirmation_gate import test_fase_3_retroativo_yes_sem_aguardando
+asyncio.run(test_fase_3_retroativo_yes_sem_aguardando())
+"
+
+# Teste retroativo NO
+python -c "
+import asyncio  
+from tests.test_confirmation_gate import test_fase_3_retroativo_no
+asyncio.run(test_fase_3_retroativo_no())
+"
+
+# Teste janela expirada
+python -c "
+import asyncio
+from tests.test_confirmation_gate import test_fase_3_janela_expirada
+asyncio.run(test_fase_3_janela_expirada())
+"
+
+# Teste múltiplas perguntas (ordem)
+python -c "
+import asyncio
+from tests.test_confirmation_gate import test_fase_3_multiplas_perguntas_ordem
+asyncio.run(test_fase_3_multiplas_perguntas_ordem())
+"
+```
+
+#### **FASE 4 — Comandos de Teste**
+
+```bash
+# Teste aceitar proposta válida
+python -c "
+import asyncio
+from tests.test_confirmation_gate import test_fase_4_aceitar_proposta_valida
+asyncio.run(test_fase_4_aceitar_proposta_valida())
+"
+
+# Teste rejeitar proposta conflitante
+python -c "
+import asyncio
+from tests.test_confirmation_gate import test_fase_4_rejeitar_proposta_conflitante  
+asyncio.run(test_fase_4_rejeitar_proposta_conflitante())
+"
+
+# Teste cooldown respeitado
+python -c "
+import asyncio
+from tests.test_confirmation_gate import test_fase_4_cooldown_respeitado
+asyncio.run(test_fase_4_cooldown_respeitado())
+"
+```
+
+#### **Validações Esperadas**
+
+**FASE 3:**
+- ✅ `retro_active == True` para confirmações sem `aguardando`
+- ✅ `idempotent_skip == False` na primeira execução
+- ✅ Facts persistidos corretamente (`agreements.can_deposit = true`)
+- ✅ `clear_waiting` executado sem erro (noop se não existe)
+
+**FASE 4:**
+- ✅ `used_llm_proposal == True` quando proposta é aceita
+- ✅ `used_llm_proposal == False` quando proposta é rejeitada
+- ✅ `reason` contém motivo específico (cooldown, conflito, etc.)
+- ✅ Fallback para KB quando propostas são rejeitadas
+
+---
+
 ## 5) Papéis e responsabilidades
 
 - **Snapshot Builder** (determinístico): normaliza evento (Telegram/WA), extrai evidências (regex/âncoras), funde com estado do lead, **não decide**. Pode enfileirar jobs para workers (ex.: `verify_signup`) e marcar `pending_ops` no snapshot.  

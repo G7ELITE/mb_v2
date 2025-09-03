@@ -24,6 +24,12 @@ class Settings(BaseSettings):
     # Flag para Gate determinístico (testes)
     GATE_YESNO_DETERMINISTICO: bool = False
     
+    # Configurações do Gate retroativo
+    GATE_RETROACTIVE_WINDOW_MIN: int = 10  # janela retroativa em minutos
+    
+    # Configurações do Orquestrador com sinais LLM
+    ORCH_ACCEPT_LLM_PROPOSAL: bool = True
+    
     model_config = {"env_file": ".env", "extra": "ignore"}
 
 

@@ -5,7 +5,7 @@ Recebe snapshot enriquecido e decide entre DÚVIDA ou PROCEDIMENTO.
 NÃO chama APIs externas, decide apenas pelos fatos do Lead Snapshot.
 """
 from fastapi import APIRouter
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 import logging
 import uuid
 
@@ -199,7 +199,7 @@ def determine_active_procedure(env: Env) -> str:
 
 async def handle_doubt_flow(env: Env, contexto_lead=None) -> Dict[str, Any]:
     """
-    Lida com fluxo de dúvida (catálogo + KB).
+    FASE 4: Lida com fluxo de dúvida (catálogo + sinais LLM + KB).
     
     Args:
         env: Ambiente atual
@@ -207,25 +207,66 @@ async def handle_doubt_flow(env: Env, contexto_lead=None) -> Dict[str, Any]:
     Returns:
         Plano de ações para dúvida
     """
-    # Primeiro, tentar seletor de automações
+    # Primeiro, tentar seletor de automações do catálogo
     automation = await select_automation(env)
     
     if automation:
         logger.info("Automação selecionada pelo catálogo")
+        # Log estruturado para observabilidade
+        from app.infra.logging import log_structured
+        log_structured("info", "orchestrator_select", {
+            "eligible_count": 1, 
+            "chosen": automation.get('automation_id', 'unknown'), 
+            "used_llm_proposal": False, 
+            "reason": "catalog_match"
+        })
         return {
             "actions": [Action(**automation)]
         }
     
-    # Se não encontrou no catálogo, usar KB
+    # FASE 4 - Se catálogo não encontrou, considerar sinais do Intake LLM
+    from app.settings import settings
+    if settings.ORCH_ACCEPT_LLM_PROPOSAL and env.snapshot.llm_signals:
+        llm_proposal = await try_llm_proposal(env)
+        if llm_proposal:
+            logger.info(f"Proposta LLM aceita: {llm_proposal.get('automation_id')}")
+            # Log estruturado para observabilidade
+            from app.infra.logging import log_structured
+            log_structured("info", "orchestrator_select", {
+                "eligible_count": 0, 
+                "chosen": llm_proposal.get('automation_id'), 
+                "used_llm_proposal": True, 
+                "reason": "llm_proposal_accepted"
+            })
+            return {
+                "actions": [Action(**llm_proposal)]
+            }
+    
+    # Se não encontrou no catálogo e não há proposta LLM válida, usar KB
     logger.info("Buscando resposta na base de conhecimento")
     kb_response = await query_knowledge_base(env)
     
     if kb_response:
+        # Log estruturado para observabilidade
+        from app.infra.logging import log_structured
+        log_structured("info", "orchestrator_select", {
+            "eligible_count": 0, 
+            "chosen": "kb_response", 
+            "used_llm_proposal": False, 
+            "reason": "kb_fallback"
+        })
         return {
             "actions": [Action(type="send_message", text=kb_response)]
         }
     
     # Fallback final
+    from app.infra.logging import log_structured
+    log_structured("info", "orchestrator_select", {
+        "eligible_count": 0, 
+        "chosen": "none", 
+        "used_llm_proposal": False, 
+        "reason": "final_fallback"
+    })
     return await handle_fallback_flow(env, contexto_lead)
 
 
@@ -235,18 +276,69 @@ async def handle_fallback_flow(env: Env, contexto_lead=None) -> Dict[str, Any]:
     
     Args:
         env: Ambiente atual
+        contexto_lead: Contexto do lead (opcional)
         
     Returns:
         Plano de ação de fallback
     """
-    fallback_messages = [
-        "Não entendi bem sua mensagem. Pode me explicar melhor?",
-        "Como posso te ajudar hoje?",
-        "Precisa de alguma coisa específica?",
-    ]
+    from app.infra.logging import log_structured
+    from app.core.selector import load_catalog
+    from app.core.procedures import load_procedures
     
-    # Escolher mensagem baseada no contexto
-    message = fallback_messages[0]
+    # Get current message for context
+    current_message = ""
+    if env.messages_window:
+        current_message = env.messages_window[-1].text.lower()
+    
+    # Check if catalogs are empty
+    catalog = load_catalog()
+    procedures = load_procedures()
+    catalog_empty = len(catalog) == 0
+    procedures_empty = len(procedures) == 0
+    
+    # Check for simple confirmations when no waiting state
+    is_simple_confirmation = any(word in current_message for word in [
+        "sim", "yes", "não", "no", "ok", "certo", "correto", "exato"
+    ])
+    
+    # Handle different fallback scenarios
+    message = None
+    fallback_reason = "generic"
+    
+    if catalog_empty and procedures_empty:
+        # System has no automations/procedures configured
+        message = "🤖 Sistema em configuração inicial. As automações estão sendo preparadas. Tente novamente em breve."
+        fallback_reason = "empty_catalog"
+        
+    elif is_simple_confirmation:
+        # User sent a confirmation but there's no active waiting state
+        message = "Entendi sua confirmação! Porém, no momento não tenho uma pergunta ativa para você. Como posso te ajudar?"
+        fallback_reason = "orphaned_confirmation"
+        
+    elif current_message and len(current_message.strip()) < 3:
+        # Very short message
+        message = "Pode me dar um pouco mais de detalhes? Assim posso te ajudar melhor! 😊"
+        fallback_reason = "too_short"
+        
+    else:
+        # Generic fallback
+        fallback_messages = [
+            "Não entendi bem sua mensagem. Pode me explicar melhor?",
+            "Como posso te ajudar hoje?",
+            "Precisa de alguma coisa específica?",
+        ]
+        message = fallback_messages[0]
+        fallback_reason = "generic"
+    
+    # Log structured fallback event
+    log_structured("info", "orchestrator_fallback", {
+        "reason": fallback_reason,
+        "catalog_empty": catalog_empty,
+        "procedures_empty": procedures_empty,
+        "is_simple_confirmation": is_simple_confirmation,
+        "message_length": len(current_message),
+        "lead_id": env.lead.id if env.lead else None
+    })
     
     return {
         "actions": [
@@ -325,6 +417,154 @@ async def handle_confirmacao_curta(env: Env, contexto_lead, posicao: str, decisi
         decision_id=decision_id,
         actions=[Action(type="send_message", text=texto_resposta)]
     )
+
+
+async def try_llm_proposal(env: Env) -> Dict[str, Any]:
+    """
+    FASE 4: Tenta aceitar uma proposta do Intake LLM com guardrails.
+    
+    Args:
+        env: Ambiente atual
+        
+    Returns:
+        Automação proposta ou None se não válida
+    """
+    try:
+        signals = env.snapshot.llm_signals
+        propose_automations = signals.get('propose_automations', [])
+        
+        if not propose_automations:
+            return None
+        
+        # Aceitar no máximo 1 proposta válida
+        for automation_id in propose_automations[:1]:  # Só primeira proposta
+            # Validar proposta com guardrails
+            if await is_proposal_valid(automation_id, env):
+                # Carregar configuração da automação do catálogo
+                automation_config = await load_automation_from_catalog(automation_id)
+                if automation_config:
+                    # Converter para formato de ação
+                    return convert_automation_config_to_action(automation_config)
+        
+        # Se chegou aqui, nenhuma proposta válida
+        logger.info(f"{{'event':'orchestrator_select', 'eligible_count':0, 'chosen':'none', 'used_llm_proposal':False, 'reason':'proposal_rejected', 'proposals':{propose_automations}}}")
+        return None
+        
+    except Exception as e:
+        logger.warning(f"Erro ao processar proposta LLM: {e}")
+        return None
+
+
+async def is_proposal_valid(automation_id: str, env: Env) -> bool:
+    """
+    FASE 4: Valida se uma proposta LLM é aceitável com guardrails.
+    
+    Args:
+        automation_id: ID da automação proposta
+        env: Ambiente atual
+        
+    Returns:
+        True se a proposta é válida
+    """
+    try:
+        # Verificar se existe no catálogo
+        automation_config = await load_automation_from_catalog(automation_id)
+        if not automation_config:
+            logger.info(f"Proposta rejeitada - não existe no catálogo: {automation_id}")
+            return False
+        
+        # Verificar eligibilidade com fatos duros (reutilizar lógica do selector)
+        from app.core.selector import is_automation_applicable
+        if not await is_automation_applicable(automation_config, env):
+            logger.info(f"Proposta rejeitada - não aplicável: {automation_id}")
+            return False
+        
+        # Verificar cooldown
+        if not await check_automation_cooldown(automation_id, env.lead.id):
+            logger.info(f"Proposta rejeitada - cooldown ativo: {automation_id}")
+            return False
+        
+        logger.info(f"Proposta aceita - guardrails OK: {automation_id}")
+        return True
+        
+    except Exception as e:
+        logger.warning(f"Erro ao validar proposta {automation_id}: {e}")
+        return False
+
+
+async def load_automation_from_catalog(automation_id: str) -> Optional[Dict[str, Any]]:
+    """
+    FASE 4: Carrega configuração de automação do catálogo YAML.
+    
+    Args:
+        automation_id: ID da automação
+        
+    Returns:
+        Configuração da automação ou None
+    """
+    try:
+        import yaml
+        import os
+        
+        catalog_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 
+            "policies", "catalog.yml"
+        )
+        
+        if os.path.exists(catalog_path):
+            with open(catalog_path, 'r', encoding='utf-8') as f:
+                catalog_list = yaml.safe_load(f) or []
+                
+            # Buscar automação por ID
+            for automation in catalog_list:
+                if automation.get("id") == automation_id:
+                    return automation
+                    
+        return None
+        
+    except Exception as e:
+        logger.error(f"Erro ao carregar automação do catálogo: {e}")
+        return None
+
+
+def convert_automation_config_to_action(automation_config: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    FASE 4: Converte configuração YAML para formato de ação.
+    
+    Args:
+        automation_config: Configuração da automação
+        
+    Returns:
+        Ação formatada
+    """
+    # Reutilizar lógica do selector
+    from app.core.selector import convert_automation_to_action
+    return convert_automation_to_action(automation_config)
+
+
+async def check_automation_cooldown(automation_id: str, lead_id: int) -> bool:
+    """
+    FASE 4: Verifica se automação não está em cooldown.
+    
+    Args:
+        automation_id: ID da automação
+        lead_id: ID do lead
+        
+    Returns:
+        True se pode executar (não em cooldown)
+    """
+    try:
+        # Reutilizar lógica do selector se existir
+        from app.core.selector import check_cooldown
+        return await check_cooldown(automation_id, lead_id)
+        
+    except ImportError:
+        # Se não existe, assumir que pode executar
+        logger.info(f"Cooldown check não implementado - assumindo OK para {automation_id}")
+        return True
+    except Exception as e:
+        logger.warning(f"Erro ao verificar cooldown: {e}")
+        return True
 
 
 def determine_decision_type(interaction_type: str, actions: list) -> str:

@@ -565,17 +565,23 @@ id_patterns:
 - **Schema válido**: Function calling sem erros 400
 - **Agreement score**: Calculado baseado na concordância de polarity
 
-### **FASE 3: Gate de Confirmação Retroativo**
-- **Detecção retroativa**: Se hook falhar, detectar confirmações
-- **TTL inteligente**: Verificar última automação recente
-- **Logs estruturados**: Observabilidade completa
-- **Testes E2E**: Validação de cenários de falha
+### ✅ **FASE 3: Gate de Confirmação Retroativo (IMPLEMENTADA)**
+- **Timeline leve**: Registro independente de expects_reply para detecção retroativa
+- **Detecção retroativa**: Reconhece confirmações mesmo se hook falhar
+- **Janela de tempo**: Configurável (GATE_RETROACTIVE_WINDOW_MIN=10min)
+- **Idempotência**: Hash baseado em lead_id + mensagem normalizada
+- **Lock por lead**: Previne processamento concorrente
+- **Testes E2E**: Validação completa de cenários retroativos
+- **Logs estruturados**: Observabilidade com `retro_active=true`
 
-### **FASE 4: Orquestrador com Dupla Entrada**
-- **Regras + LLM**: Combinar fatos duros com sinais do intake
-- **Guardrails**: Regras > LLM em conflito
-- **Proposta de automações**: Aceitar sugestões do LLM
-- **Logs estruturados**: Decision tracking completo
+### ✅ **FASE 4: Orquestrador com Sinais LLM (IMPLEMENTADA)**
+- **Proposta LLM**: Aceita sugestões do Intake quando catálogo vazio
+- **Guardrails rigorosos**: Validação de catálogo + aplicabilidade + cooldown
+- **Ordem de prioridade**: Catálogo → Proposta LLM → KB fallback
+- **Integração com Intake**: Usa `llm_signals.propose_automations[0]`
+- **Rejeição inteligente**: Detecta conflitos e cooldowns ativos
+- **Testes E2E**: Validação de aceitação e rejeição de propostas
+- **Logs estruturados**: `used_llm_proposal=true/false` com motivos
 
 ### **FASE 5: RAG Inteligente**
 - **Heurística de uso**: Só RAG quando útil

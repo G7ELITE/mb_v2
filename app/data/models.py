@@ -91,6 +91,7 @@ class ContextoLead(Base):
     aguardando: Mapped[dict] = mapped_column(JSON, nullable=True)  # {tipo, fato, origem, ttl}
     ultima_automacao_enviada: Mapped[str] = mapped_column(String, nullable=True)
     ultimo_topico_kb: Mapped[str] = mapped_column(String, nullable=True)
+    timeline_expects_reply: Mapped[list] = mapped_column(JSON, nullable=True)  # FASE 3: [{target, automation_id, provider_message_id, prompt_text, created_at}]
     atualizado_em: Mapped[str] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
 

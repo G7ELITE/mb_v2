@@ -224,6 +224,71 @@ def convert_automation_to_action(automation: Dict[str, Any]) -> Dict[str, Any]:
     return action
 
 
+async def is_automation_applicable(automation: Dict[str, Any], env: Env) -> bool:
+    """
+    FASE 4: Verifica se uma automação é aplicável ao ambiente atual.
+    
+    Args:
+        automation: Configuração da automação
+        env: Ambiente atual
+        
+    Returns:
+        True se a automação é aplicável
+    """
+    snapshot = env.snapshot
+    text = ""
+    if env.messages_window:
+        text = env.messages_window[-1].text.lower()
+    
+    return is_automation_eligible(automation, snapshot, text)
+
+
+async def check_cooldown(automation_id: str, lead_id: int) -> bool:
+    """
+    FASE 4: Verifica se automação não está em cooldown.
+    
+    Args:
+        automation_id: ID da automação
+        lead_id: ID do lead
+        
+    Returns:
+        True se pode executar (não em cooldown)
+    """
+    try:
+        # Implementação simples - para produção seria melhor usar Redis
+        from app.core.contexto_lead import get_contexto_lead_service
+        
+        contexto_service = get_contexto_lead_service()
+        contexto = await contexto_service.obter_contexto(lead_id)
+        
+        if not contexto:
+            return True  # Sem contexto = pode executar
+        
+        # Verificar se última automação foi a mesma há pouco tempo
+        if (contexto.ultima_automacao_enviada == automation_id and 
+            contexto.atualizado_em):
+            import time
+            from datetime import datetime
+            
+            # Cooldown básico de 5 minutos para a mesma automação
+            cooldown_seconds = 300
+            if isinstance(contexto.atualizado_em, str):
+                last_update = datetime.fromisoformat(contexto.atualizado_em.replace('Z', '+00:00'))
+            else:
+                last_update = contexto.atualizado_em
+            
+            time_diff = (datetime.utcnow() - last_update.replace(tzinfo=None)).total_seconds()
+            if time_diff < cooldown_seconds:
+                logger.info(f"Automation {automation_id} in cooldown for lead {lead_id} (remaining: {cooldown_seconds - time_diff:.0f}s)")
+                return False
+        
+        return True
+        
+    except Exception as e:
+        logger.warning(f"Error checking cooldown for {automation_id}: {e}")
+        return True  # Em caso de erro, permitir execução
+
+
 def reload_catalog():
     """Força recarga do catálogo (útil para desenvolvimento)."""
     global _CATALOG_CACHE
