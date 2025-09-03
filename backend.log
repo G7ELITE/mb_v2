@@ -1,583 +1,76 @@
 INFO:     Will watch for changes in these directories: ['/home/devbael/mb-v2']
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [9903] using StatReload
-INFO:     Started server process [9906]
+INFO:     Started reloader process [16824] using StatReload
+/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_id" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [16842]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     127.0.0.1:39822 - "GET /health HTTP/1.1" 200 OK
-INFO:     127.0.0.1:44630 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53268 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37660 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51502 - "GET /health HTTP/1.1" 200 OK
 INFO:     186.192.181.250:0 - "GET /health HTTP/1.1" 200 OK
-INFO:     127.0.0.1:48332 - "GET /health HTTP/1.1" 200 OK
-INFO:     127.0.0.1:47016 - "GET /health HTTP/1.1" 200 OK
-INFO:     127.0.0.1:47018 - "GET /health HTTP/1.1" 200 OK
-INFO:     186.192.181.250:0 - "GET /health HTTP/1.1" 200 OK
-INFO:     127.0.0.1:39444 - "GET /health HTTP/1.1" 200 OK
-Recebido update do Telegram: 913341897
-Evento normalizado: {'platform': 'telegram', 'user_id': '1062650136', 'message_text': 'como faço pra testar?', 'type': 'text', 'raw': {'update_id': 913341897, 'message': {'message_id': 115, 'from': {'id': 1062650136, 'is_bot': False, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'language_code': 'pt-br'}, 'chat': {'id': 1062650136, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'type': 'private'}, 'date': 1756922622, 'text': 'como faço pra testar?'}}}
-Lead existente: ID=16, chat_id=1062650136
-🎯 Iniciando pipeline completo de processamento
-📊 Construindo snapshot do lead...
-Construindo snapshot para plataforma: telegram
-KB carregada: 27 seções
-Cache miss para tópico: teste, executando busca
-RAG: nenhum contexto encontrado
-Snapshot construído com 2 candidatos
-🔍 Executando intake inteligente...
-Iniciando intake agent
-Iniciando intake sempre-LLM
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-{'event':'intake_llm', 'intents':1, 'polarity':'other', 'targets':0, 'facts_count':1, 'propose_automations_count':2, 'used_samples':2, 'agreement_score':1.0, 'error':None}
-Intake sempre-LLM concluído: polarity=other, intents=['quero testar']
-🎯 Verificando confirmações LLM-first...
-🧠 Executando orquestrador de decisões...
-Iniciando decisão dec_2d7d8bebf961
-Nenhum procedimento ativo, usando seletor
-Catálogo carregado com 0 automações
-Catálogo vazio ou não carregado
-Proposta rejeitada - não existe no catálogo: signup_link
-{'event':'orchestrator_select', 'eligible_count':0, 'chosen':'none', 'used_llm_proposal':False, 'reason':'proposal_rejected', 'proposals':['signup_link', 'ask_deposit_for_test']}
-Buscando resposta na base de conhecimento
-Consultando KB para: 'como faço pra testar?...'
-KB carregada com 27 entradas
-Nenhuma resposta relevante encontrada na KB
-{"event": "orchestrator_select", "level": "info", "eligible_count": 0, "chosen": "none", "used_llm_proposal": false, "reason": "final_fallback"}
-Procedimentos carregados: 0
-{"event": "orchestrator_fallback", "level": "info", "reason": "empty_catalog", "catalog_empty": true, "procedures_empty": true, "is_simple_confirmation": false, "message_length": 21, "lead_id": null}
-Decisão dec_2d7d8bebf961: PROCEDIMENTO executado
-Decisão dec_2d7d8bebf961 concluída com 1 ações
-⚡ Aplicando plano com 1 ações...
-{"event": "apply_plan_start", "level": "info", "decision_id": "dec_2d7d8bebf961", "actions_count": 1, "has_idempotency": false}
-{"event": "action_execution_start", "level": "info", "action_id": "dec_2d7d8bebf961_action_0", "action_type": "send_message", "action_type_raw": "send_message", "decision_id": "dec_2d7d8bebf961"}
-🔧 [ApplyPlan] Calling automation hook: automation_id=None, lead_id=None, success=True
-🔧 [ApplyPlan] Missing automation_id (None) or lead_id (None) for hook
-{"event": "action_execution_success", "level": "info", "action_id": "dec_2d7d8bebf961_action_0", "action_type": "send_message"}
-{"event": "apply_plan_success", "level": "info", "decision_id": "dec_2d7d8bebf961", "actions_executed": 1}
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 200 OK"
-Mensagem enviada com sucesso para chat 1062650136
-✅ Mensagem do pipeline enviada com sucesso: 🤖 Sistema em configuração inicial. As automações e...
-Perfil do lead 16 atualizado: {'accounts': {'quotex': 'candidato', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
-🎉 Pipeline completo executado - Decisão: dec_2d7d8bebf961
-INFO:     91.108.5.152:0 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
-Recebido update do Telegram: 999
-Evento normalizado: {'platform': 'telegram', 'user_id': '123456789', 'message_text': 'como depositar na quotex?', 'type': 'text', 'raw': {'update_id': 999, 'message': {'message_id': 1, 'from': {'id': 123456789, 'first_name': 'Teste'}, 'chat': {'id': 123456789}, 'text': 'como depositar na quotex?'}}}
-Novo lead criado: ID=17, chat_id=123456789
-🎯 Iniciando pipeline completo de processamento
-📊 Construindo snapshot do lead...
-Construindo snapshot para plataforma: telegram
-KB carregada: 27 seções
-Cache miss para tópico: depósito, executando busca
-Cached resultado para tópico: depósito
-RAG: encontrado contexto para tópico 'depósito'
-Snapshot construído com 2 candidatos
-🔍 Executando intake inteligente...
-Iniciando intake agent
-Iniciando intake sempre-LLM
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-{'event':'intake_llm', 'intents':1, 'polarity':'other', 'targets':0, 'facts_count':1, 'propose_automations_count':1, 'used_samples':2, 'agreement_score':1.0, 'error':None}
-Intake sempre-LLM concluído: polarity=other, intents=['preciso de ajuda']
-🎯 Verificando confirmações LLM-first...
-🧠 Executando orquestrador de decisões...
-Iniciando decisão dec_6c21c3741d5c
-Catálogo vazio ou não carregado
-Proposta rejeitada - não existe no catálogo: ask_deposit_for_test
-{'event':'orchestrator_select', 'eligible_count':0, 'chosen':'none', 'used_llm_proposal':False, 'reason':'proposal_rejected', 'proposals':['ask_deposit_for_test']}
-Buscando resposta na base de conhecimento
-Consultando KB para: 'como depositar na quotex?...'
-Resposta encontrada na KB (score: 0.47)
-{"event": "orchestrator_select", "level": "info", "eligible_count": 0, "chosen": "kb_response", "used_llm_proposal": false, "reason": "kb_fallback"}
-Decisão dec_6c21c3741d5c: DÚVIDA processada
-Decisão dec_6c21c3741d5c concluída com 1 ações
-⚡ Aplicando plano com 1 ações...
-{"event": "apply_plan_start", "level": "info", "decision_id": "dec_6c21c3741d5c", "actions_count": 1, "has_idempotency": false}
-{"event": "action_execution_start", "level": "info", "action_id": "dec_6c21c3741d5c_action_0", "action_type": "send_message", "action_type_raw": "send_message", "decision_id": "dec_6c21c3741d5c"}
-🔧 [ApplyPlan] Calling automation hook: automation_id=None, lead_id=None, success=True
-🔧 [ApplyPlan] Missing automation_id (None) or lead_id (None) for hook
-{"event": "action_execution_success", "level": "info", "action_id": "dec_6c21c3741d5c_action_0", "action_type": "send_message"}
-{"event": "apply_plan_success", "level": "info", "decision_id": "dec_6c21c3741d5c", "actions_executed": 1}
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 400 Bad Request"
-Erro ao enviar mensagem: 400 - {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-❌ Erro ao enviar mensagem do pipeline
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 400 Bad Request"
-Erro ao enviar mensagem: 400 - {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-⚠️ Pipeline não gerou resposta - usando fallback
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 400 Bad Request"
-Erro ao enviar mensagem: 400 - {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-Perfil do lead 17 atualizado: {'accounts': {'quotex': 'candidato', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
-🎉 Pipeline completo executado - Decisão: dec_6c21c3741d5c
-INFO:     186.192.181.250:0 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
-Recebido update do Telegram: 1000
-Evento normalizado: {'platform': 'telegram', 'user_id': '987654321', 'message_text': 'quero testar o robô', 'type': 'text', 'raw': {'update_id': 1000, 'message': {'message_id': 2, 'from': {'id': 987654321, 'first_name': 'Demo'}, 'chat': {'id': 987654321}, 'text': 'quero testar o robô'}}}
-Novo lead criado: ID=18, chat_id=987654321
-🎯 Iniciando pipeline completo de processamento
-📊 Construindo snapshot do lead...
-Construindo snapshot para plataforma: telegram
-KB carregada: 27 seções
-Cache miss para tópico: teste, executando busca
-Cached resultado para tópico: teste
-RAG: encontrado contexto para tópico 'teste'
-Snapshot construído com 2 candidatos
-🔍 Executando intake inteligente...
-Iniciando intake agent
-Iniciando intake sempre-LLM
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-{'event':'intake_llm', 'intents':1, 'polarity':'yes', 'targets':0, 'facts_count':2, 'propose_automations_count':2, 'used_samples':2, 'agreement_score':1.0, 'error':None}
-Intake sempre-LLM concluído: polarity=yes, intents=['quero testar']
-🎯 Verificando confirmações LLM-first...
-🧠 Executando orquestrador de decisões...
-Iniciando decisão dec_9be73d3be87b
-Executando procedimento: liberar_teste
-Executando procedimento: liberar_teste
-Procedimento não encontrado: liberar_teste
-Procedimento liberar_teste falhou, fazendo fallback para DÚVIDA
-Catálogo vazio ou não carregado
-Proposta rejeitada - não existe no catálogo: signup_link
-{'event':'orchestrator_select', 'eligible_count':0, 'chosen':'none', 'used_llm_proposal':False, 'reason':'proposal_rejected', 'proposals':['signup_link', 'ask_deposit_for_test']}
-Buscando resposta na base de conhecimento
-Consultando KB para: 'quero testar o robô...'
-Resposta encontrada na KB (score: 0.43)
-{"event": "orchestrator_select", "level": "info", "eligible_count": 0, "chosen": "kb_response", "used_llm_proposal": false, "reason": "kb_fallback"}
-Decisão dec_9be73d3be87b: PROCEDIMENTO executado
-Decisão dec_9be73d3be87b concluída com 1 ações
-⚡ Aplicando plano com 1 ações...
-{"event": "apply_plan_start", "level": "info", "decision_id": "dec_9be73d3be87b", "actions_count": 1, "has_idempotency": false}
-{"event": "action_execution_start", "level": "info", "action_id": "dec_9be73d3be87b_action_0", "action_type": "send_message", "action_type_raw": "send_message", "decision_id": "dec_9be73d3be87b"}
-🔧 [ApplyPlan] Calling automation hook: automation_id=None, lead_id=None, success=True
-🔧 [ApplyPlan] Missing automation_id (None) or lead_id (None) for hook
-{"event": "action_execution_success", "level": "info", "action_id": "dec_9be73d3be87b_action_0", "action_type": "send_message"}
-{"event": "apply_plan_success", "level": "info", "decision_id": "dec_9be73d3be87b", "actions_executed": 1}
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 400 Bad Request"
-Erro ao enviar mensagem: 400 - {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-❌ Erro ao enviar mensagem do pipeline
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 400 Bad Request"
-Erro ao enviar mensagem: 400 - {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-⚠️ Pipeline não gerou resposta - usando fallback
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 400 Bad Request"
-Erro ao enviar mensagem: 400 - {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-Perfil do lead 18 atualizado: {'accounts': {'quotex': 'candidato', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
-🎉 Pipeline completo executado - Decisão: dec_9be73d3be87b
-INFO:     186.192.181.250:0 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /health HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /health HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /health HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/leads/18 HTTP/1.1" 200 OK
-Recebido update do Telegram: 913341898
-Evento normalizado: {'platform': 'telegram', 'user_id': '1062650136', 'message_text': 'como depositar na quotex?', 'type': 'text', 'raw': {'update_id': 913341898, 'message': {'message_id': 117, 'from': {'id': 1062650136, 'is_bot': False, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'language_code': 'pt-br'}, 'chat': {'id': 1062650136, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'type': 'private'}, 'date': 1756923350, 'text': 'como depositar na quotex?'}}}
-Lead existente: ID=16, chat_id=1062650136
-🎯 Iniciando pipeline completo de processamento
-📊 Construindo snapshot do lead...
-Construindo snapshot para plataforma: telegram
-KB carregada: 27 seções
-Cache miss para tópico: depósito, executando busca
-Cached resultado para tópico: depósito
-RAG: encontrado contexto para tópico 'depósito'
-Snapshot construído com 2 candidatos
-🔍 Executando intake inteligente...
-Iniciando intake agent
-Iniciando intake sempre-LLM
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-{'event':'intake_llm', 'intents':1, 'polarity':'other', 'targets':0, 'facts_count':1, 'propose_automations_count':1, 'used_samples':2, 'agreement_score':1.0, 'error':None}
-Intake sempre-LLM concluído: polarity=other, intents=['preciso de ajuda']
-🎯 Verificando confirmações LLM-first...
-🧠 Executando orquestrador de decisões...
-Iniciando decisão dec_38a22c2457c0
-Catálogo vazio ou não carregado
-Proposta rejeitada - não existe no catálogo: ask_deposit_for_test
-{'event':'orchestrator_select', 'eligible_count':0, 'chosen':'none', 'used_llm_proposal':False, 'reason':'proposal_rejected', 'proposals':['ask_deposit_for_test']}
-Buscando resposta na base de conhecimento
-Consultando KB para: 'como depositar na quotex?...'
-Resposta encontrada na KB (score: 0.47)
-{"event": "orchestrator_select", "level": "info", "eligible_count": 0, "chosen": "kb_response", "used_llm_proposal": false, "reason": "kb_fallback"}
-Decisão dec_38a22c2457c0: DÚVIDA processada
-Decisão dec_38a22c2457c0 concluída com 1 ações
-⚡ Aplicando plano com 1 ações...
-{"event": "apply_plan_start", "level": "info", "decision_id": "dec_38a22c2457c0", "actions_count": 1, "has_idempotency": false}
-{"event": "action_execution_start", "level": "info", "action_id": "dec_38a22c2457c0_action_0", "action_type": "send_message", "action_type_raw": "send_message", "decision_id": "dec_38a22c2457c0"}
-🔧 [ApplyPlan] Calling automation hook: automation_id=None, lead_id=None, success=True
-🔧 [ApplyPlan] Missing automation_id (None) or lead_id (None) for hook
-{"event": "action_execution_success", "level": "info", "action_id": "dec_38a22c2457c0_action_0", "action_type": "send_message"}
-{"event": "apply_plan_success", "level": "info", "decision_id": "dec_38a22c2457c0", "actions_executed": 1}
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 200 OK"
-Mensagem enviada com sucesso para chat 1062650136
-✅ Mensagem do pipeline enviada com sucesso: - **Recomendada para iniciantes**
-- Depósito mínim...
-Perfil do lead 16 atualizado: {'accounts': {'quotex': 'candidato', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
-🎉 Pipeline completo executado - Decisão: dec_38a22c2457c0
-INFO:     91.108.5.152:0 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
-Recebido update do Telegram: 913341899
-Evento normalizado: {'platform': 'telegram', 'user_id': '1062650136', 'message_text': 'quanto preciso depositar', 'type': 'text', 'raw': {'update_id': 913341899, 'message': {'message_id': 119, 'from': {'id': 1062650136, 'is_bot': False, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'language_code': 'pt-br'}, 'chat': {'id': 1062650136, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'type': 'private'}, 'date': 1756923532, 'text': 'quanto preciso depositar'}}}
-Lead existente: ID=16, chat_id=1062650136
-🎯 Iniciando pipeline completo de processamento
-📊 Construindo snapshot do lead...
-Construindo snapshot para plataforma: telegram
-KB carregada: 27 seções
-Cache miss para tópico: depósito, executando busca
-RAG: nenhum contexto encontrado
-Snapshot construído com 1 candidatos
-🔍 Executando intake inteligente...
-Iniciando intake agent
-Iniciando intake sempre-LLM
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-{'event':'intake_llm', 'intents':1, 'polarity':'other', 'targets':0, 'facts_count':2, 'propose_automations_count':1, 'used_samples':2, 'agreement_score':1.0, 'error':None}
-Intake sempre-LLM concluído: polarity=other, intents=['preciso de ajuda']
-🎯 Verificando confirmações LLM-first...
-🧠 Executando orquestrador de decisões...
-Iniciando decisão dec_b5258c2b18ad
-{"event": "orchestrator_fallback", "level": "info", "reason": "empty_catalog", "catalog_empty": true, "procedures_empty": true, "is_simple_confirmation": false, "message_length": 24, "lead_id": null}
-Decisão dec_b5258c2b18ad: FALLBACK ativado
-Decisão dec_b5258c2b18ad concluída com 1 ações
-⚡ Aplicando plano com 1 ações...
-{"event": "apply_plan_start", "level": "info", "decision_id": "dec_b5258c2b18ad", "actions_count": 1, "has_idempotency": false}
-{"event": "action_execution_start", "level": "info", "action_id": "dec_b5258c2b18ad_action_0", "action_type": "send_message", "action_type_raw": "send_message", "decision_id": "dec_b5258c2b18ad"}
-🔧 [ApplyPlan] Calling automation hook: automation_id=None, lead_id=None, success=True
-🔧 [ApplyPlan] Missing automation_id (None) or lead_id (None) for hook
-{"event": "action_execution_success", "level": "info", "action_id": "dec_b5258c2b18ad_action_0", "action_type": "send_message"}
-{"event": "apply_plan_success", "level": "info", "decision_id": "dec_b5258c2b18ad", "actions_executed": 1}
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 200 OK"
-Mensagem enviada com sucesso para chat 1062650136
-✅ Mensagem do pipeline enviada com sucesso: 🤖 Sistema em configuração inicial. As automações e...
-Perfil do lead 16 atualizado: {'accounts': {'quotex': 'candidato', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
-🎉 Pipeline completo executado - Decisão: dec_b5258c2b18ad
-INFO:     91.108.5.152:0 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
-WARNING:  StatReload detected changes in 'app/core/orchestrator.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [9906]
-INFO:     Started server process [14495]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-WARNING:  StatReload detected changes in 'app/core/orchestrator.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [14495]
-INFO:     Started server process [14618]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-WARNING:  StatReload detected changes in 'app/core/fallback_kb.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [14618]
-INFO:     Started server process [14835]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-INFO:     127.0.0.1:33414 - "GET /health HTTP/1.1" 200 OK
-Recebido update do Telegram: 1002
-Evento normalizado: {'platform': 'telegram', 'user_id': '123456789', 'message_text': 'quanto preciso depositar?', 'type': 'text', 'raw': {'update_id': 1002, 'message': {'message_id': 4, 'from': {'id': 123456789, 'first_name': 'Teste'}, 'chat': {'id': 123456789}, 'text': 'quanto preciso depositar?'}}}
-Lead existente: ID=17, chat_id=123456789
-🎯 Iniciando pipeline completo de processamento
-📊 Construindo snapshot do lead...
-Construindo snapshot para plataforma: telegram
-KB carregada: 27 seções
-Cache miss para tópico: depósito, executando busca
-RAG: nenhum contexto encontrado
-Snapshot construído com 1 candidatos
-🔍 Executando intake inteligente...
-Iniciando intake agent
-Iniciando intake sempre-LLM
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-{'event':'intake_llm', 'intents':1, 'polarity':'other', 'targets':0, 'facts_count':1, 'propose_automations_count':1, 'used_samples':2, 'agreement_score':1.0, 'error':None}
-Intake sempre-LLM concluído: polarity=other, intents=['preciso de ajuda']
-🎯 Verificando confirmações LLM-first...
-🧠 Executando orquestrador de decisões...
-Iniciando decisão dec_695a774f8ebf
-Catálogo carregado com 0 automações
-Catálogo vazio ou não carregado
-Proposta rejeitada - não existe no catálogo: ask_deposit_amount
-{'event':'orchestrator_select', 'eligible_count':0, 'chosen':'none', 'used_llm_proposal':False, 'reason':'proposal_rejected', 'proposals':['ask_deposit_amount']}
-Buscando resposta na base de conhecimento
-Consultando KB para: 'quanto preciso depositar?...'
-KB carregada: 27 seções
-Cache miss para tópico: depósito, executando busca
-Nenhum contexto encontrado na KB
-{"event": "orchestrator_select", "level": "info", "eligible_count": 0, "chosen": "none", "used_llm_proposal": false, "reason": "final_fallback"}
-Procedimentos carregados: 0
-Catálogo/procedimentos vazios, tentando fallback para KB
-Consultando KB para: 'quanto preciso depositar?...'
-KB carregada: 27 seções
-Cache miss para tópico: depósito, executando busca
-Nenhum contexto encontrado na KB
-{"event": "orchestrator_fallback", "level": "info", "reason": "empty_catalog", "catalog_empty": true, "procedures_empty": true, "is_simple_confirmation": false, "message_length": 25, "lead_id": null}
-Decisão dec_695a774f8ebf: DÚVIDA processada
-Decisão dec_695a774f8ebf concluída com 1 ações
-⚡ Aplicando plano com 1 ações...
-{"event": "apply_plan_start", "level": "info", "decision_id": "dec_695a774f8ebf", "actions_count": 1, "has_idempotency": false}
-{"event": "action_execution_start", "level": "info", "action_id": "dec_695a774f8ebf_action_0", "action_type": "send_message", "action_type_raw": "send_message", "decision_id": "dec_695a774f8ebf"}
-🔧 [ApplyPlan] Calling automation hook: automation_id=None, lead_id=None, success=True
-🔧 [ApplyPlan] Missing automation_id (None) or lead_id (None) for hook
-{"event": "action_execution_success", "level": "info", "action_id": "dec_695a774f8ebf_action_0", "action_type": "send_message"}
-{"event": "apply_plan_success", "level": "info", "decision_id": "dec_695a774f8ebf", "actions_executed": 1}
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 400 Bad Request"
-Erro ao enviar mensagem: 400 - {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-❌ Erro ao enviar mensagem do pipeline
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 400 Bad Request"
-Erro ao enviar mensagem: 400 - {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-⚠️ Pipeline não gerou resposta - usando fallback
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 400 Bad Request"
-Erro ao enviar mensagem: 400 - {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-Perfil do lead 17 atualizado: {'accounts': {'quotex': 'candidato', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
-🎉 Pipeline completo executado - Decisão: dec_695a774f8ebf
-INFO:     127.0.0.1:44804 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
-WARNING:  StatReload detected changes in 'app/core/rag_service.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [14835]
-INFO:     Started server process [16008]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-Recebido update do Telegram: 1003
-Evento normalizado: {'platform': 'telegram', 'user_id': '555555555', 'message_text': 'quanto preciso depositar?', 'type': 'text', 'raw': {'update_id': 1003, 'message': {'message_id': 5, 'from': {'id': 555555555, 'first_name': 'Usuario'}, 'chat': {'id': 555555555}, 'text': 'quanto preciso depositar?'}}}
-Novo lead criado: ID=19, chat_id=555555555
-🎯 Iniciando pipeline completo de processamento
-📊 Construindo snapshot do lead...
-Construindo snapshot para plataforma: telegram
-KB carregada: 27 seções
-Cache miss para tópico: depósito, executando busca
-Cached resultado para tópico: depósito
-RAG: encontrado contexto para tópico 'depósito'
-Snapshot construído com 1 candidatos
-🔍 Executando intake inteligente...
-Iniciando intake agent
-Iniciando intake sempre-LLM
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-{'event':'intake_llm', 'intents':1, 'polarity':'other', 'targets':0, 'facts_count':1, 'propose_automations_count':1, 'used_samples':2, 'agreement_score':1.0, 'error':None}
-Intake sempre-LLM concluído: polarity=other, intents=['preciso de ajuda']
-🎯 Verificando confirmações LLM-first...
-🧠 Executando orquestrador de decisões...
-Iniciando decisão dec_9261740cca4d
-Catálogo carregado com 0 automações
-Catálogo vazio ou não carregado
-Proposta rejeitada - não existe no catálogo: ask_deposit_amount
-{'event':'orchestrator_select', 'eligible_count':0, 'chosen':'none', 'used_llm_proposal':False, 'reason':'proposal_rejected', 'proposals':['ask_deposit_amount']}
-Buscando resposta na base de conhecimento
-Consultando KB para: 'quanto preciso depositar?...'
-KB carregada: 27 seções
-Cache hit para tópico: depósito
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-Resposta gerada pela LLM usando KB: Olá! Para começar a utilizar os sinais do ManyBlack, você precisará fazer um depósito na corretora r...
-{"event": "orchestrator_select", "level": "info", "eligible_count": 0, "chosen": "kb_response", "used_llm_proposal": false, "reason": "kb_fallback"}
-Decisão dec_9261740cca4d: DÚVIDA processada
-Decisão dec_9261740cca4d concluída com 1 ações
-⚡ Aplicando plano com 1 ações...
-{"event": "apply_plan_start", "level": "info", "decision_id": "dec_9261740cca4d", "actions_count": 1, "has_idempotency": false}
-{"event": "action_execution_start", "level": "info", "action_id": "dec_9261740cca4d_action_0", "action_type": "send_message", "action_type_raw": "send_message", "decision_id": "dec_9261740cca4d"}
-🔧 [ApplyPlan] Calling automation hook: automation_id=None, lead_id=None, success=True
-🔧 [ApplyPlan] Missing automation_id (None) or lead_id (None) for hook
-{"event": "action_execution_success", "level": "info", "action_id": "dec_9261740cca4d_action_0", "action_type": "send_message"}
-{"event": "apply_plan_success", "level": "info", "decision_id": "dec_9261740cca4d", "actions_executed": 1}
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 400 Bad Request"
-Erro ao enviar mensagem: 400 - {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-❌ Erro ao enviar mensagem do pipeline
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 400 Bad Request"
-Erro ao enviar mensagem: 400 - {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-⚠️ Pipeline não gerou resposta - usando fallback
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 400 Bad Request"
-Erro ao enviar mensagem: 400 - {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-Perfil do lead 19 atualizado: {'accounts': {'quotex': 'candidato', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
-🎉 Pipeline completo executado - Decisão: dec_9261740cca4d
-INFO:     127.0.0.1:60916 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
-Recebido update do Telegram: 1004
-Evento normalizado: {'platform': 'telegram', 'user_id': '777777777', 'message_text': 'quanto preciso depositar na quotex?', 'type': 'text', 'raw': {'update_id': 1004, 'message': {'message_id': 6, 'from': {'id': 777777777, 'first_name': 'Test'}, 'chat': {'id': 777777777}, 'text': 'quanto preciso depositar na quotex?'}}}
-Novo lead criado: ID=20, chat_id=777777777
-🎯 Iniciando pipeline completo de processamento
-📊 Construindo snapshot do lead...
-Construindo snapshot para plataforma: telegram
-KB carregada: 27 seções
-Cache hit para tópico: depósito
-RAG: encontrado contexto para tópico 'depósito'
-Snapshot construído com 1 candidatos
-🔍 Executando intake inteligente...
-Iniciando intake agent
-Iniciando intake sempre-LLM
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-{'event':'intake_llm', 'intents':1, 'polarity':'other', 'targets':0, 'facts_count':1, 'propose_automations_count':1, 'used_samples':2, 'agreement_score':1.0, 'error':None}
-Intake sempre-LLM concluído: polarity=other, intents=['preciso de ajuda']
-🎯 Verificando confirmações LLM-first...
-🧠 Executando orquestrador de decisões...
-Iniciando decisão dec_2eed09f499ad
-Catálogo vazio ou não carregado
-Proposta rejeitada - não existe no catálogo: ask_deposit_for_test
-{'event':'orchestrator_select', 'eligible_count':0, 'chosen':'none', 'used_llm_proposal':False, 'reason':'proposal_rejected', 'proposals':['ask_deposit_for_test']}
-Buscando resposta na base de conhecimento
-Consultando KB para: 'quanto preciso depositar na quotex?...'
-KB carregada: 27 seções
-Cache hit para tópico: depósito
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-Resposta gerada pela LLM usando KB: Na Quotex, recomendamos que você deposite o valor mínimo exigido pela corretora para começar a opera...
-{"event": "orchestrator_select", "level": "info", "eligible_count": 0, "chosen": "kb_response", "used_llm_proposal": false, "reason": "kb_fallback"}
-Decisão dec_2eed09f499ad: DÚVIDA processada
-Decisão dec_2eed09f499ad concluída com 1 ações
-⚡ Aplicando plano com 1 ações...
-{"event": "apply_plan_start", "level": "info", "decision_id": "dec_2eed09f499ad", "actions_count": 1, "has_idempotency": false}
-{"event": "action_execution_start", "level": "info", "action_id": "dec_2eed09f499ad_action_0", "action_type": "send_message", "action_type_raw": "send_message", "decision_id": "dec_2eed09f499ad"}
-🔧 [ApplyPlan] Calling automation hook: automation_id=None, lead_id=None, success=True
-🔧 [ApplyPlan] Missing automation_id (None) or lead_id (None) for hook
-{"event": "action_execution_success", "level": "info", "action_id": "dec_2eed09f499ad_action_0", "action_type": "send_message"}
-{"event": "apply_plan_success", "level": "info", "decision_id": "dec_2eed09f499ad", "actions_executed": 1}
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 400 Bad Request"
-Erro ao enviar mensagem: 400 - {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-❌ Erro ao enviar mensagem do pipeline
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 400 Bad Request"
-Erro ao enviar mensagem: 400 - {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-⚠️ Pipeline não gerou resposta - usando fallback
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 400 Bad Request"
-Erro ao enviar mensagem: 400 - {"ok":false,"error_code":400,"description":"Bad Request: chat not found"}
-Perfil do lead 20 atualizado: {'accounts': {'quotex': 'candidato', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
-🎉 Pipeline completo executado - Decisão: dec_2eed09f499ad
-INFO:     127.0.0.1:38324 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
-Recebido update do Telegram: 1005
-Evento normalizado: {'platform': 'telegram', 'user_id': '1062650136', 'message_text': 'quanto preciso depositar na quotex?', 'type': 'text', 'raw': {'update_id': 1005, 'message': {'message_id': 7, 'from': {'id': 1062650136, 'first_name': 'Gabriel'}, 'chat': {'id': 1062650136}, 'text': 'quanto preciso depositar na quotex?'}}}
-Lead existente: ID=16, chat_id=1062650136
-🎯 Iniciando pipeline completo de processamento
-📊 Construindo snapshot do lead...
-Construindo snapshot para plataforma: telegram
-KB carregada: 27 seções
-Cache miss para tópico: depósito, executando busca
-Cached resultado para tópico: depósito
-RAG: encontrado contexto para tópico 'depósito'
-Snapshot construído com 1 candidatos
-🔍 Executando intake inteligente...
-Iniciando intake agent
-Iniciando intake sempre-LLM
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-{'event':'intake_llm', 'intents':1, 'polarity':'other', 'targets':0, 'facts_count':1, 'propose_automations_count':1, 'used_samples':2, 'agreement_score':1.0, 'error':None}
-Intake sempre-LLM concluído: polarity=other, intents=['preciso de ajuda']
-🎯 Verificando confirmações LLM-first...
-🧠 Executando orquestrador de decisões...
-Iniciando decisão dec_c3f90769569f
-Catálogo vazio ou não carregado
-Proposta rejeitada - não existe no catálogo: ask_deposit_for_test
-{'event':'orchestrator_select', 'eligible_count':0, 'chosen':'none', 'used_llm_proposal':False, 'reason':'proposal_rejected', 'proposals':['ask_deposit_for_test']}
-Buscando resposta na base de conhecimento
-Consultando KB para: 'quanto preciso depositar na quotex?...'
-KB carregada: 27 seções
-Cache hit para tópico: depósito
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-Resposta gerada pela LLM usando KB: Para começar a operar na quotex, você precisa depositar o valor que deseja investir em sua conta. Le...
-{"event": "orchestrator_select", "level": "info", "eligible_count": 0, "chosen": "kb_response", "used_llm_proposal": false, "reason": "kb_fallback"}
-Decisão dec_c3f90769569f: DÚVIDA processada
-Decisão dec_c3f90769569f concluída com 1 ações
-⚡ Aplicando plano com 1 ações...
-{"event": "apply_plan_start", "level": "info", "decision_id": "dec_c3f90769569f", "actions_count": 1, "has_idempotency": false}
-{"event": "action_execution_start", "level": "info", "action_id": "dec_c3f90769569f_action_0", "action_type": "send_message", "action_type_raw": "send_message", "decision_id": "dec_c3f90769569f"}
-🔧 [ApplyPlan] Calling automation hook: automation_id=None, lead_id=None, success=True
-🔧 [ApplyPlan] Missing automation_id (None) or lead_id (None) for hook
-{"event": "action_execution_success", "level": "info", "action_id": "dec_c3f90769569f_action_0", "action_type": "send_message"}
-{"event": "apply_plan_success", "level": "info", "decision_id": "dec_c3f90769569f", "actions_executed": 1}
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 200 OK"
-Mensagem enviada com sucesso para chat 1062650136
-✅ Mensagem do pipeline enviada com sucesso: Para começar a operar na quotex, você precisa depo...
-Perfil do lead 16 atualizado: {'accounts': {'quotex': 'candidato', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
-🎉 Pipeline completo executado - Decisão: dec_c3f90769569f
-INFO:     127.0.0.1:60044 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
-Recebido update do Telegram: 1006
-Evento normalizado: {'platform': 'telegram', 'user_id': '1062650136', 'message_text': 'como funciona o gale?', 'type': 'text', 'raw': {'update_id': 1006, 'message': {'message_id': 8, 'from': {'id': 1062650136, 'first_name': 'Gabriel'}, 'chat': {'id': 1062650136}, 'text': 'como funciona o gale?'}}}
-Lead existente: ID=16, chat_id=1062650136
-🎯 Iniciando pipeline completo de processamento
-📊 Construindo snapshot do lead...
-Construindo snapshot para plataforma: telegram
-KB carregada: 27 seções
-Cache miss para tópico: f3afb1d4, executando busca
-Cached resultado para tópico: f3afb1d4
-RAG: encontrado contexto para tópico 'f3afb1d4'
-Snapshot construído com 2 candidatos
-🔍 Executando intake inteligente...
-Iniciando intake agent
-Iniciando intake sempre-LLM
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-{'event':'intake_llm', 'intents':2, 'polarity':'other', 'targets':0, 'facts_count':2, 'propose_automations_count':2, 'used_samples':2, 'agreement_score':1.0, 'error':None}
-Intake sempre-LLM concluído: polarity=other, intents=['quero entender como funciona', 'quero entender como funciona o gale']
-🎯 Verificando confirmações LLM-first...
-🧠 Executando orquestrador de decisões...
-Iniciando decisão dec_9fdf0f2aa9e0
-Catálogo vazio ou não carregado
-Proposta rejeitada - não existe no catálogo: explain_gale
-{'event':'orchestrator_select', 'eligible_count':0, 'chosen':'none', 'used_llm_proposal':False, 'reason':'proposal_rejected', 'proposals':['explain_gale', 'explain_gale_functionality']}
-Buscando resposta na base de conhecimento
-Consultando KB para: 'como funciona o gale?...'
-KB carregada: 27 seções
-Cache hit para tópico: f3afb1d4
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-Resposta gerada pela LLM usando KB: O Gale é uma estratégia utilizada no ManyBlack para opções binárias. Basicamente, se você perder em ...
-{"event": "orchestrator_select", "level": "info", "eligible_count": 0, "chosen": "kb_response", "used_llm_proposal": false, "reason": "kb_fallback"}
-Decisão dec_9fdf0f2aa9e0: DÚVIDA processada
-Decisão dec_9fdf0f2aa9e0 concluída com 1 ações
-⚡ Aplicando plano com 1 ações...
-{"event": "apply_plan_start", "level": "info", "decision_id": "dec_9fdf0f2aa9e0", "actions_count": 1, "has_idempotency": false}
-{"event": "action_execution_start", "level": "info", "action_id": "dec_9fdf0f2aa9e0_action_0", "action_type": "send_message", "action_type_raw": "send_message", "decision_id": "dec_9fdf0f2aa9e0"}
-🔧 [ApplyPlan] Calling automation hook: automation_id=None, lead_id=None, success=True
-🔧 [ApplyPlan] Missing automation_id (None) or lead_id (None) for hook
-{"event": "action_execution_success", "level": "info", "action_id": "dec_9fdf0f2aa9e0_action_0", "action_type": "send_message"}
-{"event": "apply_plan_success", "level": "info", "decision_id": "dec_9fdf0f2aa9e0", "actions_executed": 1}
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 200 OK"
-Mensagem enviada com sucesso para chat 1062650136
-✅ Mensagem do pipeline enviada com sucesso: O Gale é uma estratégia utilizada no ManyBlack par...
-Perfil do lead 16 atualizado: {'accounts': {'quotex': 'candidato', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
-🎉 Pipeline completo executado - Decisão: dec_9fdf0f2aa9e0
-INFO:     127.0.0.1:46284 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
-WARNING:  StatReload detected changes in 'app/core/fallback_kb.py'. Reloading...
-INFO:     Shutting down
-INFO:     Waiting for application shutdown.
-INFO:     Application shutdown complete.
-INFO:     Finished server process [16008]
-INFO:     Started server process [18001]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
-Recebido update do Telegram: 913341900
-Evento normalizado: {'platform': 'telegram', 'user_id': '1062650136', 'message_text': 'qual é a taxa de acerto?', 'type': 'text', 'raw': {'update_id': 913341900, 'message': {'message_id': 123, 'from': {'id': 1062650136, 'is_bot': False, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'language_code': 'pt-br'}, 'chat': {'id': 1062650136, 'first_name': 'Gabriel Fundador', 'last_name': 'G7 Elite', 'username': 'fundadorg7elite', 'type': 'private'}, 'date': 1756924889, 'text': 'qual é a taxa de acerto?'}}}
-Lead existente: ID=16, chat_id=1062650136
-🎯 Iniciando pipeline completo de processamento
-📊 Construindo snapshot do lead...
-Construindo snapshot para plataforma: telegram
-KB carregada: 27 seções
-Cache miss para tópico: efc8e62c, executando busca
-Cached resultado para tópico: efc8e62c
-RAG: encontrado contexto para tópico 'efc8e62c'
-Snapshot construído com 1 candidatos
-🔍 Executando intake inteligente...
-Iniciando intake agent
-Iniciando intake sempre-LLM
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-{'event':'intake_llm', 'intents':1, 'polarity':'other', 'targets':0, 'facts_count':2, 'propose_automations_count':0, 'used_samples':2, 'agreement_score':1.0, 'error':None}
-Intake sempre-LLM concluído: polarity=other, intents=['preciso de ajuda']
-🎯 Verificando confirmações LLM-first...
-🧠 Executando orquestrador de decisões...
-Iniciando decisão dec_4577f961ae39
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'app/api/rag.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [16842]
+/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_id" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [22328]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/api/rag.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [22328]
+/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_id" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [22453]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+Iniciando decisão dec_91310d60a92b
 Catálogo carregado com 0 automações
 Catálogo vazio ou não carregado
 Buscando resposta na base de conhecimento
-Consultando KB para: 'qual é a taxa de acerto?...'
-KB carregada: 27 seções
-Cache hit para tópico: efc8e62c
+Consultando KB para: 'manyblack é o que mesmo...'
+KB carregada: 1 seções
+Cache miss para tópico: ad3068fd, executando busca
+Cached resultado para tópico: ad3068fd
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=manyblack+%C3%A9+o+que+mesmo&safe_mode=true HTTP/1.1" 200 OK
 HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-Resposta gerada pela LLM usando KB: A taxa de acerto do ManyBlack varia de acordo com as condições do mercado e a precisão das análises ...
+Resposta gerada pela LLM usando KB: O ManyBlack é uma raça de cachorro, e o nome dele é Boka o Baitola. Ele é conhecido por ser um robô ...
 {"event": "orchestrator_select", "level": "info", "eligible_count": 0, "chosen": "kb_response", "used_llm_proposal": false, "reason": "kb_fallback"}
-Decisão dec_4577f961ae39: DÚVIDA processada
-Decisão dec_4577f961ae39 concluída com 1 ações
-⚡ Aplicando plano com 1 ações...
-{"event": "apply_plan_start", "level": "info", "decision_id": "dec_4577f961ae39", "actions_count": 1, "has_idempotency": false}
-{"event": "action_execution_start", "level": "info", "action_id": "dec_4577f961ae39_action_0", "action_type": "send_message", "action_type_raw": "send_message", "decision_id": "dec_4577f961ae39"}
-🔧 [ApplyPlan] Calling automation hook: automation_id=None, lead_id=None, success=True
-🔧 [ApplyPlan] Missing automation_id (None) or lead_id (None) for hook
-{"event": "action_execution_success", "level": "info", "action_id": "dec_4577f961ae39_action_0", "action_type": "send_message"}
-{"event": "apply_plan_success", "level": "info", "decision_id": "dec_4577f961ae39", "actions_executed": 1}
-HTTP Request: POST https://api.telegram.org/bot8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI/sendMessage "HTTP/1.1 200 OK"
-Mensagem enviada com sucesso para chat 1062650136
-✅ Mensagem do pipeline enviada com sucesso: A taxa de acerto do ManyBlack varia de acordo com ...
-Perfil do lead 16 atualizado: {'accounts': {'quotex': 'candidato', 'nyrion': 'desconhecido'}, 'deposit': {'status': 'nenhum', 'amount': None, 'confirmed': False}}
-🎉 Pipeline completo executado - Decisão: dec_4577f961ae39
-INFO:     91.108.5.152:0 - "POST /channels/telegram/webhook?secret=troque HTTP/1.1" 200 OK
+Decisão dec_91310d60a92b: DÚVIDA processada
+Decisão dec_91310d60a92b concluída com 1 ações
+KB carregada: 1 seções
+Cache hit para tópico: ad3068fd
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK

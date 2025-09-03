@@ -20,27 +20,33 @@ export default defineConfig({
       port: 5173
     },
     proxy: {
+      // Todas as rotas /api/* (incluindo /api/rag/*)
       '/api': {
         target: 'http://127.0.0.1:8000',
         changeOrigin: true,
-        secure: false
+        secure: false,
+        ws: true // Para WebSockets/Server-Sent Events
       },
+      // Health check
       '/health': {
         target: 'http://127.0.0.1:8000',
         changeOrigin: true,
         secure: false
       },
-      '/leads': {
-        target: 'http://127.0.0.1:8000',
-        changeOrigin: true,
-        secure: false
-      },
+      // Engine (orquestrador)
       '/engine': {
         target: 'http://127.0.0.1:8000',
         changeOrigin: true,
         secure: false
       },
+      // Channels (telegram, whatsapp)
       '/channels': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+        secure: false
+      },
+      // Root routes para compatibility
+      '/leads': {
         target: 'http://127.0.0.1:8000',
         changeOrigin: true,
         secure: false

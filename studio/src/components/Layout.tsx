@@ -12,7 +12,8 @@ import {
   SunIcon,
   MoonIcon,
   Bars3Icon,
-  ChevronLeftIcon
+  ChevronLeftIcon,
+  CpuChipIcon
 } from '@heroicons/react/24/outline';
 import { useTheme } from '../contexts/ThemeContext';
 
@@ -22,6 +23,7 @@ const navigation = [
   { name: 'Procedimentos', href: '/procedures', icon: DocumentTextIcon },
   { name: 'Automações', href: '/automations', icon: BoltIcon },
   { name: 'Intake & Âncoras', href: '/intake', icon: CogIcon },
+  { name: 'RAG', href: '/rag', icon: CpuChipIcon },
   { name: 'Simulador', href: '/simulator', icon: PlayIcon },
   { name: 'Publicação', href: '/publish', icon: CloudArrowUpIcon },
 ];

@@ -281,3 +281,73 @@ export const COOLDOWN_OPTIONS = [
   '24h',
   '48h'
 ] as const;
+
+// Tipos para RAG
+export interface RAGKnowledgeBase {
+  content: string;
+  sections_count?: number;
+  last_modified?: string;
+}
+
+export interface RAGPrompt {
+  template: string;
+  placeholders: string[];
+  is_valid: boolean;
+}
+
+export interface RAGModel {
+  id: string;
+  name: string;
+  provider: string;
+  available: boolean;
+  description?: string;
+}
+
+export interface RAGParameters {
+  model_id: string;
+  temperature: number;
+  max_tokens: number;
+  top_p: number;
+  top_k: number;
+  threshold: number;
+  re_rank: boolean;
+}
+
+export interface RAGSimulationRequest {
+  message: string;
+  lead_profile: Record<string, any>;
+  parameters: RAGParameters;
+  safe_mode: boolean;
+}
+
+export interface RAGTopNResult {
+  source: string;
+  score: number;
+  snippet: string;
+  full_content?: string;
+}
+
+export interface RAGSimulationResult {
+  response: string;
+  classification: string;
+  decision_id: string;
+  top_n_results: RAGTopNResult[];
+  processing_time_ms: number;
+  stages: Record<string, any>;
+}
+
+export interface RAGLogEvent {
+  timestamp: number;
+  stage: string;
+  event: string;
+  data: Record<string, any>;
+  duration_ms?: number;
+}
+
+export type RAGPreset = 'fast' | 'balanced' | 'precise';
+
+export const RAG_PRESETS: Record<RAGPreset, { name: string; description: string }> = {
+  fast: { name: 'Rápido', description: 'Respostas rápidas, menos precisas' },
+  balanced: { name: 'Equilibrado', description: 'Balança velocidade e precisão' },
+  precise: { name: 'Preciso', description: 'Máxima precisão, pode ser mais lento' }
+} as const;

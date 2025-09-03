@@ -8,7 +8,15 @@ import type {
   IntakeConfig,
   LeadsListResponse,
   LeadDetail,
-  LeadsFilters 
+  LeadsFilters,
+  RAGKnowledgeBase,
+  RAGPrompt,
+  RAGModel,
+  RAGParameters,
+  RAGSimulationRequest,
+  RAGSimulationResult,
+  RAGPreset,
+  RAGLogEvent
 } from '../types';
 
 // Base URL do backend - usar caminhos relativos via proxy
@@ -143,6 +151,58 @@ export const apiService = {
   async deleteLead(leadId: number): Promise<{ success: boolean; message: string }> {
     const response = await api.delete(`/api/leads/${leadId}`);
     return response.data;
+  },
+
+  // === RAG ENDPOINTS ===
+
+  // Base de conhecimento
+  async getRAGKnowledgeBase(): Promise<RAGKnowledgeBase> {
+    const response = await api.get('/api/rag/knowledge-base');
+    return response.data;
+  },
+
+  async updateRAGKnowledgeBase(kb: RAGKnowledgeBase): Promise<{ success: boolean; message: string }> {
+    const response = await api.put('/api/rag/knowledge-base', kb);
+    return response.data;
+  },
+
+  // Prompt RAG
+  async getRAGPrompt(): Promise<RAGPrompt> {
+    const response = await api.get('/api/rag/prompt');
+    return response.data;
+  },
+
+  async updateRAGPrompt(prompt: RAGPrompt): Promise<{ success: boolean; message: string; warnings?: string }> {
+    const response = await api.put('/api/rag/prompt', prompt);
+    return response.data;
+  },
+
+  // Modelos disponíveis
+  async getRAGModels(): Promise<RAGModel[]> {
+    const response = await api.get('/api/rag/models');
+    return response.data;
+  },
+
+  // Presets de configuração
+  async getRAGPresets(): Promise<Record<RAGPreset, RAGParameters>> {
+    const response = await api.get('/api/rag/presets');
+    return response.data;
+  },
+
+  // Simulação RAG
+  async simulateRAG(request: RAGSimulationRequest): Promise<RAGSimulationResult> {
+    const response = await api.post('/api/rag/simulate', request);
+    return response.data;
+  },
+
+  // Stream de simulação (para logs em tempo real)
+  createRAGStreamConnection(message: string, safeMode: boolean = true): EventSource {
+    const params = new URLSearchParams({
+      message,
+      safe_mode: safeMode.toString()
+    });
+    
+    return new EventSource(`/api/rag/simulate/stream?${params.toString()}`);
   },
 };
 
