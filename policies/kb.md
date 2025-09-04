@@ -35,6 +35,3 @@ Sim, dá pra escolher o gerenciamento que você quiser.
 
 Precisa de internet ligada o tempo todo?
 Sim, precisa só de internet ativa.
-
-Ele usa sinais para otc?
-Só usa sinais para otc, porem só sábado e domingo.

@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 # Template padrão para RAG (formato especificado pelo usuário)
 DEFAULT_TEMPLATE = """[OBJETIVO]
-Responder a mensagem atual do lead seguindo as fielmente [REGRAS]
+Responder a mensagem atual do lead analisando TODOS os contextos disponíveis da FAQ.
 
 [HISTÓRICO]
 {historico_mensagens}
@@ -21,15 +21,17 @@ Responder a mensagem atual do lead seguindo as fielmente [REGRAS]
 {mensagem_atual}
 
 [REGRAS]
-"Responda em tom simples, como se fosse WhatsApp.
-Use apenas a resposta correspondente da FAQ, sem mudar nada.
-Não adicione frases extras como 'estou à disposição', 'espero ter ajudado', ou qualquer outra informação que não esteja escrita exatamente na resposta da FAQ.
-A resposta deve ser apenas uma linha, curta e direta."
-Gere apenas 1 frase de até 4 palavras baseado no faq.
+1. ANALISE TODOS os contextos fornecidos acima
+2. Se houver informações complementares ou específicas, COMBINE-as na resposta
+3. Responda em tom simples, como WhatsApp
+4. Seja preciso e complete, usando informações de MÚLTIPLOS contextos quando relevante
+5. Não adicione informações que não estejam nos contextos fornecidos
+6. Se há contextos contraditórios ou específicos (ex: sinais em geral vs sinais para OTC), explique as diferenças
 
 🎯[EXEMPLO ESPERADO]
-Pergunta: Funciona em OTC?
-Resposta correta: Funciona sim, mas o ideal é usar no mercado aberto que é mais estável."""
+Pergunta: Ele usa sinais? Se sim, opera todo dia?
+Contextos: 1) "Não depende de sinais, opera sozinho" 2) "Para OTC usa sinais só sábado e domingo"
+Resposta correta: Não depende de sinais em geral, mas para OTC usa sinais só nos fins de semana."""
 
 def get_current_rag_prompt():
     """

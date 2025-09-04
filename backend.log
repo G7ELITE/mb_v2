@@ -1,576 +1,499 @@
 INFO:     Will watch for changes in these directories: ['/home/devbael/mb-v2']
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [26832] using StatReload
+INFO:     Started reloader process [13381] using StatReload
 /home/devbael/mb-v2/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_id" has conflict with protected namespace "model_".
 
 You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
   warnings.warn(
-INFO:     Started server process [26834]
+INFO:     Started server process [13383]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     127.0.0.1:38430 - "GET /health HTTP/1.1" 200 OK
-INFO:     127.0.0.1:44398 - "GET /api/rag/simulate/stream?message=ele%20opera%20com%20sinais%20todo%20dia&safe_mode=true HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58468 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42572 - "GET /api/rag/simulate/stream?message=teste%20basico&safe_mode=true HTTP/1.1" 200 OK
 📋 Parser FAQ: 13 seções de perguntas/respostas criadas
 KB carregada: 13 seções
-Cache miss para tópico: 0b47a4c9, executando busca
-Cached resultado para tópico: 0b47a4c9
+Cache miss para tópico: teste, executando busca
+🎯 Nenhum lead selecionado, usando 'Primeira interação'
+📋 Parser FAQ: 13 seções de perguntas/respostas criadas
+KB carregada: 13 seções
+Cache miss para tópico: teste, executando busca
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=300, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
 HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-WARNING:  StatReload detected changes in 'app/core/rag_service.py'. Reloading...
+✅ RESPOSTA REAL RECEBIDA: 141 caracteres
+⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
+INFO:     127.0.0.1:55686 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59838 - "GET /api/rag/simulate/stream?message=ele%20usa%20sinais&safe_mode=true HTTP/1.1" 200 OK
+📋 Parser FAQ: 13 seções de perguntas/respostas criadas
+KB carregada: 13 seções
+Cache miss para tópico: 0cf44161, executando busca
+Cached resultado para tópico: 0cf44161
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.950 - Ele usa sinais?
+Não, ele não depende de sinais, ele opera sozinho....
+   Hit 2: Score 0.950 - Ele usa sinais para otc?
+Só usa sinais para otc, porem só sábado e domingo....
+   Hit 3: Score 0.363 - Preciso ter experiência pra usar?
+Não precisa, o robô faz tudo sozinho. Você só conecta e deixa roda...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:  StatReload detected changes in 'app/api/rag.py'. Reloading...
 INFO:     Shutting down
 INFO:     Waiting for application shutdown.
 INFO:     Application shutdown complete.
-INFO:     Finished server process [26834]
+INFO:     Finished server process [13383]
 /home/devbael/mb-v2/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_id" has conflict with protected namespace "model_".
 
 You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
   warnings.warn(
-INFO:     Started server process [27782]
+INFO:     Started server process [14784]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-WARNING:  StatReload detected changes in 'app/core/rag_service.py'. Reloading...
+WARNING:  StatReload detected changes in 'app/api/rag.py'. Reloading...
 INFO:     Shutting down
 INFO:     Waiting for application shutdown.
 INFO:     Application shutdown complete.
-INFO:     Finished server process [27782]
+INFO:     Finished server process [14784]
 /home/devbael/mb-v2/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_id" has conflict with protected namespace "model_".
 
 You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
   warnings.warn(
-INFO:     Started server process [27910]
+INFO:     Started server process [14993]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
 Lead RAG deletado: ID 1
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "DELETE /api/rag/leads/1 HTTP/1.1" 200 OK
-Lead RAG criado: lead 2 (ID: 1)
+Lead RAG criado: junin (ID: 1)
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/leads HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=Ele+usa+sinais+para+otc&safe_mode=true HTTP/1.1" 200 OK
-🎯 Nenhum lead selecionado, usando 'Primeira interação'
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache miss para tópico: otc, executando busca
-Cached resultado para tópico: otc
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: otc
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 50 caracteres
-🔄 Comparação semântica HABILITADA - verificando automações...
-📋 Nenhuma automação melhor encontrada, usando resposta da IA
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=mas+usa+sinais+de+forma+automatica%3F&safe_mode=true HTTP/1.1" 200 OK
-🎯 Nenhum lead selecionado, usando 'Primeira interação'
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache miss para tópico: ed71e06e, executando busca
-Cached resultado para tópico: ed71e06e
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 50 caracteres
-🔄 Comparação semântica HABILITADA - verificando automações...
-📋 Nenhuma automação melhor encontrada, usando resposta da IA
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: ed71e06e
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-Placeholders desconhecidos no prompt: ['mensagem_atual', 'historico_mensagens']
-Prompt RAG personalizado salvo: 706 caracteres
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "PUT /api/rag/prompt HTTP/1.1" 200 OK
-🎯 Usando histórico REAL do lead 'lead 2' (0 mensagens)
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache miss para tópico: d15c537c, executando busca
-Cached resultado para tópico: d15c537c
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=mas+usa+sinais+de+forma+automatica+ou+nao%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 50 caracteres
-🔄 Comparação semântica HABILITADA - verificando automações...
-📋 Nenhuma automação melhor encontrada, usando resposta da IA
-📝 Histórico REAL atualizado para lead 1: +2 mensagens
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: d15c537c
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-🎯 Usando histórico REAL do lead 'lead 2' (4 mensagens)
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache miss para tópico: 40771a08, executando busca
-Cached resultado para tópico: 40771a08
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=usa+sinais+de+forma+automatica+ou+nao%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 50 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-📝 Histórico REAL atualizado para lead 1: +2 mensagens
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: 40771a08
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-🎯 Usando histórico REAL do lead 'lead 2' (8 mensagens)
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache miss para tópico: c96b837d, executando busca
-Cached resultado para tópico: c96b837d
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=meu+nome+%C3%A9+gabriel&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 34 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-📝 Histórico REAL atualizado para lead 1: +2 mensagens
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: c96b837d
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-🎯 Usando histórico REAL do lead 'lead 2' (12 mensagens)
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache miss para tópico: ce242ba7, executando busca
-Cached resultado para tópico: ce242ba7
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=0.5
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=usa+sinais+manual+pra+operar%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: ce242ba7
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 50 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-📝 Histórico REAL atualizado para lead 1: +2 mensagens
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=qual+%C3%A9+o+meu+nome%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
-🎯 Usando histórico REAL do lead 'lead 2' (16 mensagens)
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache miss para tópico: 4f3a43d4, executando busca
-Cached resultado para tópico: 4f3a43d4
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=0.5
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 12 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-📝 Histórico REAL atualizado para lead 1: +2 mensagens
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: 4f3a43d4
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-🎯 Usando histórico REAL do lead 'lead 2' (20 mensagens)
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache miss para tópico: otc, executando busca
-Cached resultado para tópico: otc
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=0.5
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=ele+usa+sinais+manuais+em+otc+na+segunda-feira%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 50 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-📝 Histórico REAL atualizado para lead 1: +2 mensagens
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: otc
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-🎯 Usando histórico REAL do lead 'lead 2' (24 mensagens)
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: otc
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=0.5
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=usa+otc+na+segunda-feira%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 50 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-📝 Histórico REAL atualizado para lead 1: +2 mensagens
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: otc
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-Placeholders desconhecidos no prompt: ['mensagem_atual', 'historico_mensagens']
-Prompt RAG personalizado salvo: 531 caracteres
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "PUT /api/rag/prompt HTTP/1.1" 200 OK
-🎯 Usando histórico REAL do lead 'lead 2' (28 mensagens)
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache miss para tópico: otc, executando busca
-Cached resultado para tópico: otc
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=0.5
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=usa+otc+na+segunda-feira%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 50 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-📝 Histórico REAL atualizado para lead 1: +2 mensagens
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: otc
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-Placeholders desconhecidos no prompt: ['mensagem_atual', 'historico_mensagens']
-Prompt RAG personalizado salvo: 486 caracteres
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "PUT /api/rag/prompt HTTP/1.1" 200 OK
-🎯 Usando histórico REAL do lead 'lead 2' (32 mensagens)
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache miss para tópico: otc, executando busca
-Cached resultado para tópico: otc
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=0.5
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=usa+otc+na+segunda-feira%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 50 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-📝 Histórico REAL atualizado para lead 1: +2 mensagens
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: otc
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-🎯 Usando histórico REAL do lead 'lead 2' (36 mensagens)
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache miss para tópico: a6dfea7a, executando busca
-Cached resultado para tópico: a6dfea7a
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=0.5
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=opera+segunda-feira%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: a6dfea7a
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 59 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-📝 Histórico REAL atualizado para lead 1: +2 mensagens
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-🎯 Usando histórico REAL do lead 'lead 2' (40 mensagens)
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: a6dfea7a
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.8, max_tokens=400, top_p=0.5
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=opera+segunda-feira%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: a6dfea7a
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 60 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-📝 Histórico REAL atualizado para lead 1: +2 mensagens
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-🎯 Usando histórico REAL do lead 'lead 2' (44 mensagens)
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache miss para tópico: 069b4519, executando busca
-Cached resultado para tópico: 069b4519
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.8, max_tokens=400, top_p=1.0
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=opera+segunda%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 54 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-📝 Histórico REAL atualizado para lead 1: +2 mensagens
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: 069b4519
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-Lead RAG deletado: ID 1
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "DELETE /api/rag/leads/1 HTTP/1.1" 200 OK
-Lead RAG criado: antoin (ID: 1)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/leads HTTP/1.1" 200 OK
-🎯 Nenhum lead selecionado, usando 'Primeira interação'
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: 069b4519
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.8, max_tokens=400, top_p=1.0
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=opera+segunda%3F&safe_mode=true HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 83 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: 069b4519
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-🎯 Nenhum lead selecionado, usando 'Primeira interação'
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache miss para tópico: 069b4519, executando busca
-Cached resultado para tópico: 069b4519
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=opera+segunda%3F&safe_mode=true HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 57 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: 069b4519
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-🎯 Nenhum lead selecionado, usando 'Primeira interação'
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: 069b4519
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=0.5
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=opera+segunda%3F&safe_mode=true HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 59 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: 069b4519
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-🎯 Nenhum lead selecionado, usando 'Primeira interação'
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache miss para tópico: otc, executando busca
-Cached resultado para tópico: otc
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=0.5
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=opera+domingo+no+mercado+fora+de+OTC%3F&safe_mode=true HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 81 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: otc
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-🎯 Nenhum lead selecionado, usando 'Primeira interação'
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache miss para tópico: otc, executando busca
-Cached resultado para tópico: otc
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=0.5
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=opera+domingo+no+mercado+fora+de+OTC%3F&safe_mode=true HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 44 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: otc
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-Placeholders desconhecidos no prompt: ['mensagem_atual', 'historico_mensagens']
-Prompt RAG personalizado salvo: 706 caracteres
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "PUT /api/rag/prompt HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=opera+domingo+no+mercado+fora+de+OTC%3F&safe_mode=true HTTP/1.1" 200 OK
-🎯 Nenhum lead selecionado, usando 'Primeira interação'
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: otc
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=0.5
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: otc
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 50 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-🎯 Nenhum lead selecionado, usando 'Primeira interação'
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache miss para tópico: otc, executando busca
-Cached resultado para tópico: otc
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=0.5
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=opera+sabado+no+mercado+fora+de+OTC%3F&safe_mode=true HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 50 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: otc
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-🎯 Nenhum lead selecionado, usando 'Primeira interação'
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: otc
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=1.0, max_tokens=400, top_p=0.5
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=opera+sabado+no+mercado+fora+de+OTC%3F&safe_mode=true HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 50 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: otc
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-🎯 Usando histórico REAL do lead 'antoin' (0 mensagens)
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache miss para tópico: otc, executando busca
-Cached resultado para tópico: otc
-🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
-📝 Prompt formatado com 1 linhas de histórico
-🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=1.0, max_tokens=400, top_p=0.5
-🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=opera+sabado+no+mercado+fora+de+OTC%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
-📋 Parser FAQ: 13 seções de perguntas/respostas criadas
-KB carregada: 13 seções
-Cache hit para tópico: otc
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 50 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
-📝 Histórico REAL atualizado para lead 1: +2 mensagens
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
-HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
 Placeholders desconhecidos no prompt: ['mensagem_atual', 'historico_mensagens']
 Prompt RAG personalizado salvo: 428 caracteres
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "PUT /api/rag/prompt HTTP/1.1" 200 OK
-🎯 Usando histórico REAL do lead 'antoin' (4 mensagens)
+🎯 Usando histórico REAL do lead 'junin' (0 mensagens)
 📋 Parser FAQ: 13 seções de perguntas/respostas criadas
 KB carregada: 13 seções
 Cache miss para tópico: otc, executando busca
 Cached resultado para tópico: otc
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.785 - Ele usa sinais para otc?
+Só usa sinais para otc, porem só sábado e domingo....
+   Hit 2: Score 0.652 - Funciona em OTC?
+Funciona sim, mas o ideal é usar no mercado aberto que é mais estável....
+   Hit 3: Score 0.618 - Ele usa sinais?
+Não, ele não depende de sinais, ele opera sozinho....
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
 🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
 📝 Prompt formatado com 1 linhas de histórico
 🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
-⚙️ Parâmetros: temp=1.0, max_tokens=400, top_p=0.5
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
 🎯 Embedding Model: text-embedding-3-large (para RAG)
-INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=opera+sabado+no+mercado+fora+de+OTC%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=opera+otc+com+sinais+na+quinta+feira%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+📋 Parser FAQ: 13 seções de perguntas/respostas criadas
+KB carregada: 13 seções
+Cache hit para tópico: otc
 HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
-✅ RESPOSTA REAL RECEBIDA: 54 caracteres
-⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
+✅ RESPOSTA REAL RECEBIDA: 85 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.785 - Ele usa sinais para otc?
+Só usa sinais para otc, porem só sábado e domingo....
+   Hit 2: Score 0.652 - Funciona em OTC?
+Funciona sim, mas o ideal é usar no mercado aberto que é mais estável....
+   Hit 3: Score 0.618 - Ele usa sinais?
+Não, ele não depende de sinais, ele opera sozinho....
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+🎯 Usando histórico REAL do lead 'junin' (4 mensagens)
+📋 Parser FAQ: 13 seções de perguntas/respostas criadas
+KB carregada: 13 seções
+Cache miss para tópico: be6c048c, executando busca
+Cached resultado para tópico: be6c048c
+🎯 CONTEXTO CONSTRUÍDO: 2 hits incluídos no contexto
+   Hit 1: Score 0.950 - qual a banca minima?
+60...
+   Hit 2: Score 0.950 - qual a banca ideal?
+pra cima de 500...
+🎯 CONTEXTO FINAL: 2 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=qual+banca+m%C3%ADnima%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 20 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
 📝 Histórico REAL atualizado para lead 1: +2 mensagens
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
 📋 Parser FAQ: 13 seções de perguntas/respostas criadas
 KB carregada: 13 seções
-Cache hit para tópico: otc
+Cache hit para tópico: be6c048c
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+🎯 CONTEXTO CONSTRUÍDO: 2 hits incluídos no contexto
+   Hit 1: Score 0.950 - qual a banca minima?
+60...
+   Hit 2: Score 0.950 - qual a banca ideal?
+pra cima de 500...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+🎯 Usando histórico REAL do lead 'junin' (8 mensagens)
+📋 Parser FAQ: 13 seções de perguntas/respostas criadas
+KB carregada: 13 seções
+Cache miss para tópico: f94de4ef, executando busca
+Cached resultado para tópico: f94de4ef
+🎯 CONTEXTO CONSTRUÍDO: 2 hits incluídos no contexto
+   Hit 1: Score 0.950 - qual a banca minima?
+60...
+   Hit 2: Score 0.950 - qual a banca ideal?
+pra cima de 500...
+🎯 CONTEXTO FINAL: 2 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=qual+banca+recomendada%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 60 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+📋 Parser FAQ: 13 seções de perguntas/respostas criadas
+KB carregada: 13 seções
+Cache hit para tópico: f94de4ef
+🎯 CONTEXTO CONSTRUÍDO: 2 hits incluídos no contexto
+   Hit 1: Score 0.950 - qual a banca minima?
+60...
+   Hit 2: Score 0.950 - qual a banca ideal?
+pra cima de 500...
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
 HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+Placeholders desconhecidos no prompt: ['mensagem_atual', 'historico_mensagens']
+Prompt RAG personalizado salvo: 706 caracteres
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "PUT /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=funciona+otc%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'junin' (12 mensagens)
+📋 Parser FAQ: 13 seções de perguntas/respostas criadas
+KB carregada: 13 seções
+Cache miss para tópico: otc, executando busca
+Cached resultado para tópico: otc
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.950 - Funciona em OTC?
+Funciona sim, mas o ideal é usar no mercado aberto que é mais estável....
+   Hit 2: Score 0.862 - Funciona em celular?
+Sim, funciona em celular, computador e notebook....
+   Hit 3: Score 0.818 - Ele usa sinais para otc?
+Só usa sinais para otc, porem só sábado e domingo....
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+📋 Parser FAQ: 13 seções de perguntas/respostas criadas
+KB carregada: 13 seções
+Cache hit para tópico: otc
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.950 - Funciona em OTC?
+Funciona sim, mas o ideal é usar no mercado aberto que é mais estável....
+   Hit 2: Score 0.862 - Funciona em celular?
+Sim, funciona em celular, computador e notebook....
+   Hit 3: Score 0.818 - Ele usa sinais para otc?
+Só usa sinais para otc, porem só sábado e domingo....
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 70 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=qual+banca+m%C3%ADnima%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'junin' (16 mensagens)
+📋 Parser FAQ: 13 seções de perguntas/respostas criadas
+KB carregada: 13 seções
+Cache miss para tópico: be6c048c, executando busca
+Cached resultado para tópico: be6c048c
+🎯 CONTEXTO CONSTRUÍDO: 2 hits incluídos no contexto
+   Hit 1: Score 0.950 - qual a banca minima?
+60...
+   Hit 2: Score 0.950 - qual a banca ideal?
+pra cima de 500...
+🎯 CONTEXTO FINAL: 2 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 20 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+📋 Parser FAQ: 13 seções de perguntas/respostas criadas
+KB carregada: 13 seções
+Cache hit para tópico: be6c048c
+🎯 CONTEXTO CONSTRUÍDO: 2 hits incluídos no contexto
+   Hit 1: Score 0.950 - qual a banca minima?
+60...
+   Hit 2: Score 0.950 - qual a banca ideal?
+pra cima de 500...
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+📋 Parser FAQ: 12 seções de perguntas/respostas criadas
+KB carregada: 12 seções
+📋 Parser FAQ: 12 seções de perguntas/respostas criadas
+KB carregada: 12 seções
+Base de conhecimento atualizada: 868 caracteres
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "PUT /api/rag/knowledge-base HTTP/1.1" 200 OK
+Lead RAG deletado: ID 1
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "DELETE /api/rag/leads/1 HTTP/1.1" 200 OK
+Lead RAG criado: bokinha (ID: 1)
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=funciona+otc%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'bokinha' (0 mensagens)
+📋 Parser FAQ: 12 seções de perguntas/respostas criadas
+KB carregada: 12 seções
+Cache miss para tópico: otc, executando busca
+Cached resultado para tópico: otc
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.950 - Funciona em OTC?
+Funciona sim, mas o ideal é usar no mercado aberto que é mais estável....
+   Hit 2: Score 0.844 - Funciona em celular?
+Sim, funciona em celular, computador e notebook....
+   Hit 3: Score 0.650 - Sim, funciona tanto em demo quanto em real....
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 70 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+📋 Parser FAQ: 12 seções de perguntas/respostas criadas
+KB carregada: 12 seções
+Cache hit para tópico: otc
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.950 - Funciona em OTC?
+Funciona sim, mas o ideal é usar no mercado aberto que é mais estável....
+   Hit 2: Score 0.844 - Funciona em celular?
+Sim, funciona em celular, computador e notebook....
+   Hit 3: Score 0.650 - Sim, funciona tanto em demo quanto em real....
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+🎯 Usando histórico REAL do lead 'bokinha' (4 mensagens)
+📋 Parser FAQ: 12 seções de perguntas/respostas criadas
+KB carregada: 12 seções
+Cache miss para tópico: be6c048c, executando busca
+Cached resultado para tópico: be6c048c
+🎯 CONTEXTO CONSTRUÍDO: 2 hits incluídos no contexto
+   Hit 1: Score 0.950 - qual a banca minima?
+60...
+   Hit 2: Score 0.950 - qual a banca ideal?
+pra cima de 500...
+🎯 CONTEXTO FINAL: 2 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=qual+banca+m%C3%ADnima%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 2 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+📋 Parser FAQ: 12 seções de perguntas/respostas criadas
+KB carregada: 12 seções
+Cache hit para tópico: be6c048c
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+🎯 CONTEXTO CONSTRUÍDO: 2 hits incluídos no contexto
+   Hit 1: Score 0.950 - qual a banca minima?
+60...
+   Hit 2: Score 0.950 - qual a banca ideal?
+pra cima de 500...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+🎯 Usando histórico REAL do lead 'bokinha' (8 mensagens)
+📋 Parser FAQ: 12 seções de perguntas/respostas criadas
+KB carregada: 12 seções
+Cache miss para tópico: f94de4ef, executando busca
+Cached resultado para tópico: f94de4ef
+🎯 CONTEXTO CONSTRUÍDO: 2 hits incluídos no contexto
+   Hit 1: Score 0.950 - qual a banca minima?
+60...
+   Hit 2: Score 0.950 - qual a banca ideal?
+pra cima de 500...
+🎯 CONTEXTO FINAL: 2 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=qual+banca+recomendada%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 15 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+📋 Parser FAQ: 12 seções de perguntas/respostas criadas
+KB carregada: 12 seções
+Cache hit para tópico: f94de4ef
+🎯 CONTEXTO CONSTRUÍDO: 2 hits incluídos no contexto
+   Hit 1: Score 0.950 - qual a banca minima?
+60...
+   Hit 2: Score 0.950 - qual a banca ideal?
+pra cima de 500...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'bokinha' (12 mensagens)
+📋 Parser FAQ: 12 seções de perguntas/respostas criadas
+KB carregada: 12 seções
+Cache hit para tópico: f94de4ef
+🎯 CONTEXTO CONSTRUÍDO: 2 hits incluídos no contexto
+   Hit 1: Score 0.950 - qual a banca minima?
+60...
+   Hit 2: Score 0.950 - qual a banca ideal?
+pra cima de 500...
+🎯 CONTEXTO FINAL: 2 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/simulate/stream?message=qual+banca+recomendada%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 15 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+📋 Parser FAQ: 12 seções de perguntas/respostas criadas
+KB carregada: 12 seções
+Cache hit para tópico: f94de4ef
+🎯 CONTEXTO CONSTRUÍDO: 2 hits incluídos no contexto
+   Hit 1: Score 0.950 - qual a banca minima?
+60...
+   Hit 2: Score 0.950 - qual a banca ideal?
+pra cima de 500...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK

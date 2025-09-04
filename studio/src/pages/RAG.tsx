@@ -972,8 +972,8 @@ Resposta:"
                 </div>
                 {selectedLead && (
                   <div className="flex items-center space-x-2">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">Usando:</span>
-                    <span className="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">
+                    <span className="text-sm text-gray-600 dark:text-gray-400">Simulando com o lead:</span>
+                    <span className="px-2 py-1 text-xs bg-green-800 text-gray-800 rounded-full">
                       {selectedLead.name}
                     </span>
                   </div>
@@ -1247,12 +1247,14 @@ function LogEventCard({ event }: { event: RAGLogEvent }) {
   const getStageColor = (stage: string) => {
     const colors: Record<string, string> = {
       start: 'bg-gray-100 text-gray-800',
-      snapshot: 'bg-blue-100 text-blue-800',
-      classify: 'bg-purple-100 text-purple-800',
-      retrieve: 'bg-green-100 text-green-800',
-      rank: 'bg-yellow-100 text-yellow-800',
-      compose: 'bg-indigo-100 text-indigo-800',
-      complete: 'bg-emerald-100 text-emerald-800',
+      snapshot: 'bg-gray-100 text-gray-800',
+      classify: 'bg-gray-100 text-gray-800',
+      retrieve: 'bg-gray-100 text-gray-800',
+      rank: 'bg-gray-100 text-gray-800',
+      compose: 'bg-gray-100 text-gray-800',
+      debug_prompt: 'bg-gray-100 text-gray-800',
+      generate: 'bg-gray-100 text-gray-800',
+      complete: 'bg-green-800 text-gray-800',
       error: 'bg-red-100 text-red-800'
     };
     return colors[stage] || 'bg-gray-100 text-gray-800';
@@ -1283,8 +1285,33 @@ function LogEventCard({ event }: { event: RAGLogEvent }) {
       </div>
       
       {safeEvent.data && Object.keys(safeEvent.data).length > 0 && (
-        <div className="mt-2 text-xs text-gray-900 dark:text-gray-100 font-mono bg-gray-50 dark:bg-gray-700 p-2 rounded border">
-          {JSON.stringify(safeEvent.data, null, 2)}
+        <div className="mt-2">
+          {/* Formatação especial para o prompt final */}
+          {safeEvent.stage === 'debug_prompt' && safeEvent.data.formatted_prompt ? (
+            <div className="space-y-2">
+              {/* Estatísticas do prompt */}
+              <div className="text-xs text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-800 p-2 rounded">
+                📊 Estatísticas: {safeEvent.data.prompt_lines_count || 0} linhas | {safeEvent.data.kb_hits_included || 0} hits incluídos | {safeEvent.data.total_prompt_chars || 0} caracteres
+              </div>
+              
+              {/* Prompt formatado com melhor legibilidade */}
+              <div className="text-xs bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded p-3 max-h-96 overflow-y-auto">
+                <div className="text-gray-700 dark:text-gray-200 font-semibold mb-2">
+                  🎯 PROMPT FINAL (exato como enviado ao GPT):
+                </div>
+                <pre className="whitespace-pre-wrap text-gray-800 dark:text-gray-100 leading-relaxed font-mono text-xs">
+                  {safeEvent.data.formatted_prompt}
+                </pre>
+              </div>
+            </div>
+          ) : (
+            /* Formatação padrão para outros logs */
+            <div className="text-xs text-gray-900 dark:text-gray-100 font-mono bg-gray-50 dark:bg-gray-700 p-2 rounded border max-h-32 overflow-y-auto">
+              <pre className="whitespace-pre-wrap">
+                {JSON.stringify(safeEvent.data, null, 2)}
+              </pre>
+            </div>
+          )}
         </div>
       )}
     </div>

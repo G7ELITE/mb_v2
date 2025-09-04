@@ -1,50 +1,90 @@
 [
   {
     "id": 1,
-    "name": "antoin",
-    "description": "teste",
+    "name": "bokinha",
+    "description": "lead bokinha",
     "messages": [
       {
         "role": "Lead",
-        "text": "opera sabado no mercado fora de OTC?",
-        "timestamp": "2025-09-04T01:10:03.042634"
+        "text": "funciona otc?",
+        "timestamp": "2025-09-04T02:01:58.428607"
       },
       {
         "role": "GPT",
-        "text": "Só usa sinais para otc, porem só sábado e domingo.",
-        "timestamp": "2025-09-04T01:10:03.042648"
+        "text": "Funciona sim, mas o ideal é usar no mercado aberto que é mais estável.",
+        "timestamp": "2025-09-04T02:01:58.428628"
       },
       {
         "role": "Lead",
-        "text": "opera sabado no mercado fora de OTC?",
-        "timestamp": "2025-09-04T01:10:04.842333"
+        "text": "funciona otc?",
+        "timestamp": "2025-09-04T02:02:00.709270"
       },
       {
         "role": "GPT",
-        "text": "Não, ele não depende de sinais, ele opera sozinho.",
-        "timestamp": "2025-09-04T01:10:04.842344"
+        "text": "Funciona sim, mas o ideal é usar no mercado aberto que é mais estável.",
+        "timestamp": "2025-09-04T02:02:00.709285"
       },
       {
         "role": "Lead",
-        "text": "opera sabado no mercado fora de OTC?",
-        "timestamp": "2025-09-04T01:11:08.712580"
+        "text": "qual banca mínima?",
+        "timestamp": "2025-09-04T02:03:07.913767"
       },
       {
         "role": "GPT",
-        "text": "Não, ele não opera no mercado fora de OTC aos sábados.",
-        "timestamp": "2025-09-04T01:11:08.712592"
+        "text": "60",
+        "timestamp": "2025-09-04T02:03:07.913779"
       },
       {
         "role": "Lead",
-        "text": "opera sabado no mercado fora de OTC?",
-        "timestamp": "2025-09-04T01:11:10.743108"
+        "text": "qual banca mínima?",
+        "timestamp": "2025-09-04T02:03:10.274799"
       },
       {
         "role": "GPT",
-        "text": "Não, ele não opera no mercado fora de OTC aos sábados.",
-        "timestamp": "2025-09-04T01:11:10.743119"
+        "text": "60",
+        "timestamp": "2025-09-04T02:03:10.274810"
+      },
+      {
+        "role": "Lead",
+        "text": "qual banca recomendada?",
+        "timestamp": "2025-09-04T02:03:26.161974"
+      },
+      {
+        "role": "GPT",
+        "text": "pra cima de 500",
+        "timestamp": "2025-09-04T02:03:26.161985"
+      },
+      {
+        "role": "Lead",
+        "text": "qual banca recomendada?",
+        "timestamp": "2025-09-04T02:03:28.809411"
+      },
+      {
+        "role": "GPT",
+        "text": "pra cima de 500",
+        "timestamp": "2025-09-04T02:03:28.809421"
+      },
+      {
+        "role": "Lead",
+        "text": "qual banca recomendada?",
+        "timestamp": "2025-09-04T02:04:06.232525"
+      },
+      {
+        "role": "GPT",
+        "text": "pra cima de 500",
+        "timestamp": "2025-09-04T02:04:06.232536"
+      },
+      {
+        "role": "Lead",
+        "text": "qual banca recomendada?",
+        "timestamp": "2025-09-04T02:04:09.048410"
+      },
+      {
+        "role": "GPT",
+        "text": "pra cima de 500",
+        "timestamp": "2025-09-04T02:04:09.048421"
       }
     ],
-    "created_at": "2025-09-04T01:03:20.931121"
+    "created_at": "2025-09-04T02:01:36.938871"
   }
 ]

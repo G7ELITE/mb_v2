@@ -10,7 +10,10 @@ Responder a mensagem atual do lead seguindo as fielmente [REGRAS]
 [RESPONDA ESSA MENSAGEM ATUAL DO LEAD]
 {mensagem_atual}
 
-
+[REGRAS]
+“Responda em tom simples, como se fosse WhatsApp.
+Use apenas a resposta correspondente da FAQ, sem mudar nada.
+Não adicione frases extras como ‘estou à disposição’, ‘espero ter ajudado’, ou qualquer outra informação que não esteja escrita exatamente na resposta da FAQ.
 A resposta deve ser apenas uma a 5 linhas, curta e direta.”
 
 🎯[EXEMPLO ESPERADO]

@@ -17,7 +17,7 @@ from app.core.fallback_kb import load_knowledge_base
 from app.core.comparador_semantico import TEMPLATE_GERACAO_RESPOSTA
 from app.core.orchestrator import decide_and_plan
 from app.core.rag_prompt_manager import get_current_rag_prompt, save_custom_rag_prompt, is_using_custom_prompt
-from app.data.schemas import Env, Lead, Snapshot, Message
+from app.data.schemas import Env, Lead, Snapshot, Message, KbContext
 from app.settings import settings
 import logging
 from app.infra.logging import log_structured
@@ -360,21 +360,23 @@ async def simulate_rag(request: RAGSimulationRequest):
         
         if rag_context and rag_context.hits:
             # Aplicar threshold primeiro
-            hits = [hit for hit in rag_context.hits if hit.get('score', 0) >= request.parameters.threshold]
+            hits_filtrados = [hit for hit in rag_context.hits if hit.get('score', 0) >= request.parameters.threshold]
             
             # Aplicar re_rank se habilitado
             if request.parameters.re_rank:
-                # Simular re-ranking (ordenar por score)
-                hits = sorted(hits, key=lambda x: x.get('score', 0), reverse=True)
+                # Re-ranking (ordenar por score)
+                hits_filtrados = sorted(hits_filtrados, key=lambda x: x.get('score', 0), reverse=True)
             
-            # Construir contexto
-            kb_text = "\n".join([
-                f"- {hit.get('texto', '')[:200]}{'...' if len(hit.get('texto', '')) > 200 else ''}"
-                for hit in hits[:request.parameters.top_k]
-            ])
+            # Criar contexto atualizado com hits filtrados
+            rag_context_filtrado = KbContext(hits=hits_filtrados, topico=rag_context.topico)
+            
+            # USAR O MESMO MÉTODO build_context_string para consistência
+            kb_text = rag_context_filtrado.build_context_string()
+            
+            logger.info(f"🎯 CONTEXTO FINAL: {len(hits_filtrados)} hits após threshold {request.parameters.threshold}")
             
             # Top-N results - APENAS os hits específicos, não KB inteiro
-            for hit in hits:
+            for hit in hits_filtrados[:request.parameters.top_k]:
                 texto_hit = hit.get("texto", "")
                 fonte = hit.get("fonte", "KB")
                 
@@ -565,6 +567,13 @@ async def simulate_rag_stream(
                 template_source = f"error (missing: {e})"
             
             yield f"data: {json.dumps({'stage': 'compose', 'event': 'Prompt montado com dados REAIS', 'timestamp': time.time(), 'data': {'model': 'gpt-4o', 'template_source': template_source, 'using_custom': is_using_custom_prompt(), 'prompt_chars': len(formatted_prompt)}})}\n\n"
+            await asyncio.sleep(0.3)
+            
+            # 4.1. MOSTRAR PROMPT FINAL COMPLETO (para debug com formatação melhorada)
+            prompt_lines = formatted_prompt.split('\n')
+            prompt_preview = '\n'.join(prompt_lines)  # Manter quebras de linha
+            
+            yield f"data: {json.dumps({'stage': 'debug_prompt', 'event': 'PROMPT FINAL FORMATADO (exato como enviado ao GPT)', 'timestamp': time.time(), 'data': {'formatted_prompt': prompt_preview, 'prompt_lines_count': len(prompt_lines), 'kb_hits_included': len(hits_filtrados), 'historico_chars': len(historico_real), 'total_prompt_chars': len(formatted_prompt)}})}\n\n"
             await asyncio.sleep(0.3)
             
             # 5. Fazendo chamada REAL para OpenAI

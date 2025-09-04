@@ -100,10 +100,19 @@ class KbContext(BaseModel):
             fonte = hit.get("fonte", "Desconhecida")
             score = hit.get("score", 0.0)
             
-            # Formatação mais limpa para o contexto
-            context_parts.append(f"**{fonte}**: {texto}")
+            # Formatação mais limpa para o contexto com índice e score
+            context_parts.append(f"**{i}. {fonte} (Score: {score:.3f})**: {texto}")
         
-        return "\n\n".join(context_parts)
+        context_string = "\n\n".join(context_parts)
+        
+        # Log para debug
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.info(f"🎯 CONTEXTO CONSTRUÍDO: {len(self.hits)} hits incluídos no contexto")
+        for i, hit in enumerate(self.hits, 1):
+            logger.info(f"   Hit {i}: Score {hit.get('score', 0):.3f} - {hit.get('texto', '')[:100]}...")
+        
+        return context_string
 
 
 class FilaRevisaoItem(BaseModel):

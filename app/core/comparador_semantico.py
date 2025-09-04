@@ -163,7 +163,7 @@ class ComparadorSemantico:
             # Chamar LLM com timeout
             response = await asyncio.wait_for(
                 self.client.chat.completions.create(
-                    model="gpt-3.5-turbo",
+                    model="gpt-4o",
                     messages=[{"role": "user", "content": prompt}],
                     max_tokens=300,
                     temperature=0.3
