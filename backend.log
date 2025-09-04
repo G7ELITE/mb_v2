@@ -497,3 +497,1872 @@ INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/models HTTP/
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:fdf6:c62a:e97c:203b:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:470a:ab3:22be:d211:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:470a:ab3:22be:d211:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:470a:ab3:22be:d211:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:470a:ab3:22be:d211:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:470a:ab3:22be:d211:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:470a:ab3:22be:d211:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:470a:ab3:22be:d211:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:470a:ab3:22be:d211:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:470a:ab3:22be:d211:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:470a:ab3:22be:d211:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:470a:ab3:22be:d211:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:470a:ab3:22be:d211:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:470a:ab3:22be:d211:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:470a:ab3:22be:d211:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:470a:ab3:22be:d211:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:6d64:fd0e:e122:6c53:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:6d64:fd0e:e122:6c53:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:6d64:fd0e:e122:6c53:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:6d64:fd0e:e122:6c53:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:6d64:fd0e:e122:6c53:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:6d64:fd0e:e122:6c53:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+Lead RAG criado: Jota (ID: 2)
+INFO:     2804:7f0:9200:de4e:6d64:fd0e:e122:6c53:0 - "POST /api/rag/leads HTTP/1.1" 200 OK
+Lead RAG deletado: ID 1
+INFO:     2804:7f0:9200:de4e:6d64:fd0e:e122:6c53:0 - "DELETE /api/rag/leads/1 HTTP/1.1" 200 OK
+🎯 Nenhum lead selecionado, usando 'Primeira interação'
+📋 Parser FAQ: 12 seções de perguntas/respostas criadas
+KB carregada: 12 seções
+Cache miss para tópico: otc, executando busca
+Cached resultado para tópico: otc
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.950 - Funciona em OTC?
+Funciona sim, mas o ideal é usar no mercado aberto que é mais estável....
+   Hit 2: Score 0.843 - Funciona em celular?
+Sim, funciona em celular, computador e notebook....
+   Hit 3: Score 0.684 - Sim, funciona tanto em demo quanto em real....
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:6d64:fd0e:e122:6c53:0 - "GET /api/rag/simulate/stream?message=Funciona+otc%3F&safe_mode=true HTTP/1.1" 200 OK
+📋 Parser FAQ: 12 seções de perguntas/respostas criadas
+KB carregada: 12 seções
+Cache hit para tópico: otc
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.950 - Funciona em OTC?
+Funciona sim, mas o ideal é usar no mercado aberto que é mais estável....
+   Hit 2: Score 0.843 - Funciona em celular?
+Sim, funciona em celular, computador e notebook....
+   Hit 3: Score 0.684 - Sim, funciona tanto em demo quanto em real....
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 70 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+INFO:     2804:7f0:9200:de4e:6d64:fd0e:e122:6c53:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+📋 Parser FAQ: 12 seções de perguntas/respostas criadas
+KB carregada: 12 seções
+📋 Parser FAQ: 12 seções de perguntas/respostas criadas
+KB carregada: 12 seções
+Base de conhecimento atualizada: 868 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/knowledge-base HTTP/1.1" 200 OK
+Placeholders desconhecidos no prompt: ['mensagem_atual', 'historico_mensagens']
+Prompt RAG personalizado salvo: 706 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/prompt HTTP/1.1" 200 OK
+Placeholders desconhecidos no prompt: ['mensagem_atual', 'historico_mensagens']
+Prompt RAG personalizado salvo: 706 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/prompt HTTP/1.1" 200 OK
+Placeholders desconhecidos no prompt: ['mensagem_atual', 'historico_mensagens']
+Prompt RAG personalizado salvo: 706 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/prompt HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'Jota' (0 mensagens)
+📋 Parser FAQ: 12 seções de perguntas/respostas criadas
+KB carregada: 12 seções
+Cache miss para tópico: otc, executando busca
+Cached resultado para tópico: otc
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.950 - Funciona em OTC?
+Funciona sim, mas o ideal é usar no mercado aberto que é mais estável....
+   Hit 2: Score 0.950 - Funciona em celular?
+Sim, funciona em celular, computador e notebook....
+   Hit 3: Score 0.467 - Precisa de internet ligada o tempo todo?
+Sim, precisa só de internet ativa....
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=funciona+em+otc%3F&safe_mode=true&lead_id=2 HTTP/1.1" 200 OK
+📋 Parser FAQ: 12 seções de perguntas/respostas criadas
+KB carregada: 12 seções
+Cache hit para tópico: otc
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 70 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 2: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.950 - Funciona em OTC?
+Funciona sim, mas o ideal é usar no mercado aberto que é mais estável....
+   Hit 2: Score 0.950 - Funciona em celular?
+Sim, funciona em celular, computador e notebook....
+   Hit 3: Score 0.467 - Precisa de internet ligada o tempo todo?
+Sim, precisa só de internet ativa....
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+📋 Parser FAQ: 4 seções de perguntas/respostas criadas
+KB carregada: 4 seções
+📋 Parser FAQ: 4 seções de perguntas/respostas criadas
+KB carregada: 4 seções
+Base de conhecimento atualizada: 530 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/knowledge-base HTTP/1.1" 200 OK
+Placeholders desconhecidos no prompt: ['mensagem_atual', 'historico_mensagens']
+Prompt RAG personalizado salvo: 706 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/prompt HTTP/1.1" 200 OK
+Lead RAG deletado: ID 2
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "DELETE /api/rag/leads/2 HTTP/1.1" 200 OK
+Lead RAG criado: Guto (ID: 1)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/leads HTTP/1.1" 200 OK
+Placeholders desconhecidos no prompt: ['mensagem_atual', 'historico_mensagens']
+Prompt RAG personalizado salvo: 571 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+🎯 Nenhum lead selecionado, usando 'Primeira interação'
+📋 Parser FAQ: 4 seções de perguntas/respostas criadas
+KB carregada: 4 seções
+Cache miss para tópico: teste, executando busca
+Cached resultado para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.642 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito do Money Machine só está disponível n...
+   Hit 2: Score 0.422 - Posso sacar o que fizer no teste gratuito?
+Sim. Durante o teste gratuito, todo lucro que o cliente f...
+   Hit 3: Score 0.351 - Por que o teste é só na conta real?
+O objetivo do teste gratuito é o cliente já usar na conta real, ...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=posso+testa+na+demo%3F&safe_mode=true HTTP/1.1" 200 OK
+📋 Parser FAQ: 4 seções de perguntas/respostas criadas
+KB carregada: 4 seções
+Cache hit para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.642 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito do Money Machine só está disponível n...
+   Hit 2: Score 0.422 - Posso sacar o que fizer no teste gratuito?
+Sim. Durante o teste gratuito, todo lucro que o cliente f...
+   Hit 3: Score 0.351 - Por que o teste é só na conta real?
+O objetivo do teste gratuito é o cliente já usar na conta real, ...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 117 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+📋 Parser FAQ: 4 seções de perguntas/respostas criadas
+KB carregada: 4 seções
+📋 Parser FAQ: 4 seções de perguntas/respostas criadas
+KB carregada: 4 seções
+Base de conhecimento atualizada: 530 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/knowledge-base HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'Guto' (0 mensagens)
+📋 Parser FAQ: 4 seções de perguntas/respostas criadas
+KB carregada: 4 seções
+Cache miss para tópico: teste, executando busca
+Cached resultado para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.652 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito do Money Machine só está disponível n...
+   Hit 2: Score 0.424 - Posso sacar o que fizer no teste gratuito?
+Sim. Durante o teste gratuito, todo lucro que o cliente f...
+   Hit 3: Score 0.392 - Por que o teste é só na conta real?
+O objetivo do teste gratuito é o cliente já usar na conta real, ...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=posso+testa+na+demo%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 117 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+📋 Parser FAQ: 4 seções de perguntas/respostas criadas
+KB carregada: 4 seções
+Cache hit para tópico: teste
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.652 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito do Money Machine só está disponível n...
+   Hit 2: Score 0.424 - Posso sacar o que fizer no teste gratuito?
+Sim. Durante o teste gratuito, todo lucro que o cliente f...
+   Hit 3: Score 0.392 - Por que o teste é só na conta real?
+O objetivo do teste gratuito é o cliente já usar na conta real, ...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+🎯 Usando histórico REAL do lead 'Guto' (4 mensagens)
+📋 Parser FAQ: 4 seções de perguntas/respostas criadas
+KB carregada: 4 seções
+Cache miss para tópico: 28f725df, executando busca
+Cached resultado para tópico: 28f725df
+🎯 CONTEXTO CONSTRUÍDO: 2 hits incluídos no contexto
+   Hit 1: Score 0.654 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito do Money Machine só está disponível n...
+   Hit 2: Score 0.208 - Sim. Durante o teste gratuito, todo lucro que o cliente fizer pode ser sacado diretamente da correto...
+🎯 CONTEXTO FINAL: 2 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=funciona+em+qual+corretora%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+📋 Parser FAQ: 4 seções de perguntas/respostas criadas
+KB carregada: 4 seções
+Cache hit para tópico: 28f725df
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 98 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+🎯 CONTEXTO CONSTRUÍDO: 2 hits incluídos no contexto
+   Hit 1: Score 0.654 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito do Money Machine só está disponível n...
+   Hit 2: Score 0.208 - Sim. Durante o teste gratuito, todo lucro que o cliente fizer pode ser sacado diretamente da correto...
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+📋 Parser FAQ: 5 seções de perguntas/respostas criadas
+KB carregada: 5 seções
+📋 Parser FAQ: 5 seções de perguntas/respostas criadas
+KB carregada: 5 seções
+Base de conhecimento atualizada: 637 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/knowledge-base HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'Guto' (8 mensagens)
+📋 Parser FAQ: 5 seções de perguntas/respostas criadas
+KB carregada: 5 seções
+Cache miss para tópico: 28f725df, executando busca
+Cached resultado para tópico: 28f725df
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.916 - Qual corretora o funciona?
+Funciona na quotex e na Nyrion, porem a Nyrion da pra lucrar bem mais fac...
+   Hit 2: Score 0.675 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito do Money Machine só está disponível n...
+   Hit 3: Score 0.298 - Sim. Durante o teste gratuito, todo lucro que o cliente fizer pode ser sacado diretamente da correto...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=funciona+em+qual+corretora%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 76 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+📋 Parser FAQ: 5 seções de perguntas/respostas criadas
+KB carregada: 5 seções
+Cache hit para tópico: 28f725df
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.916 - Qual corretora o funciona?
+Funciona na quotex e na Nyrion, porem a Nyrion da pra lucrar bem mais fac...
+   Hit 2: Score 0.675 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito do Money Machine só está disponível n...
+   Hit 3: Score 0.298 - Sim. Durante o teste gratuito, todo lucro que o cliente fizer pode ser sacado diretamente da correto...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+🎯 Usando histórico REAL do lead 'Guto' (12 mensagens)
+📋 Parser FAQ: 5 seções de perguntas/respostas criadas
+KB carregada: 5 seções
+Cache miss para tópico: 6617e5f9, executando busca
+Cached resultado para tópico: 6617e5f9
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.576 - Qual corretora o funciona?
+Funciona na quotex e na Nyrion, porem a Nyrion da pra lucrar bem mais fac...
+   Hit 2: Score 0.385 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito do Money Machine só está disponível n...
+   Hit 3: Score 0.381 - Posso sacar o que fizer no teste gratuito?
+Sim. Durante o teste gratuito, todo lucro que o cliente f...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=qual+estrategia+o+rob%C3%B4+usa%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 82 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+📋 Parser FAQ: 5 seções de perguntas/respostas criadas
+KB carregada: 5 seções
+Cache hit para tópico: 6617e5f9
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.576 - Qual corretora o funciona?
+Funciona na quotex e na Nyrion, porem a Nyrion da pra lucrar bem mais fac...
+   Hit 2: Score 0.385 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito do Money Machine só está disponível n...
+   Hit 3: Score 0.381 - Posso sacar o que fizer no teste gratuito?
+Sim. Durante o teste gratuito, todo lucro que o cliente f...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Base de conhecimento atualizada: 5047 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/knowledge-base HTTP/1.1" 200 OK
+Lead RAG deletado: ID 1
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "DELETE /api/rag/leads/1 HTTP/1.1" 200 OK
+Lead RAG criado: teste1 (ID: 1)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=como+funciona+o+teste+gratis%3F&safe_mode=true HTTP/1.1" 200 OK
+🎯 Nenhum lead selecionado, usando 'Primeira interação'
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache miss para tópico: teste, executando busca
+Cached resultado para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.731 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito só funciona em conta real. Isso acont...
+   Hit 2: Score 0.549 - Em quais corretoras o robô funciona?
+O robô funciona na corretora Nyrion e na corretora Quotex. Poré...
+   Hit 3: Score 0.524 - O robô funciona em OTC?
+Sim, o robô funciona no OTC. Mas a recomendação é que você use no mercado ab...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache hit para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.731 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito só funciona em conta real. Isso acont...
+   Hit 2: Score 0.549 - Em quais corretoras o robô funciona?
+O robô funciona na corretora Nyrion e na corretora Quotex. Poré...
+   Hit 3: Score 0.524 - O robô funciona em OTC?
+Sim, o robô funciona no OTC. Mas a recomendação é que você use no mercado ab...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 307 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'teste1' (0 mensagens)
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache hit para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.731 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito só funciona em conta real. Isso acont...
+   Hit 2: Score 0.549 - Em quais corretoras o robô funciona?
+O robô funciona na corretora Nyrion e na corretora Quotex. Poré...
+   Hit 3: Score 0.524 - O robô funciona em OTC?
+Sim, o robô funciona no OTC. Mas a recomendação é que você use no mercado ab...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=posso+testar+durante+5+dias%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache hit para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.731 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito só funciona em conta real. Isso acont...
+   Hit 2: Score 0.549 - Em quais corretoras o robô funciona?
+O robô funciona na corretora Nyrion e na corretora Quotex. Poré...
+   Hit 3: Score 0.524 - O robô funciona em OTC?
+Sim, o robô funciona no OTC. Mas a recomendação é que você use no mercado ab...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 284 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+Placeholders desconhecidos no prompt: ['mensagem_atual', 'historico_mensagens']
+Prompt RAG personalizado salvo: 780 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/prompt HTTP/1.1" 200 OK
+Lead RAG criado: teste2 (ID: 2)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=posso+testar+durante+5+dias%3F&safe_mode=true&lead_id=2 HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'teste2' (0 mensagens)
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache miss para tópico: teste, executando busca
+Cached resultado para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.505 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 2: Score 0.383 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+   Hit 3: Score 0.344 - Preciso pagar para testar?
+Não. Você não precisa pagar nada para testar. O teste é 100% gratuito. A ...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache hit para tópico: teste
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 130 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 2: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.505 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 2: Score 0.383 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+   Hit 3: Score 0.344 - Preciso pagar para testar?
+Não. Você não precisa pagar nada para testar. O teste é 100% gratuito. A ...
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+Placeholders desconhecidos no prompt: ['mensagem_atual', 'historico_mensagens']
+Prompt RAG personalizado salvo: 726 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/prompt HTTP/1.1" 200 OK
+Lead RAG criado: teste3 (ID: 3)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=posso+testar+durante+5+dias%3F&safe_mode=true&lead_id=3 HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'teste3' (0 mensagens)
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache miss para tópico: teste, executando busca
+Cached resultado para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.565 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 2: Score 0.380 - Preciso pagar para testar?
+Não. Você não precisa pagar nada para testar. O teste é 100% gratuito. A ...
+   Hit 3: Score 0.311 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache hit para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.565 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 2: Score 0.380 - Preciso pagar para testar?
+Não. Você não precisa pagar nada para testar. O teste é 100% gratuito. A ...
+   Hit 3: Score 0.311 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 469 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 3: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+🎯 Usando histórico REAL do lead 'teste3' (4 mensagens)
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache miss para tópico: 020c31fc, executando busca
+Cached resultado para tópico: 020c31fc
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.537 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 2: Score 0.533 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 3: Score 0.519 - Não. O robô não tem nenhum tipo de acesso para sacar o seu dinheiro. Quem controla isso é a própria ...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=eu+achei+que+era+de+gra%C3%A7a&safe_mode=true&lead_id=3 HTTP/1.1" 200 OK
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache hit para tópico: 020c31fc
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.537 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 2: Score 0.533 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 3: Score 0.519 - Não. O robô não tem nenhum tipo de acesso para sacar o seu dinheiro. Quem controla isso é a própria ...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 469 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 3: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+Lead RAG criado: teste4 (ID: 4)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=eu+achei+que+era+de+gra%C3%A7a&safe_mode=true&lead_id=4 HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'teste4' (0 mensagens)
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache hit para tópico: 020c31fc
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.537 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 2: Score 0.533 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 3: Score 0.519 - Não. O robô não tem nenhum tipo de acesso para sacar o seu dinheiro. Quem controla isso é a própria ...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache hit para tópico: 020c31fc
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.537 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 2: Score 0.533 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 3: Score 0.519 - Não. O robô não tem nenhum tipo de acesso para sacar o seu dinheiro. Quem controla isso é a própria ...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 655 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 4: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Base de conhecimento atualizada: 5070 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/knowledge-base HTTP/1.1" 200 OK
+Lead RAG criado: teste5 (ID: 5)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/leads HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'teste5' (0 mensagens)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache miss para tópico: 020c31fc, executando busca
+Cached resultado para tópico: 020c31fc
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.534 - Não. O robô não tem nenhum tipo de acesso para sacar o seu dinheiro. Quem controla isso é a própria ...
+   Hit 2: Score 0.522 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 3: Score 0.494 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=eu+achei+que+era+de+gra%C3%A7a&safe_mode=true&lead_id=5 HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: 020c31fc
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.534 - Não. O robô não tem nenhum tipo de acesso para sacar o seu dinheiro. Quem controla isso é a própria ...
+   Hit 2: Score 0.522 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 3: Score 0.494 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 655 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 5: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Base de conhecimento atualizada: 5044 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/knowledge-base HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'teste4' (4 mensagens)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache miss para tópico: 020c31fc, executando busca
+Cached resultado para tópico: 020c31fc
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.499 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 2: Score 0.497 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 3: Score 0.486 - Não. O robô não tem nenhum tipo de acesso para sacar o seu dinheiro. Quem controla isso é a própria ...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=eu+achei+que+era+de+gra%C3%A7a&safe_mode=true&lead_id=4 HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: 020c31fc
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.499 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 2: Score 0.497 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 3: Score 0.486 - Não. O robô não tem nenhum tipo de acesso para sacar o seu dinheiro. Quem controla isso é a própria ...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 655 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 4: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+Lead RAG deletado: ID 4
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "DELETE /api/rag/leads/4 HTTP/1.1" 200 OK
+Lead RAG deletado: ID 1
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "DELETE /api/rag/leads/1 HTTP/1.1" 200 OK
+Lead RAG deletado: ID 2
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "DELETE /api/rag/leads/2 HTTP/1.1" 200 OK
+Lead RAG deletado: ID 3
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "DELETE /api/rag/leads/3 HTTP/1.1" 200 OK
+Lead RAG deletado: ID 5
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "DELETE /api/rag/leads/5 HTTP/1.1" 200 OK
+Lead RAG criado: a (ID: 1)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/leads HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'a' (0 mensagens)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: 020c31fc
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.499 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 2: Score 0.497 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 3: Score 0.486 - Não. O robô não tem nenhum tipo de acesso para sacar o seu dinheiro. Quem controla isso é a própria ...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=eu+achei+que+era+de+gra%C3%A7a&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: 020c31fc
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.499 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 2: Score 0.497 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 3: Score 0.486 - Não. O robô não tem nenhum tipo de acesso para sacar o seu dinheiro. Quem controla isso é a própria ...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 655 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+🎯 Usando histórico REAL do lead 'a' (4 mensagens)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache miss para tópico: 78c9e8fe, executando busca
+Cached resultado para tópico: 78c9e8fe
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.615 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 2: Score 0.562 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 3: Score 0.434 - Não. O robô não depende de sinais. Ele mesmo faz a análise dos gráficos, aplica o gerenciamento defi...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=achei+que+era+de+gra%C3%A7a&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: 78c9e8fe
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.615 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 2: Score 0.562 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 3: Score 0.434 - Não. O robô não depende de sinais. Ele mesmo faz a análise dos gráficos, aplica o gerenciamento defi...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 655 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+🎯 Usando histórico REAL do lead 'a' (8 mensagens)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache miss para tópico: depósito, executando busca
+Cached resultado para tópico: depósito
+🎯 CONTEXTO CONSTRUÍDO: 1 hits incluídos no contexto
+   Hit 1: Score 0.526 - O teste gratuito do Money Machine é de 3 dias. Depois desses 3 dias, se você quiser continuar usando...
+🎯 CONTEXTO FINAL: 1 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=precisa+pagar+pra+testar%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: depósito
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 469 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+🎯 CONTEXTO CONSTRUÍDO: 1 hits incluídos no contexto
+   Hit 1: Score 0.526 - O teste gratuito do Money Machine é de 3 dias. Depois desses 3 dias, se você quiser continuar usando...
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=tem+como+usar+pao+com+ovo%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'a' (12 mensagens)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache miss para tópico: b62b6ab2, executando busca
+Cached resultado para tópico: b62b6ab2
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.498 - O robô da versão gratuita e da versão VIP é exatamente o mesmo. A diferença é que no teste gratuito ...
+   Hit 2: Score 0.462 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 3: Score 0.375 - O teste gratuito do Money Machine é de 3 dias. Depois desses 3 dias, se você quiser continuar usando...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: b62b6ab2
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.498 - O robô da versão gratuita e da versão VIP é exatamente o mesmo. A diferença é que no teste gratuito ...
+   Hit 2: Score 0.462 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 3: Score 0.375 - O teste gratuito do Money Machine é de 3 dias. Depois desses 3 dias, se você quiser continuar usando...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 251 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+Lead RAG deletado: ID 1
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "DELETE /api/rag/leads/1 HTTP/1.1" 200 OK
+Lead RAG criado: teste (ID: 1)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=tem+como+usar+pao+com+ovo%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'teste' (0 mensagens)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: b62b6ab2
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.498 - O robô da versão gratuita e da versão VIP é exatamente o mesmo. A diferença é que no teste gratuito ...
+   Hit 2: Score 0.462 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 3: Score 0.375 - O teste gratuito do Money Machine é de 3 dias. Depois desses 3 dias, se você quiser continuar usando...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: b62b6ab2
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.498 - O robô da versão gratuita e da versão VIP é exatamente o mesmo. A diferença é que no teste gratuito ...
+   Hit 2: Score 0.462 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 3: Score 0.375 - O teste gratuito do Money Machine é de 3 dias. Depois desses 3 dias, se você quiser continuar usando...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 251 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+Placeholders desconhecidos no prompt: ['mensagem_atual', 'historico_mensagens']
+Prompt RAG personalizado salvo: 928 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/prompt HTTP/1.1" 200 OK
+Lead RAG deletado: ID 1
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "DELETE /api/rag/leads/1 HTTP/1.1" 200 OK
+Lead RAG criado: a (ID: 1)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/leads HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'a' (0 mensagens)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache miss para tópico: b62b6ab2, executando busca
+Cached resultado para tópico: b62b6ab2
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.488 - O robô da versão gratuita e da versão VIP é exatamente o mesmo. A diferença é que no teste gratuito ...
+   Hit 2: Score 0.437 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 3: Score 0.370 - O teste gratuito do Money Machine é de 3 dias. Depois desses 3 dias, se você quiser continuar usando...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=tem+como+usar+pao+com+ovo%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 76 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: b62b6ab2
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.488 - O robô da versão gratuita e da versão VIP é exatamente o mesmo. A diferença é que no teste gratuito ...
+   Hit 2: Score 0.437 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 3: Score 0.370 - O teste gratuito do Money Machine é de 3 dias. Depois desses 3 dias, se você quiser continuar usando...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=achei+que+era+de+gra%C3%A7a&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'a' (4 mensagens)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache miss para tópico: 78c9e8fe, executando busca
+Cached resultado para tópico: 78c9e8fe
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.626 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 2: Score 0.558 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 3: Score 0.395 - Sim, o robô funciona no OTC. Mas a recomendação é que você use no mercado aberto, porque o mercado a...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 76 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: 78c9e8fe
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.626 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 2: Score 0.558 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 3: Score 0.395 - Sim, o robô funciona no OTC. Mas a recomendação é que você use no mercado aberto, porque o mercado a...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+🎯 Usando histórico REAL do lead 'a' (8 mensagens)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache miss para tópico: teste, executando busca
+Cached resultado para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.587 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+   Hit 2: Score 0.305 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 3: Score 0.221 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=posso+testar+durante+quantos+dias%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: teste
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 469 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.587 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+   Hit 2: Score 0.305 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 3: Score 0.221 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=paga+pra+testar%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'a' (12 mensagens)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.587 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+   Hit 2: Score 0.305 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 3: Score 0.221 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 76 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.587 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+   Hit 2: Score 0.305 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 3: Score 0.221 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=paga+pra+testar%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'a' (16 mensagens)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache miss para tópico: teste, executando busca
+Cached resultado para tópico: teste
+🎯 CONTEXTO FINAL: 0 hits após threshold 0.5
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 1 hits incluídos no contexto
+   Hit 1: Score 0.305 - O teste gratuito do Money Machine é de 3 dias. Depois desses 3 dias, se você quiser continuar usando...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 76 caracteres
+⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=paga+pra+testar%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'a' (20 mensagens)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 1 hits incluídos no contexto
+   Hit 1: Score 0.305 - O teste gratuito do Money Machine é de 3 dias. Depois desses 3 dias, se você quiser continuar usando...
+🎯 CONTEXTO FINAL: 1 hits após threshold 0.01
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 30 caracteres
+⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 1 hits incluídos no contexto
+   Hit 1: Score 0.305 - O teste gratuito do Money Machine é de 3 dias. Depois desses 3 dias, se você quiser continuar usando...
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=paga+pra+testar%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'a' (24 mensagens)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache miss para tópico: teste, executando busca
+Cached resultado para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 1 hits incluídos no contexto
+   Hit 1: Score 0.356 - O teste gratuito do Money Machine é de 3 dias. Depois desses 3 dias, se você quiser continuar usando...
+🎯 CONTEXTO FINAL: 1 hits após threshold 0.04
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=800, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 30 caracteres
+⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 1 hits incluídos no contexto
+   Hit 1: Score 0.356 - O teste gratuito do Money Machine é de 3 dias. Depois desses 3 dias, se você quiser continuar usando...
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Base de conhecimento atualizada: 5044 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/knowledge-base HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'a' (28 mensagens)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache miss para tópico: teste, executando busca
+Cached resultado para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 1 hits incluídos no contexto
+   Hit 1: Score 0.369 - O teste gratuito do Money Machine é de 3 dias. Depois desses 3 dias, se você quiser continuar usando...
+🎯 CONTEXTO FINAL: 1 hits após threshold 0.04
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=800, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=paga+pra+testar%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 30 caracteres
+⏭️ Comparação semântica DESABILITADA - usando resposta direta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 1 hits incluídos no contexto
+   Hit 1: Score 0.369 - O teste gratuito do Money Machine é de 3 dias. Depois desses 3 dias, se você quiser continuar usando...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+Lead RAG deletado: ID 1
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "DELETE /api/rag/leads/1 HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=achei+que+era+de+gra%C3%A7a&safe_mode=true HTTP/1.1" 200 OK
+🎯 Nenhum lead selecionado, usando 'Primeira interação'
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache miss para tópico: 78c9e8fe, executando busca
+Cached resultado para tópico: 78c9e8fe
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.619 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 2: Score 0.598 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 3: Score 0.442 - Não. O robô não depende de sinais. Ele mesmo faz a análise dos gráficos, aplica o gerenciamento defi...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: 78c9e8fe
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.619 - A banca mínima é de R$60,00. Mas é importante entender: com R$60 você só vai conseguir ver o robô fu...
+   Hit 2: Score 0.598 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 3: Score 0.442 - Não. O robô não depende de sinais. Ele mesmo faz a análise dos gráficos, aplica o gerenciamento defi...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 655 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Base de conhecimento atualizada: 5044 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Base de conhecimento atualizada: 5047 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/knowledge-base HTTP/1.1" 200 OK
+Lead RAG criado: a (ID: 1)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/leads HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'a' (0 mensagens)
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache miss para tópico: depósito, executando busca
+Cached resultado para tópico: depósito
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.667 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+   Hit 2: Score 0.650 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito só funciona em conta real. Isso acont...
+   Hit 3: Score 0.601 - precisa pagar para testar?
+Não. Você não precisa pagar nada para testar. O teste é 100% gratuito. A ...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=precisa+pagar+o+teste%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache hit para tópico: depósito
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.667 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+   Hit 2: Score 0.650 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito só funciona em conta real. Isso acont...
+   Hit 3: Score 0.601 - precisa pagar para testar?
+Não. Você não precisa pagar nada para testar. O teste é 100% gratuito. A ...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 590 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=achei+que+era+de+gra%C3%A7a+o+teste%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead 'a' (4 mensagens)
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache miss para tópico: teste, executando busca
+Cached resultado para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.731 - Não. Você não precisa pagar nada para testar. O teste é 100% gratuito. A única coisa que você precis...
+   Hit 2: Score 0.613 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito só funciona em conta real. Isso acont...
+   Hit 3: Score 0.605 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache hit para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.731 - Não. Você não precisa pagar nada para testar. O teste é 100% gratuito. A única coisa que você precis...
+   Hit 2: Score 0.613 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito só funciona em conta real. Isso acont...
+   Hit 3: Score 0.605 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 590 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+🎯 Usando histórico REAL do lead 'a' (8 mensagens)
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache miss para tópico: teste, executando busca
+Cached resultado para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.744 - Não. Você não precisa pagar nada para testar. O teste é 100% gratuito. A única coisa que você precis...
+   Hit 2: Score 0.464 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito só funciona em conta real. Isso acont...
+   Hit 3: Score 0.403 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=achei+que+era+de+gra%C3%A7a+o+teste&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache hit para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.744 - Não. Você não precisa pagar nada para testar. O teste é 100% gratuito. A única coisa que você precis...
+   Hit 2: Score 0.464 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito só funciona em conta real. Isso acont...
+   Hit 3: Score 0.403 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 590 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+Lead RAG deletado: ID 1
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "DELETE /api/rag/leads/1 HTTP/1.1" 200 OK
+Lead RAG criado: 1 (ID: 1)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=achei+que+era+de+gra%C3%A7a+o+teste&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead '1' (0 mensagens)
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache miss para tópico: teste, executando busca
+Cached resultado para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.667 - Não. Você não precisa pagar nada para testar. O teste é 100% gratuito. A única coisa que você precis...
+   Hit 2: Score 0.454 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+   Hit 3: Score 0.430 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito só funciona em conta real. Isso acont...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache hit para tópico: teste
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.667 - Não. Você não precisa pagar nada para testar. O teste é 100% gratuito. A única coisa que você precis...
+   Hit 2: Score 0.454 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+   Hit 3: Score 0.430 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito só funciona em conta real. Isso acont...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 590 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+🎯 Usando histórico REAL do lead '1' (4 mensagens)
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache miss para tópico: depósito, executando busca
+Cached resultado para tópico: depósito
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.666 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+   Hit 2: Score 0.660 - precisa pagar para testar?
+Não. Você não precisa pagar nada para testar. O teste é 100% gratuito. A ...
+   Hit 3: Score 0.606 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito só funciona em conta real. Isso acont...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=precisa+pagar+o+teste%3F&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+📋 Parser FAQ: 11 seções de perguntas/respostas criadas
+KB carregada: 11 seções
+Cache hit para tópico: depósito
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.666 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+   Hit 2: Score 0.660 - precisa pagar para testar?
+Não. Você não precisa pagar nada para testar. O teste é 100% gratuito. A ...
+   Hit 3: Score 0.606 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito só funciona em conta real. Isso acont...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 590 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Base de conhecimento atualizada: 5046 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/knowledge-base HTTP/1.1" 200 OK
+Lead RAG criado: 12 (ID: 2)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/leads HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead '12' (0 mensagens)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: depósito
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.666 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+   Hit 2: Score 0.660 - precisa pagar para testar?
+Não. Você não precisa pagar nada para testar. O teste é 100% gratuito. A ...
+   Hit 3: Score 0.606 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito só funciona em conta real. Isso acont...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=precisa+pagar+o+teste%3F&safe_mode=true&lead_id=2 HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: depósito
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.666 - O teste gratuito do Money Machine é de quantos dias?
+O teste gratuito do Money Machine é de 3 dias. ...
+   Hit 2: Score 0.660 - precisa pagar para testar?
+Não. Você não precisa pagar nada para testar. O teste é 100% gratuito. A ...
+   Hit 3: Score 0.606 - O teste gratuito funciona em conta demo?
+Não. O teste gratuito só funciona em conta real. Isso acont...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 590 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 2: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Base de conhecimento atualizada: 5046 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+Iniciando decisão dec_2ea06c853439
+Nenhum procedimento ativo, usando seletor
+Catálogo carregado com 0 automações
+Catálogo vazio ou não carregado
+Buscando resposta na base de conhecimento
+Consultando KB para: 'precisa pagar pra testar?...'
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache miss para tópico: depósito, executando busca
+Cached resultado para tópico: depósito
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+Resposta gerada pela LLM usando KB: Sim, o teste gratuito do Money Machine é de 3 dias. Depois desse período, será necessário comprar o ...
+{"event": "orchestrator_select", "level": "info", "eligible_count": 0, "chosen": "kb_response", "used_llm_proposal": false, "reason": "kb_fallback"}
+Decisão dec_2ea06c853439: PROCEDIMENTO executado
+Decisão dec_2ea06c853439 concluída com 1 ações
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /engine/decide HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+Lead RAG deletado: ID 1
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "DELETE /api/rag/leads/1 HTTP/1.1" 200 OK
+Lead RAG deletado: ID 2
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "DELETE /api/rag/leads/2 HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /health HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Base de conhecimento atualizada: 5046 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/knowledge-base HTTP/1.1" 200 OK
+🎯 Nenhum lead selecionado, usando 'Primeira interação'
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache miss para tópico: d2b66a40, executando busca
+Cached resultado para tópico: d2b66a40
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.291 - O teste gratuito do Money Machine é de 3 dias. Depois desses 3 dias, se você quiser continuar usando...
+   Hit 2: Score 0.289 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 3: Score 0.279 - Preciso deixar o computador ou celular ligado para o robô funcionar?
+Não. O robô funciona em nuvem. ...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=pc+precisa+fica+ligado&safe_mode=true HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: d2b66a40
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.291 - O teste gratuito do Money Machine é de 3 dias. Depois desses 3 dias, se você quiser continuar usando...
+   Hit 2: Score 0.289 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 3: Score 0.279 - Preciso deixar o computador ou celular ligado para o robô funcionar?
+Não. O robô funciona em nuvem. ...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 377 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=pc+precisa+fica+ligado&safe_mode=true HTTP/1.1" 200 OK
+🎯 Nenhum lead selecionado, usando 'Primeira interação'
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache miss para tópico: d2b66a40, executando busca
+Cached resultado para tópico: d2b66a40
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.297 - Não. O robô não tem nenhum tipo de acesso para sacar o seu dinheiro. Quem controla isso é a própria ...
+   Hit 2: Score 0.262 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 3: Score 0.246 - Preciso deixar o computador ou celular ligado para o robô funcionar?
+Não. O robô funciona em nuvem. ...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: d2b66a40
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.297 - Não. O robô não tem nenhum tipo de acesso para sacar o seu dinheiro. Quem controla isso é a própria ...
+   Hit 2: Score 0.262 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 3: Score 0.246 - Preciso deixar o computador ou celular ligado para o robô funcionar?
+Não. O robô funciona em nuvem. ...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 446 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+📋 Parser FAQ: 9 seções de perguntas/respostas criadas
+KB carregada: 9 seções
+📋 Parser FAQ: 9 seções de perguntas/respostas criadas
+KB carregada: 9 seções
+Base de conhecimento atualizada: 5046 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/knowledge-base HTTP/1.1" 200 OK
+🎯 Nenhum lead selecionado, usando 'Primeira interação'
+📋 Parser FAQ: 9 seções de perguntas/respostas criadas
+KB carregada: 9 seções
+Cache hit para tópico: d2b66a40
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.297 - Não. O robô não tem nenhum tipo de acesso para sacar o seu dinheiro. Quem controla isso é a própria ...
+   Hit 2: Score 0.262 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 3: Score 0.246 - Preciso deixar o computador ou celular ligado para o robô funcionar?
+Não. O robô funciona em nuvem. ...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=pc+precisa+fica+ligado&safe_mode=true HTTP/1.1" 200 OK
+📋 Parser FAQ: 9 seções de perguntas/respostas criadas
+KB carregada: 9 seções
+Cache hit para tópico: d2b66a40
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.297 - Não. O robô não tem nenhum tipo de acesso para sacar o seu dinheiro. Quem controla isso é a própria ...
+   Hit 2: Score 0.262 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 3: Score 0.246 - Preciso deixar o computador ou celular ligado para o robô funcionar?
+Não. O robô funciona em nuvem. ...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 377 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Base de conhecimento atualizada: 5046 caracteres
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "PUT /api/rag/knowledge-base HTTP/1.1" 200 OK
+🎯 Nenhum lead selecionado, usando 'Primeira interação'
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache miss para tópico: d2b66a40, executando busca
+Cached resultado para tópico: d2b66a40
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.297 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 2: Score 0.273 - Preciso deixar o computador ou celular ligado para o robô funcionar?
+Não. O robô funciona em nuvem. ...
+   Hit 3: Score 0.261 - Não. O robô não tem nenhum tipo de acesso para sacar o seu dinheiro. Quem controla isso é a própria ...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=pc+precisa+fica+ligado&safe_mode=true HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: d2b66a40
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.297 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 2: Score 0.273 - Preciso deixar o computador ou celular ligado para o robô funcionar?
+Não. O robô funciona em nuvem. ...
+   Hit 3: Score 0.261 - Não. O robô não tem nenhum tipo de acesso para sacar o seu dinheiro. Quem controla isso é a própria ...
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 377 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+Lead RAG criado: 1 (ID: 1)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/leads HTTP/1.1" 200 OK
+🎯 Usando histórico REAL do lead '1' (0 mensagens)
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: d2b66a40
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.297 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 2: Score 0.273 - Preciso deixar o computador ou celular ligado para o robô funcionar?
+Não. O robô funciona em nuvem. ...
+   Hit 3: Score 0.261 - Não. O robô não tem nenhum tipo de acesso para sacar o seu dinheiro. Quem controla isso é a própria ...
+🎯 CONTEXTO FINAL: 3 hits após threshold 0.05
+🎯 Usando prompt personalizado da interface (100% controlado pelo usuário)
+📝 Prompt formatado com 1 linhas de histórico
+🚀 FAZENDO CHAMADA REAL PARA OPENAI - Modelo: gpt-4o
+⚙️ Parâmetros: temp=0.3, max_tokens=400, top_p=1.0
+🎯 Embedding Model: text-embedding-3-large (para RAG)
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/simulate/stream?message=pc+precisa+fica+ligado&safe_mode=true&lead_id=1 HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+Cache hit para tópico: d2b66a40
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+✅ RESPOSTA REAL RECEBIDA: 377 caracteres
+🔄 Comparação semântica HABILITADA - verificando automações...
+📋 Nenhuma automação melhor encontrada, usando resposta da IA
+📝 Histórico REAL atualizado para lead 1: +2 mensagens
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "POST /api/rag/simulate HTTP/1.1" 200 OK
+🎯 CONTEXTO CONSTRUÍDO: 3 hits incluídos no contexto
+   Hit 1: Score 0.297 - O robô funciona na corretora Nyrion e na corretora Quotex. Porém, a recomendação principal é usar a ...
+   Hit 2: Score 0.273 - Preciso deixar o computador ou celular ligado para o robô funcionar?
+Não. O robô funciona em nuvem. ...
+   Hit 3: Score 0.261 - Não. O robô não tem nenhum tipo de acesso para sacar o seu dinheiro. Quem controla isso é a própria ...
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+Lead RAG deletado: ID 1
+INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "DELETE /api/rag/leads/1 HTTP/1.1" 200 OK
