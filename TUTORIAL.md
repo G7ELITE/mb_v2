@@ -11,9 +11,10 @@
 4. [⚡ Automações - Mensagens Automáticas](#-automações---mensagens-automáticas)
 5. [🎯 Intake & Âncoras - Capturando Intenções](#-intake--âncoras---capturando-intenções)
 6. [🧪 Simulador - Testando Conversas](#-simulador---testando-conversas)
-7. [🚀 Publicação - Enviando para Produção](#-publicação---enviando-para-produção)
-8. [🆕 Novas Funcionalidades](#-novas-funcionalidades)
-9. [💡 Dicas e Boas Práticas](#-dicas-e-boas-práticas)
+7. [🧠 RAG - Configuração Inteligente](#-rag---configuração-inteligente)
+8. [🚀 Publicação - Enviando para Produção](#-publicação---enviando-para-produção)
+9. [🆕 Novas Funcionalidades](#-novas-funcionalidades)
+10. [💡 Dicas e Boas Práticas](#-dicas-e-boas-práticas)
 
 ---
 
@@ -433,6 +434,226 @@ confirm_can_deposit_v3:
 - **Confiança**: LLM precisa ter ≥80% de confiança
 - **Determinístico**: Se LLM falhar, usa regras simples
 - **Idempotência**: Mesma confirmação só é processada uma vez
+
+---
+
+## 🧠 RAG - Configuração Inteligente
+
+A página **RAG** é onde você controla como o sistema responde às dúvidas dos leads quando não há automações específicas. É uma ferramenta avançada mas fácil de usar.
+
+### 🎯 O que é RAG?
+
+**RAG** significa "busca inteligente na base de conhecimento". Funciona assim:
+
+1. **Lead faz pergunta**: "Como depositar na Quotex?"
+2. **Sistema busca**: Procura informações relevantes na base de conhecimento
+3. **IA responde**: Usa as informações encontradas para gerar uma resposta personalizada
+
+### 📝 Base de Conhecimento
+
+#### O que fazer aqui:
+
+**📖 Escreva o que o sistema precisa saber** para responder leads:
+
+- Informações sobre corretoras (depósito mínimo, como criar conta)
+- Processos de depósito (PIX, cartão, etc)
+- Dúvidas frequentes sobre sinais
+- Regras e limitações importantes
+
+#### Como usar:
+
+1. **Clique em "Base de Conhecimento"** para expandir
+2. **Escreva em markdown** (texto normal funciona também):
+   ```markdown
+   ## Depósito na Quotex
+   - Depósito mínimo: $10
+   - Aceita PIX
+   - Processo: Login → Depósito → PIX
+   ```
+3. **Use o preview** para ver como fica formatado
+4. **Clique "Salvar"** - aparecerá uma notificação de sucesso
+
+#### Exemplo prático:
+```markdown
+## Quotex
+- **Recomendada para iniciantes**
+- Depósito mínimo: $10
+- Interface amigável
+- Suporte em português
+- PIX disponível
+
+## Nyrion
+- **Para usuários avançados**
+- Depósito mínimo: $50
+- Mais opções de negociação
+- Suporte 24/7
+```
+
+### 🎯 Configuração de Prompts
+
+Aqui você define **como** a IA deve responder usando as informações da base.
+
+#### O que fazer:
+
+1. **Mantenha o prompt claro** - a IA precisa saber seu papel
+2. **Use os placeholders** disponíveis (aparecerão destacados)
+3. **Defina o tom**: formal, amigável, técnico
+
+#### Exemplo de prompt eficaz:
+```
+Você é um assistente do ManyBlack, especialista em opções binárias.
+
+Contexto do usuário: {{contexto_lead}}
+
+Informações da base: {{base_conhecimento}}
+
+Pergunta: {{pergunta_usuario}}
+
+Responda de forma:
+- Clara e objetiva
+- Amigável mas profissional  
+- Máximo 2 parágrafos
+- Use as informações da base
+```
+
+### 🤖 Modelos e Configuração
+
+#### Escolhendo o modelo:
+
+- **GPT-4o**: Equilibrado, boa qualidade e velocidade
+- **GPT-4o Mini**: Mais rápido, menos detalhado
+- **o1-preview**: Máxima qualidade, mais lento
+
+#### Configurações Avançadas:
+
+**🎨 Criatividade (0-1)**
+- **0.1**: Respostas objetivas e diretas
+- **0.5**: Equilibrado
+- **0.8**: Mais criativo e variado
+
+**📏 Tamanho da Resposta**
+- **100-200**: Respostas curtas
+- **300-400**: Tamanho ideal
+- **500+**: Respostas detalhadas
+
+**🔍 Profundidade de Busca**
+- **1-3**: Busca básica, rápida
+- **3-5**: Busca completa (recomendado)
+- **5+**: Busca exaustiva
+
+### 🧪 Simulação Realística
+
+A **simulação** permite testar o sistema **exatamente** como um lead real experimentaria.
+
+#### Como simular:
+
+1. **Digite uma pergunta** de lead: "quanto preciso depositar?"
+2. **Defina o perfil** do lead:
+   - ☑️ Tem conta: Se já cadastrou em alguma corretora
+   - ☑️ Já depositou: Se já fez depósito antes
+   - ☑️ Quer testar: Se está interessado no teste
+3. **Clique "Simular"**
+
+#### Logs em Tempo Real:
+
+Durante a simulação, você verá **cada passo** do processo:
+
+```
+🔄 Montando perfil do lead...
+🔍 Buscando informações na base de conhecimento...
+📊 Encontrados 3 resultados relevantes (score: 0.89)
+🤖 Enviando prompt para GPT-4o...
+💬 Resposta gerada pela IA
+✅ Simulação concluída
+```
+
+#### Interpretando os resultados:
+
+- **Top-N Resultados**: Mostra o que foi encontrado na base
+- **Score de similaridade**: Quão relevante é cada resultado (0-1)
+- **Tempo de resposta**: Performance do sistema
+- **Resposta final**: Exatamente o que o lead receberia
+
+### 📊 Analisando Resultados
+
+#### O que observar:
+
+**✅ Boa resposta:**
+- Score alto (>0.7) nos resultados
+- Resposta relevante à pergunta
+- Tom adequado ao contexto
+
+**⚠️ Precisa ajustar:**
+- Score baixo (<0.5) - melhorar base de conhecimento
+- Resposta genérica - ajustar prompt
+- Tom inadequado - revisar instruções
+
+#### Situações comuns:
+
+**Lead pergunta:** "qual o mínimo para depositar?"
+**Sistema encontra:** "Depósito mínimo: $10" (score: 0.85)
+**Resposta ideal:** "Para começar, você precisa depositar pelo menos $10 na Quotex. É um valor bem acessível para testar a plataforma."
+
+**Lead pergunta:** "como funciona?"
+**Sistema encontra:** Várias informações (scores baixos)
+**Problema:** Pergunta muito vaga
+**Solução:** Melhorar base com mais contexto
+
+### 📈 Monitoramento
+
+#### Exportar logs:
+
+1. Após várias simulações, clique **"Export"**
+2. Baixe o arquivo **JSONL** com todos os dados
+3. Use para análise posterior ou troubleshooting
+
+#### Filtros úteis:
+
+- **Por estágio**: Veja apenas busca, ranking ou composição
+- **Por resultado**: Filtre por scores altos/baixos
+- **Busca rápida**: Encontre simulações específicas
+
+### 🔧 Situações Práticas
+
+#### Cenário 1: Sistema não encontra informações
+**Problema**: Leads perguntam sobre algo que não está na base
+**Solução**: Adicionar informação na Base de Conhecimento
+
+#### Cenário 2: Resposta muito técnica
+**Problema**: IA usa linguagem complicada
+**Solução**: Ajustar prompt para "linguagem simples e amigável"
+
+#### Cenário 3: Resposta muito genérica
+**Problema**: Sempre a mesma resposta padrão
+**Solução**: Aumentar profundidade de busca e melhorar base
+
+#### Cenário 4: Demora para responder
+**Problema**: Simulação leva >5 segundos
+**Solução**: Usar GPT-4o Mini ou reduzir profundidade
+
+### 💡 Dicas Importantes
+
+#### ✅ Boas práticas:
+
+- **Atualize a base regularmente** com novas informações
+- **Teste com perguntas reais** de leads
+- **Use linguagem do seu público** na base de conhecimento
+- **Monitore os scores** - se ficarem baixos, ajuste a base
+- **Mantenha prompts simples** e diretos
+
+#### ❌ Evite:
+
+- Base de conhecimento muito técnica
+- Prompts muito longos ou complexos
+- Ignorar scores baixos nas simulações
+- Não testar antes de alterações grandes
+
+#### 🎯 Meta ideal:
+
+- **Score médio >0.7** nas simulações
+- **Tempo <3 segundos** por resposta
+- **Respostas relevantes** em 90% dos casos
+- **Tom consistente** com a marca
 
 ---
 
@@ -1609,107 +1830,6 @@ curl -X POST "localhost:8000/engine/decide" \
     "messages_window": [{"id": "1", "text": "quero testar"}]
   }'
 ```
-
-### **Passo 4: Validar logs**
-```bash
-# Ver logs em tempo real
-./logs.sh live
-
-# Procurar por execuções bem-sucedidas
-grep -A5 -B5 "Executando procedimento\|Automação encontrada" backend.log
-```
-
----
-
-## 🔍 **5. POR QUE ESTAVA FALHANDO?**
-
-### **Problema 1: Classificação Correta, Execução Falha**
-- ✅ Sistema detectou "quero testar" como PROCEDIMENTO  
-- ✅ Tentou executar procedimento "liberar_teste"
-- ❌ Arquivo `procedures.yml` vazio → procedimento não encontrado
-- ❌ Retorna plano vazio em vez de fazer fallback
-
-### **Problema 2: Fallback Não Implementado**
-O código deveria fazer fallback para KB quando procedimento falha, mas há um bug:
-
-```python
-# Em procedures.py linha 36-37:
-if not proc:
-    logger.error(f"Procedimento não encontrado: {proc_id}")
-    return {"decision_id": "proc_error", "actions": []}  # ❌ Plano vazio
-```
-
-**Deveria ser:**
-- Retornar erro específico para o orquestrador fazer fallback
-- Ou o orquestrador verificar se plano está vazio e tentar DÚVIDA
-
-### **Problema 3: KB Sendo Ignorado**
-Com arquivos vazios, o fluxo deveria ser:
-1. Classificar como DÚVIDA (ou fallback após procedimento falhar)
-2. Tentar catálogo → vazio  
-3. Usar KB → tem conteúdo
-4. Gerar resposta personalizada
-
-**Mas isso não está acontecendo devido aos bugs acima.**
-
----
-
-## ✅ **PRÓXIMOS PASSOS IMEDIATOS**
-
-1. **Aplicar as configurações YAML** fornecidas acima
-2. **Reiniciar o sistema** para carregar as novas configs  
-3. **Testar** com "quero testar" e "como depositar"
-4. **Validar logs** para confirmar execução correta
-5. **Testar dúvidas não mapeadas** para verificar KB funcionando
-
-**Resultado esperado:** Sistema funcionará conforme documentado no `caminho-duvida.md`! 🎉
-
----
-
-## ✅ **TESTE IMEDIATO - BUG JÁ CORRIGIDO**
-
-### **O sistema AGORA funciona mesmo com arquivos vazios!**
-
-**Teste via Telegram:**
-1. Mande: **"quero testar"**
-2. **ANTES:** Fallback genérico 
-3. **AGORA:** Resposta inteligente do KB sobre teste!
-
-**Teste via Terminal:**
-```bash
-# Iniciar servidor
-cd /home/devbael/mb-v2
-uvicorn app.main:app --port 8000
-
-# Em outro terminal, testar:
-curl -X POST "localhost:8000/channels/telegram/webhook?secret=troque" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "update_id": 999,
-    "message": {
-      "message_id": 1,
-      "from": {"id": 123456789, "first_name": "Teste"},
-      "chat": {"id": 123456789},
-      "text": "como depositar na quotex?"
-    }
-  }'
-```
-
-### **Logs que você verá:**
-```
-✅ Lead: "como depositar na quotex?"
-✅ Sistema classifica: DÚVIDA
-✅ Catálogo carregado: 0 automações
-❌ Nenhuma automação encontrada
-🔍 Consultando base de conhecimento (kb.md)
-✅ KB: encontrados 3 hits sobre depósito
-🤖 Gerando resposta inteligente com contexto KB
-📤 Resposta enviada: "Para depositar na Quotex..."
-```
-
-**A LLM agora responde usando o KB mesmo com arquivos vazios!** 🎯
-
----
 
 ## 🎓 **CONCEITOS FUNDAMENTAIS PARA ENTENDER O SISTEMA**
 

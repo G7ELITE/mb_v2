@@ -14,6 +14,13 @@ from openai import AsyncOpenAI
 from app.data.schemas import Snapshot, KbContext
 from app.settings import settings
 
+# Importar prompt manager para usar prompt personalizado quando disponível
+try:
+    from app.core.rag_prompt_manager import get_current_rag_prompt
+    USE_CUSTOM_PROMPT = True
+except ImportError:
+    USE_CUSTOM_PROMPT = False
+
 logger = logging.getLogger(__name__)
 
 # Limiar padrão de similaridade (configurável)
@@ -122,14 +129,36 @@ class ComparadorSemantico:
             if not kb_text:
                 kb_text = "Nenhum contexto da KB disponível."
             
-            prompt = TEMPLATE_GERACAO_RESPOSTA.format(
-                accounts=json.dumps(snapshot.accounts, ensure_ascii=False),
-                deposit=json.dumps(snapshot.deposit, ensure_ascii=False),
-                agreements=json.dumps(snapshot.agreements, ensure_ascii=False),
-                flags=json.dumps(snapshot.flags, ensure_ascii=False),
-                kb_context=kb_text,
-                pergunta=pergunta
-            )
+            # Usar prompt personalizado se disponível, senão usar padrão
+            if USE_CUSTOM_PROMPT:
+                template = get_current_rag_prompt()
+            else:
+                template = TEMPLATE_GERACAO_RESPOSTA
+                
+            # Adaptação para novo formato do prompt
+            try:
+                # Tentar formato novo (histórico + mensagem atual)
+                historico_fake = f"Lead: '{pergunta}'"  # Simular histórico básico
+                prompt = template.format(
+                    historico_mensagens=historico_fake,
+                    kb_context=kb_text,
+                    mensagem_atual=pergunta
+                )
+            except KeyError:
+                # Fallback para formato antigo (compatibilidade)
+                try:
+                    prompt = template.format(
+                        accounts=json.dumps(snapshot.accounts, ensure_ascii=False),
+                        deposit=json.dumps(snapshot.deposit, ensure_ascii=False),
+                        agreements=json.dumps(snapshot.agreements, ensure_ascii=False),
+                        flags=json.dumps(snapshot.flags, ensure_ascii=False),
+                        kb_context=kb_text,
+                        pergunta=pergunta
+                    )
+                except KeyError as e:
+                    logger.error(f"Erro na formatação do prompt: {e}")
+                    # Fallback simples
+                    prompt = f"Baseado na KB: {kb_text}\n\nPergunta: {pergunta}\n\nResponda de forma objetiva:"
             
             # Chamar LLM com timeout
             response = await asyncio.wait_for(

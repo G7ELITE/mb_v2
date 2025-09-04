@@ -16,7 +16,10 @@ import type {
   RAGSimulationRequest,
   RAGSimulationResult,
   RAGPreset,
-  RAGLogEvent
+  RAGLogEvent,
+  RAGLead,
+  RAGLeadMessage,
+  CreateRAGLeadRequest
 } from '../types';
 
 // Base URL do backend - usar caminhos relativos via proxy
@@ -196,13 +199,45 @@ export const apiService = {
   },
 
   // Stream de simulação (para logs em tempo real)
-  createRAGStreamConnection(message: string, safeMode: boolean = true): EventSource {
+  createRAGStreamConnection(message: string, safeMode: boolean = true, leadId?: number): EventSource {
     const params = new URLSearchParams({
       message,
       safe_mode: safeMode.toString()
     });
     
+    if (leadId) {
+      params.append('lead_id', leadId.toString());
+    }
+    
     return new EventSource(`/api/rag/simulate/stream?${params.toString()}`);
+  },
+
+  // === RAG LEADS ENDPOINTS ===
+
+  // Gerenciar Leads RAG
+  async getRAGLeads(): Promise<RAGLead[]> {
+    const response = await api.get('/api/rag/leads');
+    return response.data;
+  },
+
+  async createRAGLead(request: CreateRAGLeadRequest): Promise<RAGLead> {
+    const response = await api.post('/api/rag/leads', request);
+    return response.data;
+  },
+
+  async deleteRAGLead(leadId: number): Promise<{ message: string }> {
+    const response = await api.delete(`/api/rag/leads/${leadId}`);
+    return response.data;
+  },
+
+  async getRAGLead(leadId: number): Promise<RAGLead> {
+    const response = await api.get(`/api/rag/leads/${leadId}`);
+    return response.data;
+  },
+
+  async addMessageToRAGLead(leadId: number, message: RAGLeadMessage): Promise<{ message: string; total_messages: number }> {
+    const response = await api.post(`/api/rag/leads/${leadId}/messages`, message);
+    return response.data;
   },
 };
 

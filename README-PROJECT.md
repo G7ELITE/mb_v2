@@ -18,45 +18,66 @@ devbael@DESKTOP-7B8L8U5:~/mb-v2$ source .venv/bin/activate
 
 ## 🎯 Visão Geral do Projeto
 
-> **Status Atual**: Sistema completo com **Backend FastAPI** + **Frontend Studio** + **Novas Funcionalidades Avançadas** em produção
+> **Status Atual**: Sistema completo com **Backend FastAPI** + **Frontend Studio** + **Funcionalidades RAG Avançadas** em produção
 > 
-> **Arquitetura Principal**: 
+> **🚀 Escalabilidade & Performance**: 
+> - **Capacidade**: Suporta até **500 leads simultâneos** com resposta em < 3 segundos
+> - **Arquitetura**: Assíncrona com **FastAPI + Redis** para cache distribuído
+> - **Concorrência**: Processamento paralelo com locks por lead (evita conflitos)
+> - **Cache inteligente**: RAG com cache de 60s, comparador semântico otimizado
+> - **Fallbacks**: Sistema resiliente com múltiplas camadas de segurança
+>
+> **🛠️ Stack Tecnológica Completa**:
+> - **Backend**: FastAPI 0.104+, Python 3.11+, SQLAlchemy 2.0, Redis 6+
+> - **Frontend**: React 18, TypeScript, Tailwind CSS, Vite 5
+> - **Base de Dados**: PostgreSQL 14+ com índices JSONB otimizados
+> - **IA**: OpenAI GPT-4o, GPT-4o-mini, o1-preview com function calling
+> - **Infraestrutura**: Ngrok para desenvolvimento, WebSockets/SSE para tempo real
+> 
+> **🧠 Arquitetura Inteligente**: 
 > - **🤖 Intake Agent** (inteligente) processa mensagens e enriquece fatos
 > - **🎛️ Orquestrador** toma decisões baseadas em regras em português natural  
 > - **⚙️ Workers/Tools** executam verificações externas e ações
 > - **📚 Catálogo/Procedimentos** em **PT-BR** controlam respostas automáticas
-> - **🎨 ManyBlack Studio** interface visual para configuração e testes
-> - **🧠 Contexto Persistente** mantém estado entre turnos
+> - **🎨 ManyBlack Studio** interface visual completa para configuração e testes
+> - **🧠 Contexto Persistente** mantém estado entre turnos e reinicializações
 > - **💬 Entendimento de Respostas Curtas** via regex + LLM fallback
-> - **🔍 RAG Inteligente** por turno com cache
-> - **⚖️ Comparador Semântico** prefere automações quando similar
-> - **📋 Fila de Revisão Humana** para respostas geradas
+> - **🔍 RAG Inteligente** com simulação realística e logs em tempo real
+> - **⚖️ Comparador Semântico** prefere automações quando similar (limiar 80%)
+> - **📋 Fila de Revisão Humana** para respostas geradas sem automação
 > - **🎯 Sistema de Confirmação LLM-first** entende 'sim/não' inteligentemente
+> - **🛡️ Páginas RAG** para configuração avançada e simulação sem efeitos colaterais
 
 ### 🚀 Funcionalidades Implementadas
 
 - ✅ **Backend FastAPI** com arquitetura orientada a contexto
-- ✅ **Frontend React** com interface em português brasileiro
+- ✅ **Frontend React** com interface completa em português brasileiro
 - ✅ **Duas trilhas de conversação**: Dúvida (resposta controlada) e Procedimento (funis flexíveis)
 - ✅ **Intake inteligente** com processamento de linguagem natural
-- ✅ **Simulador integrado** para teste de conversas
-- ✅ **Dashboard em tempo real** com métricas do sistema
-- ✅ **Bot Telegram funcional** com resposta automática implementada
+- ✅ **Simulador integrado** para teste de conversas com modo desenvolvedor
+- ✅ **Dashboard em tempo real** com métricas do sistema e saúde
+- ✅ **Bot Telegram funcional** com resposta automática e webhook configurado
 - ✅ **Pipeline de automações** completamente funcional com procedimentos em YAML
 - ✅ **Persistência completa** de leads, perfis e eventos de jornada no PostgreSQL  
 - ✅ **Tools reais** implementados (verify_signup, check_deposit) com simulação
-- ✅ **Catálogo expandido** com 10+ automações e knowledge base detalhada
-- ✅ **Modo escuro completo** com alto contraste
-- ✅ **Interface responsiva** e acessível
+- ✅ **Catálogo expandido** com automações e knowledge base detalhada
+- ✅ **Modo escuro completo** com design moderno e alto contraste
+- ✅ **Interface responsiva** e acessível para desktop/tablet/mobile
 - ✅ **Contexto persistente** do lead entre turnos e reinicializações
-- ✅ **Página de Leads** com filtros avançados e integração com simulador
+- ✅ **Página de Leads** com filtros avançados, busca e ações de lead
 - ✅ **Entendimento de respostas curtas** ("sim/não") via regex e LLM fallback
-- ✅ **RAG por turno** com cache inteligente e contexto da KB
+- ✅ **RAG por turno** com cache inteligente e contexto da KB otimizado
 - ✅ **Comparador semântico** que prefere automações quando similar (limiar 80%)
 - ✅ **Fila de revisão humana** para respostas geradas sem automação equivalente
 - ✅ **Envio seguro** de mensagens blindado contra nulos e botões inválidos
 - ✅ **Telemetria consistente** com action_type padronizado e idempotência
-- ✅ **Merge não-regressivo** do snapshot que não rebaixa fatos sem evidência melhor
+- ✅ **Merge não-regressivo** do snapshot que não rebaixa fatos sem evidência
+- ✅ **Página RAG avançada** com configuração, simulação realística e logs tempo real
+- ✅ **Modelos IA modernos** GPT-4o, GPT-4o-mini e o1-preview integrados
+- ✅ **Simulação sem efeitos colaterais** para testes seguros do sistema
+- ✅ **Streaming de logs** com Server-Sent Events para observabilidade
+- ✅ **Sistema de notificações** com toast popups para feedback do usuário
+- ✅ **Configuração avançada** com tooltips explicativos e presets inteligentes
 
 ---
 
@@ -125,11 +146,21 @@ npm run dev
 **Recursos do Studio:**
 - 🎨 Interface 100% em português brasileiro
 - 🌙 Modo escuro com alto contraste
-- 📱 Design responsivo e acessível
+- 📱 Design responsivo e acessível para todos dispositivos
 - 🔄 Integração em tempo real com o backend
-- 🧪 Simulador de conversas integrado
-- 👥 Página de Leads com filtros avançados
-- 🤖 Sistema de confirmação LLM-first
+- 🧪 Simulador de conversas integrado com modo desenvolvedor
+- 👥 Página de Leads com filtros avançados, busca e ações
+- 🤖 Sistema de confirmação LLM-first inteligente
+- 🧠 **Página RAG** - Nova funcionalidade para:
+  - 📝 **Editor de Base de Conhecimento** com markdown e preview
+  - 🎯 **Configuração de Prompts** com validação de placeholders
+  - 🤖 **Seleção de Modelos IA** (GPT-4o, o1-preview, etc)
+  - ⚙️ **Parâmetros Avançados** (criatividade, foco, profundidade)
+  - 🧪 **Simulação Realística** sem efeitos colaterais
+  - 📊 **Logs em Tempo Real** com scores de similaridade
+  - 📈 **Pipeline de Estágios** visível (busca → rank → composição)
+  - 💾 **Exportação JSONL** para análise posterior
+  - 🍞 **Toasts de Feedback** para todas as ações
 
 **🌐 Nova Implementação Ngrok Unificado:**
 ```bash

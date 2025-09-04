@@ -311,11 +311,33 @@ export interface RAGParameters {
   top_k: number;
   threshold: number;
   re_rank: boolean;
+  enable_semantic_comparison: boolean;
+}
+
+// Tipos para Leads RAG
+export interface RAGLeadMessage {
+  role: 'Lead' | 'GPT';
+  text: string;
+  timestamp: string;
+}
+
+export interface RAGLead {
+  id?: number;
+  name: string;
+  description?: string;
+  messages: RAGLeadMessage[];
+  created_at?: string;
+}
+
+export interface CreateRAGLeadRequest {
+  name: string;
+  description?: string;
+  initial_messages: RAGLeadMessage[];
 }
 
 export interface RAGSimulationRequest {
   message: string;
-  lead_profile: Record<string, any>;
+  lead_id?: number;
   parameters: RAGParameters;
   safe_mode: boolean;
 }

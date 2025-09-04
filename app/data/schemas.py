@@ -83,6 +83,27 @@ class KbContext(BaseModel):
     """Schema para contexto da KB anexado ao snapshot."""
     hits: List[Dict[str, Any]]  # [{texto, fonte, score}]
     topico: str
+    
+    def build_context_string(self) -> str:
+        """
+        Constrói string de contexto a partir dos hits.
+        
+        Returns:
+            String formatada com o contexto dos hits encontrados
+        """
+        if not self.hits:
+            return "Nenhuma informação relevante encontrada na base de conhecimento."
+        
+        context_parts = []
+        for i, hit in enumerate(self.hits, 1):
+            texto = hit.get("texto", "")
+            fonte = hit.get("fonte", "Desconhecida")
+            score = hit.get("score", 0.0)
+            
+            # Formatação mais limpa para o contexto
+            context_parts.append(f"**{fonte}**: {texto}")
+        
+        return "\n\n".join(context_parts)
 
 
 class FilaRevisaoItem(BaseModel):

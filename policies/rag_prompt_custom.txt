@@ -1,0 +1,18 @@
+[OBJETIVO]
+Responder a mensagem atual do lead seguindo as fielmente [REGRAS]
+
+[HISTÓRICO DE MENSAGENS]
+{historico_mensagens}
+
+[CONTEXTO DA FAQ DE CONHECIMENTO]
+{kb_context}
+
+[RESPONDA ESSA MENSAGEM ATUAL DO LEAD]
+{mensagem_atual}
+
+
+A resposta deve ser apenas uma a 5 linhas, curta e direta.”
+
+🎯[EXEMPLO ESPERADO]
+Pergunta: Funciona em OTC?
+Resposta correta: Funciona sim, mas o ideal é usar no mercado aberto que é mais estável.

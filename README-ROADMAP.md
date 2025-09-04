@@ -45,6 +45,11 @@
 - **🛡️ Envio Seguro**: Blindagem contra nulos e botões inválidos
 - **📊 Telemetria Consistente**: Logs padronizados e idempotência
 - **🔄 Merge Não-Regressivo**: Não rebaixa fatos sem evidência melhor
+- **🧪 Página RAG Studio**: Interface completa para configuração e simulação
+- **🤖 Modelos IA Modernos**: GPT-4o, o1-preview com configuração avançada
+- **📈 Simulação Realística**: Teste do pipeline completo sem efeitos colaterais
+- **⚡ Logs Streaming**: Server-Sent Events para observabilidade em tempo real
+- **🍞 Sistema de Toasts**: Feedback visual inteligente para ações do usuário
 
 ---
 
@@ -479,6 +484,17 @@ id_patterns:
 ---
 
 ## 🎯 **Marcos Concluídos**
+
+### ✅ **Implementação #13: Página RAG Avançada no Studio**
+- **Interface RAG completa**: Configuração, simulação e monitoramento
+- **Editor de KB**: Markdown com preview e validação
+- **Configuração de prompts**: Validação de placeholders e histórico
+- **Modelos IA modernos**: GPT-4o, GPT-4o-mini, o1-preview integrados
+- **Simulação realística**: Pipeline completo em modo seguro
+- **Logs em tempo real**: SSE com estágios detalhados e top-N
+- **Sistema de toasts**: Feedback visual para todas as ações
+- **Responsividade**: Interface otimizada para todos dispositivos
+- **Configuração avançada**: Parâmetros com tooltips explicativos
 
 ### ✅ **Implementação #12: MAX MODE - Fases 1 e 2**
 - **FASE 1**: Hook/ApplyPlan/Gate com aplicação de ações E2E

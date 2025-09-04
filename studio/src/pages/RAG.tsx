@@ -13,11 +13,13 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   InformationCircleIcon,
-  ExclamationCircleIcon
+  ExclamationCircleIcon,
+  UserGroupIcon,
+  TrashIcon
 } from '@heroicons/react/24/outline';
 import { apiService } from '../services/api';
 import { useToast } from '../hooks/useToast';
-import ToastContainer from '../components/Toast';
+import PopupContainer from '../components/PopupContainer';
 import { InfoTooltip } from '../components/Tooltip';
 import type { 
   RAGKnowledgeBase, 
@@ -28,16 +30,15 @@ import type {
   RAGSimulationResult,
   RAGLogEvent,
   RAGTopNResult,
-  RAGPreset
+  RAGPreset,
+  RAGLead,
+  RAGLeadMessage,
+  CreateRAGLeadRequest
 } from '../types';
 
 interface RAGForm {
   message: string;
-  leadProfile: {
-    hasAccount: boolean;
-    hasDeposit: boolean;
-    wantsTest: boolean;
-  };
+  lead_id: number | null;
   selectedPreset: RAGPreset;
   useCustomParameters: boolean;
   customParameters: {
@@ -48,6 +49,7 @@ interface RAGForm {
     search_depth: number; // top_k
     relevance_filter: number; // threshold
     enable_rerank: boolean; // re_rank
+    enable_semantic_comparison: boolean; // nova flag
   };
   safeMode: boolean;
 }
@@ -55,6 +57,13 @@ interface RAGForm {
 export default function RAG() {
   // Hook de toast para feedbacks
   const toast = useToast();
+
+  // Estados para gerenciar leads RAG
+  const [leads, setLeads] = useState<RAGLead[]>([]);
+  const [selectedLead, setSelectedLead] = useState<RAGLead | null>(null);
+  const [showCreateLead, setShowCreateLead] = useState(false);
+  const [newLeadName, setNewLeadName] = useState('');
+  const [newLeadDescription, setNewLeadDescription] = useState('');
 
   // Estados principais
   const [knowledgeBase, setKnowledgeBase] = useState<RAGKnowledgeBase | null>(null);
@@ -88,11 +97,7 @@ export default function RAG() {
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<RAGForm>({
     defaultValues: {
       message: '',
-      leadProfile: {
-        hasAccount: false,
-        hasDeposit: false,
-        wantsTest: false
-      },
+      lead_id: null,
       selectedPreset: 'balanced',
       useCustomParameters: false,
       customParameters: {
@@ -102,7 +107,8 @@ export default function RAG() {
         focus: 1.0,
         search_depth: 3,
         relevance_filter: 0.05,
-        enable_rerank: false
+        enable_rerank: false,
+        enable_semantic_comparison: false
       },
       safeMode: true
     }
@@ -114,12 +120,73 @@ export default function RAG() {
   // Carregar dados iniciais
   useEffect(() => {
     loadInitialData();
+    loadLeads();
     return () => {
       if (eventSourceRef.current) {
         eventSourceRef.current.close();
       }
     };
   }, []);
+
+  const loadLeads = async () => {
+    try {
+      const leadsData = await apiService.getRAGLeads();
+      setLeads(leadsData);
+    } catch (error) {
+      console.error('Erro ao carregar leads:', error);
+      toast.error('Erro ao carregar leads', 'Não foi possível carregar a lista de leads');
+    }
+  };
+
+  const createLead = async () => {
+    if (!newLeadName.trim()) {
+      toast.warning('Nome obrigatório', 'Por favor, informe o nome do lead');
+      return;
+    }
+
+    try {
+      const request: CreateRAGLeadRequest = {
+        name: newLeadName,
+        description: newLeadDescription,
+        initial_messages: []  // LEAD CRIADO SEM MENSAGENS FAKE!
+      };
+
+      const newLead = await apiService.createRAGLead(request);
+      setLeads([...leads, newLead]);
+      setNewLeadName('');
+      setNewLeadDescription('');
+      setShowCreateLead(false);
+      
+      toast.success('Lead criado', `Lead "${newLead.name}" criado com sucesso`);
+    } catch (error) {
+      console.error('Erro ao criar lead:', error);
+      toast.error('Erro ao criar lead', 'Não foi possível criar o lead');
+    }
+  };
+
+  const deleteLead = async (leadId: number) => {
+    if (!confirm('Tem certeza que deseja deletar este lead?')) return;
+
+    try {
+      await apiService.deleteRAGLead(leadId);
+      setLeads(leads.filter(lead => lead.id !== leadId));
+      
+      if (selectedLead?.id === leadId) {
+        setSelectedLead(null);
+        setValue('lead_id', null);
+      }
+      
+      toast.success('Lead deletado', 'Lead deletado com sucesso');
+    } catch (error) {
+      console.error('Erro ao deletar lead:', error);
+      toast.error('Erro ao deletar lead', 'Não foi possível deletar o lead');
+    }
+  };
+
+  const selectLead = (lead: RAGLead) => {
+    setSelectedLead(lead);
+    setValue('lead_id', lead.id || null);
+  };
 
   // Auto scroll nos logs
   useEffect(() => {
@@ -197,24 +264,6 @@ export default function RAG() {
       setError('');
       setLogs([]);
 
-      // Construir perfil do lead
-      const leadProfile = {
-        accounts: { 
-          quotex: data.leadProfile.hasAccount ? 'com_conta' : 'nenhum',
-          nyrion: 'desconhecido' 
-        },
-        deposit: { 
-          status: data.leadProfile.hasDeposit ? 'confirmado' : 'nenhum',
-          amount: data.leadProfile.hasDeposit ? 100 : null 
-        },
-        agreements: { 
-          wants_test: data.leadProfile.wantsTest 
-        },
-        flags: { 
-          explained: false 
-        }
-      };
-
       // Usar preset ou parâmetros customizados
       let parameters: RAGParameters;
       
@@ -226,7 +275,8 @@ export default function RAG() {
           top_p: data.customParameters.focus,
           top_k: data.customParameters.search_depth,
           threshold: data.customParameters.relevance_filter,
-          re_rank: data.customParameters.enable_rerank
+          re_rank: data.customParameters.enable_rerank,
+          enable_semantic_comparison: data.customParameters.enable_semantic_comparison
         };
       } else {
         parameters = presets[data.selectedPreset];
@@ -234,23 +284,32 @@ export default function RAG() {
 
       const request: RAGSimulationRequest = {
         message: data.message,
-        lead_profile: leadProfile,
+        lead_id: data.lead_id || undefined,
         parameters,
         safe_mode: data.safeMode
       };
 
       // Iniciar stream de logs se disponível
       if (data.safeMode) {
-        startLogStream(data.message, data.safeMode);
+        startLogStream(data.message, data.safeMode, data.lead_id || undefined);
       }
 
       const result = await apiService.simulateRAG(request);
       setSimulationResult(result);
       
-      toast.success(
-        'Simulação concluída com sucesso!', 
-        `Processada em ${result.processing_time_ms}ms - Classificação: ${result.classification}`
-      );
+      // RECARREGAR LEADS para mostrar histórico REAL atualizado
+      if (data.lead_id) {
+        await loadLeads();
+        toast.success(
+          'Simulação concluída com sucesso!', 
+          `Processada em ${result.processing_time_ms}ms. Histórico do lead foi atualizado com mensagem real!`
+        );
+      } else {
+        toast.success(
+          'Simulação concluída com sucesso!', 
+          `Processada em ${result.processing_time_ms}ms - Classificação: ${result.classification}`
+        );
+      }
 
     } catch (err: any) {
       toast.error('Erro na simulação RAG', err.message);
@@ -260,13 +319,13 @@ export default function RAG() {
     }
   };
 
-  const startLogStream = (message: string, safeMode: boolean) => {
+  const startLogStream = (message: string, safeMode: boolean, leadId?: number) => {
     if (eventSourceRef.current) {
       eventSourceRef.current.close();
     }
 
     try {
-      const eventSource = apiService.createRAGStreamConnection(message, safeMode);
+      const eventSource = apiService.createRAGStreamConnection(message, safeMode, leadId);
       eventSourceRef.current = eventSource;
       setStreamActive(true);
 
@@ -695,6 +754,25 @@ Resposta:"
                         <InfoTooltip content="Reordena os resultados da busca usando algoritmos avançados para melhor relevância (mais lento, mas mais preciso)" />
                       </div>
                     </div>
+
+                    {/* Comparação Semântica */}
+                    <div className="border-t border-gray-200 dark:border-gray-600 pt-4">
+                      <div className="flex items-center space-x-2">
+                        <input
+                          type="checkbox"
+                          {...register('customParameters.enable_semantic_comparison')}
+                          className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                        />
+                        <label className="text-sm text-gray-700 dark:text-gray-300">
+                          <strong>Comparar com Automações</strong>
+                        </label>
+                        <InfoTooltip content="Se habilitado, compara a resposta gerada com automações disponíveis. Se desabilitado, responde diretamente usando apenas o prompt e KB" />
+                      </div>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 ml-6">
+                        ✅ Habilitado: Resposta pode ser substituída por automação similar<br/>
+                        ❌ Desabilitado: Resposta direta da IA sem comparação
+                      </p>
+                    </div>
                   </div>
                 )}
 
@@ -730,12 +808,176 @@ Resposta:"
             )}
           </div>
 
+          {/* Bloco: Leads RAG */}
+          <div className="bg-white dark:bg-gray-800 shadow rounded-lg">
+            <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <UserGroupIcon className="h-5 w-5 text-gray-400 mr-2" />
+                  <h3 className="text-lg font-medium text-gray-900 dark:text-white">Leads RAG</h3>
+                  <span className="ml-3 px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">
+                    {leads.length} leads
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowCreateLead(true)}
+                  className="px-3 py-1 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                >
+                  + Novo Lead
+                </button>
+              </div>
+            </div>
+
+            <div className="p-4">
+              {/* Lista de Leads */}
+              {leads.length === 0 ? (
+                <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                  <UserGroupIcon className="h-12 w-12 mx-auto mb-3 opacity-30" />
+                  <p>Nenhum lead criado ainda</p>
+                  <p className="text-sm">Crie um lead para usar histórico real nas simulações</p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                  {leads.map((lead) => (
+                    <div
+                      key={lead.id}
+                      className={`p-3 border rounded-lg cursor-pointer transition-colors ${
+                        selectedLead?.id === lead.id
+                          ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
+                          : 'border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500'
+                      }`}
+                      onClick={() => selectLead(lead)}
+                    >
+                      <div className="flex justify-between items-start">
+                        <div className="flex-1">
+                          <h4 className="font-medium text-gray-900 dark:text-white text-sm">
+                            {lead.name}
+                          </h4>
+                          {lead.description && (
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                              {lead.description}
+                            </p>
+                          )}
+                          <div className="flex items-center mt-2 text-xs text-gray-400">
+                            <span>{lead.messages.length} mensagens</span>
+                            {selectedLead?.id === lead.id && (
+                              <span className="ml-2 text-blue-600 dark:text-blue-400">● Selecionado</span>
+                            )}
+                          </div>
+                        </div>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            deleteLead(lead.id!);
+                          }}
+                          className="text-red-500 hover:text-red-700 p-1"
+                          title="Deletar lead"
+                        >
+                          <TrashIcon className="h-4 w-4" />
+                        </button>
+                      </div>
+
+                      {/* Preview do Histórico */}
+                      {selectedLead?.id === lead.id && lead.messages.length > 0 && (
+                        <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
+                          <p className="text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Últimas mensagens:
+                          </p>
+                          <div className="space-y-1 max-h-20 overflow-y-auto">
+                            {lead.messages.slice(-3).map((msg, idx) => (
+                              <div key={idx} className="text-xs">
+                                <span className={`font-medium ${msg.role === 'Lead' ? 'text-blue-600' : 'text-green-600'}`}>
+                                  {msg.role}:
+                                </span>
+                                <span className="ml-1 text-gray-600 dark:text-gray-400">
+                                  {msg.text}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Modal de Criar Lead */}
+              {showCreateLead && (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-md w-full mx-4">
+                    <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                      Criar Novo Lead RAG
+                    </h3>
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                          Nome *
+                        </label>
+                        <input
+                          type="text"
+                          value={newLeadName}
+                          onChange={(e) => setNewLeadName(e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                          placeholder="Ex: João Silva"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                          Descrição
+                        </label>
+                        <input
+                          type="text"
+                          value={newLeadDescription}
+                          onChange={(e) => setNewLeadDescription(e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+                          placeholder="Ex: Lead interessado em opções binárias"
+                        />
+                      </div>
+                      <div className="flex justify-end space-x-3 pt-4">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setShowCreateLead(false);
+                            setNewLeadName('');
+                            setNewLeadDescription('');
+                          }}
+                          className="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
+                        >
+                          Cancelar
+                        </button>
+                        <button
+                          type="button"
+                          onClick={createLead}
+                          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                          Criar Lead
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
           {/* Bloco: Simulação */}
           <div className="bg-white dark:bg-gray-800 shadow rounded-lg">
             <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-              <div className="flex items-center">
-                <PlayIcon className="h-5 w-5 text-gray-400 mr-2" />
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white">Simulação RAG</h3>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <PlayIcon className="h-5 w-5 text-gray-400 mr-2" />
+                  <h3 className="text-lg font-medium text-gray-900 dark:text-white">Simulação RAG</h3>
+                </div>
+                {selectedLead && (
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm text-gray-600 dark:text-gray-400">Usando:</span>
+                    <span className="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">
+                      {selectedLead.name}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
             
@@ -961,8 +1203,8 @@ Resposta:"
         </div>
       </div>
 
-      {/* Toast Container */}
-      <ToastContainer toasts={toast.toasts} onRemove={toast.removeToast} />
+      {/* Popup Container - Notificações centralizadas */}
+      <PopupContainer toasts={toast.toasts} onRemove={toast.removeToast} />
     </div>
   );
 }

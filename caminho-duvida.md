@@ -342,3 +342,132 @@ O sistema está preparado para evoluir:
 
 **Lead:** "como depositar na quotex?"  
 **Bot:** "💰 Para depositar na Quotex: 1️⃣ Acesse sua conta..." + instruções completas
+
+---
+
+## 🚀 Novas Funcionalidades: Sistema RAG Avançado
+
+### 🧠 Página RAG no Studio
+
+O ManyBlack V2 agora tem uma **página especial para configurar** como o sistema responde às dúvidas dos leads. É uma ferramenta poderosa mas fácil de usar:
+
+#### 📝 Editor de Base de Conhecimento
+- **Interface visual** para editar o `kb.md`
+- **Preview em tempo real** do conteúdo
+- **Validação automática** de formato
+- **Notificações** quando salva com sucesso
+
+#### 🎯 Configuração de Prompts
+- **Editor visual** do prompt que a IA usa
+- **Validação de placeholders** (mostra se está correto)
+- **Diferentes templates** para diferentes situações
+
+#### 🤖 Modelos de IA Modernos
+O sistema agora suporta os modelos mais avançados:
+- **GPT-4o**: Equilibrado, boa qualidade e velocidade
+- **GPT-4o-mini**: Mais rápido para respostas simples
+- **o1-preview**: Máxima qualidade para casos complexos
+
+#### ⚙️ Configurações Avançadas (com nomes amigáveis)
+- **Criatividade**: Quão variado o bot pode ser nas respostas
+- **Tamanho da Resposta**: Respostas curtas vs detalhadas
+- **Foco**: Se deve considerar várias possibilidades ou ser direto
+- **Profundidade de Busca**: Quantas informações da KB considerar
+- **Filtro de Relevância**: Quão relacionada a informação deve ser
+
+### 🧪 Simulação Realística
+
+#### Teste Sem Riscos
+- **Simula exatamente** como um lead real experimentaria
+- **Modo seguro**: Não afeta leads reais nem dados do sistema
+- **Logs detalhados** mostrando cada passo
+
+#### Como usar:
+1. **Digite mensagem do lead**: "quanto preciso depositar?"
+2. **Configure perfil**: tem conta? já depositou? quer teste?
+3. **Clique Simular**: veja exatamente o que aconteceria
+
+#### Logs em Tempo Real:
+```
+🔄 Montando perfil do lead...
+🔍 Buscando informações na base de conhecimento...
+📊 Encontrados 3 resultados relevantes (score: 0.89)
+🤖 Enviando prompt para GPT-4o...
+💬 Resposta gerada pela IA (245 caracteres)
+⚖️ Comparando com automações disponíveis...
+✅ Preparando resposta final para o lead
+```
+
+#### Top-N Resultados:
+Mostra **exatamente** o que o sistema encontrou:
+- **Texto encontrado**: "Depósito mínimo Quotex: $10"
+- **Score**: 0.89 (quão relevante é - 0 a 1)
+- **Fonte**: De onde veio a informação na KB
+
+### 📊 Análise e Monitoramento
+
+#### Métricas em Tempo Real:
+- **Tempo de resposta**: Quantos milissegundos demorou
+- **Quantidade de hits**: Quantas informações foram encontradas
+- **Score médio**: Qualidade geral da busca
+- **Modelo usado**: Qual IA processou a pergunta
+
+#### Exportação de Dados:
+- **Formato JSONL**: Para análise posterior
+- **Filtros avançados**: Por estágio, por score, por modelo
+- **Busca rápida**: Encontrar simulações específicas
+
+### 💡 Benefícios Práticos
+
+#### Para Operadores:
+- **Interface amigável**: Não precisa editar arquivos técnicos
+- **Feedback visual**: Toasts mostram se ações deram certo
+- **Simulação segura**: Teste antes de afetar leads reais
+- **Tooltips explicativos**: Entenda cada opção
+
+#### Para o Sistema:
+- **Respostas mais inteligentes**: IA considera mais contexto
+- **Performance otimizada**: Cache de 60s para respostas similares
+- **Modelos modernos**: Usa a IA mais avançada disponível
+- **Observabilidade completa**: Vê cada passo do processo
+
+#### Para Leads:
+- **Respostas mais precisas**: Sistema encontra informações melhores
+- **Tempo de resposta rápido**: Cache e otimizações
+- **Tom consistente**: Prompts padronizados
+- **Informações atualizadas**: Base editada visualmente
+
+### 🔧 Casos de Uso Práticos
+
+#### Cenário 1: Lead pergunta "como depositar?"
+**Antes**: Resposta genérica sempre igual
+**Agora**: 
+- Sistema busca informações específicas sobre depósito
+- Considera se lead já tem conta ou não
+- Personaliza resposta baseada no perfil
+- Mostra passo a passo relevante
+
+#### Cenário 2: Resposta não está boa
+**Antes**: Precisava editar arquivo técnico
+**Agora**:
+- Abra a página RAG
+- Edite a base de conhecimento visualmente
+- Ajuste o prompt se necessário
+- Teste com simulação
+- Publique quando estiver satisfeito
+
+#### Cenário 3: Sistema muito lento
+**Antes**: Difícil identificar o problema
+**Agora**:
+- Veja logs em tempo real mostrando onde demora
+- Ajuste profundidade de busca
+- Mude para modelo mais rápido
+- Monitor performance na simulação
+
+#### Cenário 4: Quero entender por que respondeu isso
+**Antes**: Logs técnicos complexos
+**Agora**:
+- Veja exatamente quais informações foram encontradas
+- Scores de relevância para cada uma
+- Prompt completo enviado para IA
+- Resultado final explicado
