@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  # Aplicação principal
+  app:
+    build: .
+    container_name: manyblack-app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=production
+    env_file:
+      - .env  # Arquivo .env de produção na VPS
+    depends_on:
+      - postgres
+      - redis
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    networks:
+      - manyblack-network
+
+  # PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: manyblack-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: manyblack_v2
+      POSTGRES_USER: mbuser
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backups:/backups
+    ports:
+      - "5432:5432"
+    networks:
+      - manyblack-network
+
+  # Redis
+  redis:
+    image: redis:7-alpine
+    container_name: manyblack-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - manyblack-network
+
+  # Nginx (Reverse Proxy)
+  nginx:
+    image: nginx:alpine
+    container_name: manyblack-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - ./static:/var/www/static:ro
+    depends_on:
+      - app
+    networks:
+      - manyblack-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  manyblack-network:
+    driver: bridge

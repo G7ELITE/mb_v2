@@ -107,3 +107,33 @@ Error: read ECONNRESET
 1:59:54 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css
 2:02:57 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css
 2:05:08 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css
+1:09:57 PM [vite] vite.config.ts changed, restarting server...
+✘ [ERROR] Expected ";" but found ")"
+
+    vite.config.ts:72:1:
+      72 │ })
+         │  ^
+         ╵  ;
+
+failed to load config from /home/devbael/mb-v2/studio/vite.config.ts
+1:09:58 PM [vite] Build failed with 1 error:
+vite.config.ts:72:1: ERROR: Expected ";" but found ")"
+1:09:58 PM [vite] server restart failed
+1:10:08 PM [vite] vite.config.ts changed, restarting server...
+✘ [ERROR] Expected ";" but found ")"
+
+    vite.config.ts:73:1:
+      73 │ })
+         │  ^
+         ╵  ;
+
+failed to load config from /home/devbael/mb-v2/studio/vite.config.ts
+1:10:08 PM [vite] Build failed with 1 error:
+vite.config.ts:73:1: ERROR: Expected ";" but found ")"
+1:10:08 PM [vite] server restart failed
+1:10:11 PM [vite] vite.config.ts changed, restarting server...
+1:10:11 PM [vite] server restarted.
+1:12:25 PM [vite] vite.config.ts changed, restarting server...
+1:12:26 PM [vite] server restarted.
+1:33:57 PM [vite] vite.config.ts changed, restarting server...
+1:33:57 PM [vite] server restarted.

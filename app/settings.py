@@ -1,9 +1,10 @@
+import os
 from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
-    APP_ENV: str = "dev"
+    APP_ENV: str = "development"
     APP_PORT: int = 8000
     OPENAI_API_KEY: str | None = None
     DB_HOST: str = "127.0.0.1"
@@ -12,9 +13,15 @@ class Settings(BaseSettings):
     DB_USER: str = "mbuser"
     DB_PASSWORD: str = "change-me"
     REDIS_URL: str | None = None
-    TELEGRAM_BOT_TOKEN: str = "8365690952:AAE6KhKQ0qqmxM3iUvX0n9WOCS-WCFzXSnI"
+    TELEGRAM_BOT_TOKEN: str = ""
     TELEGRAM_WEBHOOK_SECRET: str = ""
     JWT_SECRET: str = ""
+    
+    # URLs para diferentes ambientes
+    FRONTEND_URL: str = "http://localhost:5173"
+    BACKEND_URL: str = "http://localhost:8000"
+    DOMAIN: str = "localhost"
+    CORS_ORIGINS: str = "http://localhost:5173,http://localhost:5174,http://127.0.0.1:5173,http://127.0.0.1:5174"
     
     # Configurações do sistema de confirmação LLM-first
     CONFIRM_AGENT_MODE: str = "llm_first"  # llm_first | hybrid | det_only

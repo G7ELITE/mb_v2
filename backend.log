@@ -2366,3 +2366,39 @@ INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/prompt HTTP/1
 INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
 Lead RAG deletado: ID 1
 INFO:     2804:7f0:9200:de4e:9ed0:60cd:11bc:dc9f:0 - "DELETE /api/rag/leads/1 HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'app/settings.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [14993]
+/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_id" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [23245]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [23245]
+/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_id" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [23280]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [23280]
+/home/devbael/mb-v2/.venv/lib/python3.12/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field "model_id" has conflict with protected namespace "model_".
+
+You may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.
+  warnings.warn(
+INFO:     Started server process [24359]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.

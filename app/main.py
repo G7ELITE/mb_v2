@@ -35,15 +35,12 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# CORS para permitir acesso do Studio (Vite dev server)
+# CORS - configuração dinâmica baseada no ambiente
+cors_origins = settings.CORS_ORIGINS.split(",") if settings.CORS_ORIGINS else ["http://localhost:5173"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://localhost:5174",
-        "http://127.0.0.1:5173",
-        "http://127.0.0.1:5174",
-    ],
+    allow_origins=cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
