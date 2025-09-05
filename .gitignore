@@ -40,3 +40,6 @@ nginx/ssl/*.crt
 studio/vite.config.ts.backup
 studio/vite.config.ts.old
 studio/build.js
+__pycache__/
+*.pyc
+*.log
