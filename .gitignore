@@ -1,17 +1,21 @@
-.env
-.env
-.env
-.env
+# Ambiente/segredos
+.env*
+!.env.example
+!env.*.example
 
 # Python / cache
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 .pytest_cache/
+.venv/
 
 # Node/Vite
 node_modules/
 studio/node_modules/
 dist/
+studio/dist/
 build/
 
 # Logs / artefatos locais
@@ -22,8 +26,17 @@ dump.rdb
 ngrok.log
 .audit_result.json
 
-# Ambiente/segredos/venv
-.env
-.env.*
-!.env.example
-.venv/
+# Backups
+*.backup
+*.bak
+*.tmp
+
+# SSL/Certificados
+nginx/ssl/*.pem
+nginx/ssl/*.key
+nginx/ssl/*.crt
+
+# Configs duplicados do Vite (manter apenas vite.config.ts)
+studio/vite.config.ts.backup
+studio/vite.config.ts.old
+studio/build.js
