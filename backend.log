@@ -3068,3 +3068,86 @@ INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/rag/prompt HTTP/
 INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
 INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/equipe/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/equipe/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/equipe/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/equipe/prompt HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/equipe/parameters HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/equipe/parameters HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/equipe/history?limit=50 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/equipe/history?limit=50 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/equipe/consultas?limit=100 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/equipe/consultas?limit=100 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/equipe/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/equipe/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/equipe/prompt HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/equipe/parameters HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/equipe/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/equipe/history?limit=50 HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/equipe/parameters HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/equipe/history?limit=50 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:b8ce:f166:73f5:51a5:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/prompt HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/parameters HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/parameters HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/history?limit=50 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/history?limit=50 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/consultas?limit=100 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/consultas?limit=100 HTTP/1.1" 200 OK
+Consulta 33 atualizada pela equipe
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "PUT /api/equipe/consultas/33?pergunta=como+funciona+o+rob%C3%B4%3Fteste&resposta=O+rob%C3%B4+funciona+em+nuvem.+teste HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/prompt HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/parameters HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/parameters HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/history?limit=50 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/consultas?limit=100 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/history?limit=50 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/consultas?limit=100 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/prompt HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/parameters HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/consultas?limit=100 HTTP/1.1" 200 OK
+📋 Parser FAQ: 10 seções de perguntas/respostas criadas
+KB carregada: 10 seções
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/parameters HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/history?limit=50 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/consultas?limit=100 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/equipe/history?limit=50 HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/rag/presets HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/rag/prompt HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/rag/knowledge-base HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/rag/models HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/rag/leads HTTP/1.1" 200 OK
+INFO:     2804:1054:4018:caf0:2c0d:d6a0:333f:9dc3:0 - "GET /api/rag/presets HTTP/1.1" 200 OK

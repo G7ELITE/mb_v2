@@ -21,6 +21,15 @@ import { apiService } from '../services/api';
 import { useToast } from '../hooks/useToast';
 import PopupContainer from '../components/PopupContainer';
 import { InfoTooltip } from '../components/Tooltip';
+import { 
+  loadRAGConfig, 
+  saveRAGConfig, 
+  configToRAGParameters, 
+  DEFAULT_RAG_CONFIG,
+  AVAILABLE_MODELS,
+  validateRAGConfig,
+  type RAGGlobalConfig 
+} from '../utils/ragConfig';
 import type { 
   RAGKnowledgeBase, 
   RAGPrompt, 
@@ -96,28 +105,59 @@ export default function RAG() {
   const eventSourceRef = useRef<EventSource | null>(null);
   const logsEndRef = useRef<HTMLDivElement>(null);
 
+  // Carregar configuração global
+  const [globalConfig, setGlobalConfig] = useState<RAGGlobalConfig>(loadRAGConfig());
+
   // Form
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<RAGForm>({
     defaultValues: {
       message: '',
       lead_id: null,
       selectedPreset: 'balanced',
-      useCustomParameters: false,
+      useCustomParameters: true, // Sempre usar configuração global
       customParameters: {
-        model_id: 'gpt-4o',
-        creativity: 0.3,
-        response_length: 400,
-        focus: 1.0,
-        search_depth: 3,
-        relevance_filter: 0.65,  // Aligned with Equipe threshold
-        enable_rerank: false,
-        enable_semantic_comparison: false
+        model_id: globalConfig.model_id,
+        temperature: globalConfig.temperature,
+        max_tokens: globalConfig.max_tokens,
+        top_p: globalConfig.top_p,
+        top_k: globalConfig.top_k,
+        threshold: globalConfig.threshold,
+        re_rank: globalConfig.re_rank,
+        enable_semantic_comparison: globalConfig.enable_semantic_comparison
       },
       safeMode: true
     }
   });
 
   const useCustomParameters = watch('useCustomParameters');
+  const watchedParams = watch('customParameters');
+
+  // Função para salvar configurações globalmente
+  const handleConfigSave = () => {
+    const currentParams = watchedParams;
+    const newConfig: RAGGlobalConfig = {
+      model_id: currentParams.model_id,
+      temperature: currentParams.temperature,
+      max_tokens: currentParams.max_tokens,
+      top_p: currentParams.top_p,
+      top_k: currentParams.top_k,
+      threshold: currentParams.threshold,
+      re_rank: currentParams.re_rank,
+      enable_semantic_comparison: currentParams.enable_semantic_comparison
+    };
+
+    // Validar configuração
+    const errors = validateRAGConfig(newConfig);
+    if (errors.length > 0) {
+      toast.error(`Erro na configuração: ${errors.join(', ')}`);
+      return;
+    }
+
+    // Salvar globalmente
+    saveRAGConfig(newConfig);
+    setGlobalConfig(newConfig);
+    toast.success('✅ Configurações salvas e aplicadas à tela Equipe!');
+  };
 
   // Carregar dados iniciais
   useEffect(() => {
@@ -617,9 +657,9 @@ Resposta:"
                         {...register('customParameters.model_id')}
                         className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
                       >
-                        {models.map((model) => (
+                        {AVAILABLE_MODELS.map((model) => (
                           <option key={model.id} value={model.id}>
-                            {model.name} {!model.available && '(indisponível)'}
+                            {model.name} - {model.description}
                           </option>
                         ))}
                       </select>
@@ -768,9 +808,24 @@ Resposta:"
                         ❌ Desabilitado: Resposta direta da IA sem comparação
                       </p>
                     </div>
+
+                    {/* Botão Salvar Configurações Globais */}
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-600">
+                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                        <span className="font-medium">💡 Configurações Globais:</span> Suas alterações serão aplicadas automaticamente na tela Equipe
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleConfigSave}
+                        className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md font-medium flex items-center space-x-2 text-sm"
+                      >
+                        <span>💾</span>
+                        <span>Salvar e Aplicar</span>
+                      </button>
+                    </div>
                   </div>
                 )}
-
+  
                 {/* Lista de modelos */}
                 {models.length > 0 && (
                   <div>

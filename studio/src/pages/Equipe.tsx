@@ -22,8 +22,14 @@ import { useToast } from '../hooks/useToast';
 import PopupContainer from '../components/PopupContainer';
 import { InfoTooltip } from '../components/Tooltip';
 import EquipeLayout from '../components/EquipeLayout';
+import { 
+  loadRAGConfig, 
+  configToRAGParameters,
+  useRAGConfigSync,
+  type RAGGlobalConfig 
+} from '../utils/ragConfig';
 
-// Tipos específicos para EQUIPE
+// Tipos específicos para EQUIPE - IDÊNTICOS à API RAG
 interface EquipeParameters {
   model_id: string;
   temperature: number;
@@ -32,12 +38,12 @@ interface EquipeParameters {
   top_k: number;
   threshold: number;
   re_rank: boolean;
+  enable_semantic_comparison: boolean;
 }
 
 interface EquipeSimulationRequest {
   message: string;
-  preset: string;
-  custom_parameters?: EquipeParameters;
+  parameters: EquipeParameters;  // Obrigatório - IGUAL à API RAG
   safe_mode: boolean;
   session_id?: string;
   funcionario_id?: string;
@@ -109,24 +115,49 @@ export default function Equipe() {
   // Referências
   const simulationEndRef = useRef<HTMLDivElement>(null);
 
-  // Form
+  // Carregar configuração global (sincronizada com tela RAG)
+  const [globalConfig, setGlobalConfig] = useState<RAGGlobalConfig>(loadRAGConfig());
+  const { handleConfigChange } = useRAGConfigSync();
+
+  // Form - sempre usa configuração global da tela RAG
   const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<EquipeForm>({
     defaultValues: {
       message: '',
       selectedPreset: 'balanced',
-      useCustomParameters: false,
+      useCustomParameters: true, // Sempre usar configuração global
       customParameters: {
-        model_id: 'gpt-4o-mini',
-        temperature: 0.3,
-        max_tokens: 800,
-        top_p: 0.9,
-        top_k: 5,
-        threshold: 0.65,  // Lowered for better KB matching
-        re_rank: true
+        model_id: globalConfig.model_id,
+        temperature: globalConfig.temperature,
+        max_tokens: globalConfig.max_tokens,
+        top_p: globalConfig.top_p,
+        top_k: globalConfig.top_k,
+        threshold: globalConfig.threshold,
+        re_rank: globalConfig.re_rank,
+        enable_semantic_comparison: globalConfig.enable_semantic_comparison
       },
       safeMode: false
     }
   });
+
+  // Sincronizar com mudanças nas configurações da tela RAG
+  useEffect(() => {
+    const cleanup = handleConfigChange((newConfig) => {
+      console.log('🔄 Equipe: Configurações atualizadas da tela RAG:', newConfig);
+      setGlobalConfig(newConfig);
+      
+      // Atualizar valores do form
+      setValue('customParameters.model_id', newConfig.model_id);
+      setValue('customParameters.temperature', newConfig.temperature);
+      setValue('customParameters.max_tokens', newConfig.max_tokens);
+      setValue('customParameters.top_p', newConfig.top_p);
+      setValue('customParameters.top_k', newConfig.top_k);
+      setValue('customParameters.threshold', newConfig.threshold);
+      setValue('customParameters.re_rank', newConfig.re_rank);
+      setValue('customParameters.enable_semantic_comparison', newConfig.enable_semantic_comparison);
+    });
+
+    return cleanup;
+  }, [handleConfigChange, setValue]);
 
   const watchAll = watch();
 
@@ -189,15 +220,12 @@ export default function Equipe() {
     setSimulationResult(null);
 
     try {
+      // USAR CONFIGURAÇÃO GLOBAL SINCRONIZADA COM TELA RAG
       const request: EquipeSimulationRequest = {
         message: data.message.trim(),
-        preset: data.selectedPreset,
+        parameters: configToRAGParameters(globalConfig),
         safe_mode: data.safeMode
       };
-
-      if (data.useCustomParameters) {
-        request.custom_parameters = data.customParameters;
-      }
 
       const response = await apiService.simulateEquipe(request);
       setSimulationResult(response);
@@ -394,36 +422,30 @@ export default function Equipe() {
               </div>
 
               {/* Configurações (só para admin) */}
-              {isAdmin && (
-                <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
-                  <h3 className="font-medium text-gray-900 dark:text-white mb-3">Configurações</h3>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Preset */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Preset</label>
-                      <select 
-                        {...register('selectedPreset')}
-                        className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                      >
-                        <option value="conservative">Conservativo</option>
-                        <option value="balanced">Balanceado</option>
-                        <option value="creative">Criativo</option>
-                      </select>
-                    </div>
-
-                    {/* Safe Mode */}
-                    <div className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        {...register('safeMode')}
-                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                      />
-                      <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Modo Seguro</label>
-                    </div>
+              {/* Indicador de Configuração Global */}
+              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-4">
+                <div className="flex items-center space-x-2">
+                  <div className="flex-shrink-0">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                   </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-blue-900 dark:text-blue-200">
+                      Configurações Sincronizadas
+                    </p>
+                  </div>
+                  {isAdmin && (
+                    <div className="flex-shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => window.open('/rag', '_blank')}
+                        className="text-blue-600 hover:text-blue-800 text-xs underline"
+                      >
+                        Configurar na tela RAG
+                      </button>
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
 
               {/* Botão de Enviar */}
               <div className="flex justify-between items-center pt-4">

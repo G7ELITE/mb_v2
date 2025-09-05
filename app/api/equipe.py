@@ -29,12 +29,23 @@ logger = logging.getLogger(__name__)
 router = APIRouter()
 
 # Modelos de dados para a API da EQUIPE
+# IMPORTAR RAGParameters da API RAG para garantir consistência 100%
+class RAGParameters(BaseModel):
+    """Parâmetros idênticos aos da API RAG"""
+    model_id: str = Field(..., description="ID do modelo selecionado")
+    temperature: float = Field(0.3, ge=0, le=1, description="Temperatura da geração")
+    max_tokens: int = Field(300, ge=50, le=2000, description="Máximo de tokens")
+    top_p: float = Field(1.0, ge=0, le=1, description="Top-p sampling")
+    top_k: int = Field(3, ge=1, le=10, description="Top-K retrieval")
+    threshold: float = Field(0.65, ge=0, le=1, description="Threshold de similaridade")
+    re_rank: bool = Field(False, description="Se deve re-rankear resultados")
+    enable_semantic_comparison: bool = Field(False, description="Se deve comparar resposta com automações")
+
 class EquipeSimulationRequest(BaseModel):
-    """Requisição de simulação para equipe"""
-    message: str
-    preset: str = "balanced"
-    custom_parameters: Optional[Dict[str, Any]] = None
-    safe_mode: bool = False
+    """Requisição de simulação para equipe - IDÊNTICA à RAG"""
+    message: str = Field(..., description="Mensagem do funcionário para simular")
+    parameters: RAGParameters = Field(..., description="Parâmetros da simulação (MESMOS da RAG)")
+    safe_mode: bool = Field(False, description="Modo seguro (sem efeitos colaterais)")
     session_id: Optional[str] = None
     funcionario_id: Optional[str] = None
 
@@ -160,48 +171,18 @@ async def simulate_equipe_response(
         # Obter serviço RAG
         rag_service = get_rag_service()
         
-        # Definir parâmetros baseados no preset ou customizados
-        if request.custom_parameters:
-            parameters = request.custom_parameters
-        else:
-            presets = {
-                "conservative": {
-                    "model_id": "gpt-4o-mini",
-                    "temperature": 0.1,
-                    "max_tokens": 500,
-                    "top_p": 0.8,
-                    "top_k": 3,
-                    "threshold": 0.75,  # Lowered from 0.85
-                    "re_rank": True
-                },
-                "balanced": {
-                    "model_id": "gpt-4o-mini",
-                    "temperature": 0.3,
-                    "max_tokens": 800,
-                    "top_p": 0.9,
-                    "top_k": 5,
-                    "threshold": 0.65,  # Lowered from 0.75
-                    "re_rank": True
-                },
-                "creative": {
-                    "model_id": "gpt-4o-mini",
-                    "temperature": 0.7,
-                    "max_tokens": 1000,
-                    "top_p": 0.95,
-                    "top_k": 7,
-                    "threshold": 0.55,  # Lowered from 0.65
-                    "re_rank": False
-                }
-            }
-            parameters = presets.get(request.preset, presets["balanced"])
+        # USAR EXATAMENTE OS MESMOS PARÂMETROS DA API RAG
+        # Não mais presets - usar request.parameters diretamente como na API RAG
+        logger.info(f"🎯 EQUIPE: Usando parâmetros idênticos à API RAG")
+        logger.info(f"⚙️ EQUIPE: Modelo: {request.parameters.model_id}, Temp: {request.parameters.temperature}, Threshold: {request.parameters.threshold}")
         
         # Executar simulação RAG usando o mesmo fluxo da API RAG original
         prompt_template = get_current_rag_prompt()
         
-        # Buscar contexto na knowledge base (mesmo método da API RAG)
+        # Buscar contexto na knowledge base - IDÊNTICO à API RAG
         rag_context = await rag_service.buscar_contexto_kb(
             request.message, 
-            top_k=parameters.get("top_k", 5)
+            top_k=request.parameters.top_k
         )
         
         # Preparar contexto KB - USANDO O MESMO MÉTODO DA API RAG
@@ -209,11 +190,11 @@ async def simulate_equipe_response(
         kb_hits = []
         
         if rag_context and rag_context.hits:
-            # Aplicar threshold primeiro
-            hits_filtrados = [hit for hit in rag_context.hits if hit.get('score', 0) >= parameters.get("threshold", 0.75)]
+            # Aplicar threshold primeiro - IDÊNTICO à API RAG
+            hits_filtrados = [hit for hit in rag_context.hits if hit.get('score', 0) >= request.parameters.threshold]
             
-            # Aplicar re_rank se habilitado
-            if parameters.get("re_rank", True):
+            # Aplicar re_rank se habilitado - IDÊNTICO à API RAG
+            if request.parameters.re_rank:
                 # Re-ranking (ordenar por score)
                 hits_filtrados = sorted(hits_filtrados, key=lambda x: x.get('score', 0), reverse=True)
             
@@ -228,7 +209,7 @@ async def simulate_equipe_response(
             if hits_filtrados:
                 kb_hits = hits_filtrados
                 
-            logger.info(f"🎯 CONTEXTO EQUIPE FINAL: {len(hits_filtrados)} hits após threshold {parameters.get('threshold', 0.75)}")
+            logger.info(f"🎯 CONTEXTO EQUIPE FINAL: {len(hits_filtrados)} hits após threshold {request.parameters.threshold}")
         
         # Formatar prompt com contextos
         formatted_prompt = prompt_template.format(
@@ -243,15 +224,15 @@ async def simulate_equipe_response(
         
         client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
         
-        logger.info(f"🚀 EQUIPE: Fazendo chamada para OpenAI - Modelo: {parameters.get('model_id', 'gpt-4o-mini')}")
-        logger.info(f"⚙️ EQUIPE: Parâmetros - temp={parameters.get('temperature', 0.3)}, max_tokens={parameters.get('max_tokens', 800)}, top_p={parameters.get('top_p', 0.9)}")
+        logger.info(f"🚀 EQUIPE: Fazendo chamada para OpenAI - Modelo: {request.parameters.model_id}")
+        logger.info(f"⚙️ EQUIPE: Parâmetros - temp={request.parameters.temperature}, max_tokens={request.parameters.max_tokens}, top_p={request.parameters.top_p}")
         
         llm_response = await client.chat.completions.create(
-            model=parameters.get("model_id", "gpt-4o-mini"),
+            model=request.parameters.model_id,
             messages=[{"role": "user", "content": formatted_prompt}],
-            temperature=parameters.get("temperature", 0.3),
-            max_tokens=parameters.get("max_tokens", 800),
-            top_p=parameters.get("top_p", 0.9)
+            temperature=request.parameters.temperature,
+            max_tokens=request.parameters.max_tokens,
+            top_p=request.parameters.top_p
         )
         
         response = llm_response.choices[0].message.content.strip()
@@ -266,11 +247,19 @@ async def simulate_equipe_response(
         interacao = EquipeInteracao(
             pergunta_funcionario=request.message,
             resposta_gerada=response,
-            parametros_rag=parameters,
+            parametros_rag={
+                "model_id": request.parameters.model_id,
+                "temperature": request.parameters.temperature,
+                "max_tokens": request.parameters.max_tokens,
+                "top_p": request.parameters.top_p,
+                "top_k": request.parameters.top_k,
+                "threshold": request.parameters.threshold,
+                "re_rank": request.parameters.re_rank,
+                "enable_semantic_comparison": request.parameters.enable_semantic_comparison
+            },
             fontes_kb={"hits": kb_hits, "total": len(kb_hits)},
             resultado_simulacao={
                 "execution_time": execution_time,
-                "preset_used": request.preset,
                 "safe_mode": request.safe_mode
             },
             funcionario_id=request.funcionario_id,
@@ -286,7 +275,15 @@ async def simulate_equipe_response(
         return EquipeSimulationResult(
             response=response,
             kb_hits=kb_hits,
-            parameters_used=parameters,
+            parameters_used={
+                "model_id": request.parameters.model_id,
+                "temperature": request.parameters.temperature,
+                "max_tokens": request.parameters.max_tokens,
+                "top_p": request.parameters.top_p,
+                "top_k": request.parameters.top_k,
+                "threshold": request.parameters.threshold,
+                "re_rank": request.parameters.re_rank
+            },
             execution_time=execution_time,
             session_id=session_id,
             interaction_id=interacao.id,
