@@ -137,3 +137,83 @@ vite.config.ts:73:1: ERROR: Expected ";" but found ")"
 1:12:26 PM [vite] server restarted.
 1:33:57 PM [vite] vite.config.ts changed, restarting server...
 1:33:57 PM [vite] server restarted.
+10:27:12 PM [vite] (client) hmr update /src/App.tsx, /src/index.css
+10:27:14 PM [vite] (client) hmr update /src/App.tsx, /src/index.css
+10:27:15 PM [vite] (client) hmr update /src/components/Layout.tsx, /src/index.css
+10:27:17 PM [vite] (client) hmr update /src/components/Layout.tsx, /src/index.css
+10:46:32 PM [vite] (client) hmr update /src/App.tsx, /src/index.css
+10:46:32 PM [vite] (client) hmr update /src/components/Layout.tsx, /src/index.css
+10:55:33 PM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+10:55:49 PM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+10:55:52 PM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+10:56:12 PM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+10:56:30 PM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+10:56:44 PM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+10:57:03 PM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+10:57:21 PM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+10:57:42 PM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+10:57:56 PM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+10:59:13 PM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+11:01:36 PM [vite] (client) hmr update /src/index.css, /src/pages/Dashboard.tsx, /src/pages/Leads.tsx, /src/pages/Simulator.tsx, /src/pages/RAG.tsx, /src/components/LeadModal.tsx, /src/pages/Equipe.tsx
+11:01:51 PM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+11:01:54 PM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+11:01:56 PM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+11:01:59 PM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+11:07:29 PM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+11:07:29 PM [vite] (client) hmr update /src/index.css, /src/pages/Dashboard.tsx, /src/pages/Leads.tsx, /src/pages/Simulator.tsx, /src/pages/RAG.tsx, /src/components/LeadModal.tsx, /src/pages/Equipe.tsx
+11:12:20 PM [vite] http proxy error: /api/leads?page=1&page_size=50&sort_by=created_at&sort_dir=desc&mock=false
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:218:20)
+11:12:20 PM [vite] http proxy error: /health
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:218:20)
+11:12:20 PM [vite] http proxy error: /health
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:218:20)
+11:48:52 PM [vite] (client) hmr update /src/index.css, /src/pages/Dashboard.tsx, /src/pages/Leads.tsx, /src/pages/Simulator.tsx, /src/pages/RAG.tsx, /src/components/LeadModal.tsx, /src/pages/Equipe.tsx
+11:50:38 PM [vite] (client) hmr update /src/App.tsx, /src/index.css
+11:50:40 PM [vite] (client) hmr update /src/App.tsx, /src/index.css
+11:50:44 PM [vite] (client) hmr update /src/components/Layout.tsx, /src/index.css
+11:50:46 PM [vite] (client) hmr update /src/components/Layout.tsx, /src/index.css
+11:51:09 PM [vite] (client) hmr update /src/index.css, /src/pages/Dashboard.tsx, /src/pages/Leads.tsx, /src/pages/Simulator.tsx, /src/pages/RAG.tsx, /src/components/LeadModal.tsx, /src/pages/Equipe.tsx
+11:52:19 PM [vite] (client) hmr update /src/index.css, /src/pages/Dashboard.tsx, /src/pages/Leads.tsx, /src/pages/Simulator.tsx, /src/pages/RAG.tsx, /src/components/LeadModal.tsx, /src/pages/Equipe.tsx, /src/pages/EquipeConsultas.tsx
+11:52:19 PM [vite] (client) hmr update /src/pages/EquipeConsultas.tsx, /src/index.css
+11:52:19 PM [vite] (client) hmr update /src/App.tsx, /src/index.css
+11:52:19 PM [vite] (client) hmr update /src/components/Layout.tsx, /src/index.css
+1:08:54 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css
+1:08:59 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css
+1:09:01 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css
+1:09:21 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css
+1:09:56 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css
+1:10:04 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css
+1:10:12 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css
+1:10:15 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css
+1:10:17 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css
+1:10:47 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css
+1:11:01 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css
+1:11:32 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css
+2:15:30 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css
+2:15:41 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css
+2:16:36 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css
+2:27:15 AM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+2:27:18 AM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+2:27:23 AM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+2:27:34 AM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+2:27:47 AM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+2:27:51 AM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+2:28:31 AM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+2:41:05 AM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+2:41:37 AM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+2:41:40 AM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+2:41:58 AM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+2:42:51 AM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+2:42:51 AM [vite] (client) hmr update /src/index.css, /src/components/EquipeLayout.tsx
+2:45:48 AM [vite] (client) hmr update /src/App.tsx, /src/index.css
+2:46:01 AM [vite] (client) hmr update /src/index.css, /src/components/EquipeLayout.tsx
+2:46:05 AM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+2:47:05 AM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+2:47:05 AM [vite] (client) hmr update /src/App.tsx, /src/index.css
+2:55:11 AM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+2:55:28 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css
+2:56:20 AM [vite] (client) hmr update /src/pages/Equipe.tsx, /src/index.css
+2:56:20 AM [vite] (client) hmr update /src/pages/RAG.tsx, /src/index.css

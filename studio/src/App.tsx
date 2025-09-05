@@ -12,6 +12,8 @@ import AutomationEditor from './pages/AutomationEditor';
 import Intake from './pages/Intake';
 import Leads from './pages/Leads';
 import RAG from './pages/RAG';
+import Equipe from './pages/Equipe';
+import EquipeConsultas from './pages/EquipeConsultas';
 
 // Criar QueryClient para React Query
 const queryClient = new QueryClient({
@@ -42,6 +44,10 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <Router>
           <Routes>
+            {/* Rota isolada para Equipe - SEM Layout principal */}
+            <Route path="/equipe" element={<Equipe />} />
+            
+            {/* Rotas principais com Layout padrão */}
             <Route path="/" element={<Layout />}>
               <Route index element={<Dashboard />} />
               <Route path="simulator" element={<Simulator />} />
@@ -54,6 +60,7 @@ function App() {
               <Route path="intake" element={<Intake />} />
               <Route path="leads" element={<Leads />} />
               <Route path="rag" element={<RAG />} />
+              <Route path="equipe-consultas" element={<EquipeConsultas />} />
               <Route path="publish" element={<PlaceholderPage title="Publicação" />} />
               <Route path="*" element={
                 <div className="text-center py-12">

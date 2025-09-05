@@ -16,7 +16,6 @@ import type {
   RAGSimulationRequest,
   RAGSimulationResult,
   RAGPreset,
-  // RAGLogEvent,
   RAGLead,
   RAGLeadMessage,
   CreateRAGLeadRequest
@@ -237,6 +236,107 @@ export const apiService = {
 
   async addMessageToRAGLead(leadId: number, message: RAGLeadMessage): Promise<{ message: string; total_messages: number }> {
     const response = await api.post(`/api/rag/leads/${leadId}/messages`, message);
+    return response.data;
+  },
+
+  // === EQUIPE ENDPOINTS ===
+
+  // Parâmetros da EQUIPE
+  async getEquipeParameters(): Promise<any> {
+    const response = await api.get('/api/equipe/parameters');
+    return response.data;
+  },
+
+  // Knowledge Base da EQUIPE
+  async getEquipeKnowledgeBase(): Promise<any> {
+    const response = await api.get('/api/equipe/knowledge-base');
+    return response.data;
+  },
+
+  // Prompt da EQUIPE
+  async getEquipePrompt(): Promise<any> {
+    const response = await api.get('/api/equipe/prompt');
+    return response.data;
+  },
+
+  // Simulação da EQUIPE
+  async simulateEquipe(request: any): Promise<any> {
+    const response = await api.post('/api/equipe/simulate', request);
+    return response.data;
+  },
+
+  // Histórico da EQUIPE
+  async getEquipeHistory(params: any = {}): Promise<any[]> {
+    const queryParams = new URLSearchParams();
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        queryParams.append(key, value.toString());
+      }
+    });
+
+    const response = await api.get(`/api/equipe/history?${queryParams.toString()}`);
+    return response.data;
+  },
+
+  // Deletar interação da EQUIPE
+  async deleteEquipeInteraction(interactionId: number): Promise<{ message: string }> {
+    const response = await api.delete(`/api/equipe/history/${interactionId}`);
+    return response.data;
+  },
+
+  // Sessões da EQUIPE
+  async getEquipeSessions(params: any = {}): Promise<any[]> {
+    const queryParams = new URLSearchParams();
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        queryParams.append(key, value.toString());
+      }
+    });
+
+    const response = await api.get(`/api/equipe/sessions?${queryParams.toString()}`);
+    return response.data;
+  },
+
+  // === EQUIPE CONSULTAS ENDPOINTS ===
+
+  // Consultas com filtros
+  async getEquipeConsultas(params: any = {}): Promise<any[]> {
+    const queryParams = new URLSearchParams();
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== '') {
+        queryParams.append(key, value.toString());
+      }
+    });
+
+    const response = await api.get(`/api/equipe/consultas?${queryParams.toString()}`);
+    return response.data;
+  },
+
+  // Atualizar consulta
+  async updateEquipeConsulta(interactionId: number, pergunta: string, resposta: string): Promise<any> {
+    const queryParams = new URLSearchParams();
+    queryParams.append('pergunta', pergunta);
+    queryParams.append('resposta', resposta);
+
+    const response = await api.put(`/api/equipe/consultas/${interactionId}?${queryParams.toString()}`);
+    return response.data;
+  },
+
+  // Deletar consultas em lote
+  async deleteEquipeConsultasBulk(interactionIds: number[]): Promise<any> {
+    const queryParams = new URLSearchParams();
+    interactionIds.forEach(id => queryParams.append('interaction_ids', id.toString()));
+
+    const response = await api.delete(`/api/equipe/consultas/bulk?${queryParams.toString()}`);
+    return response.data;
+  },
+
+  // Exportar para fine-tuning
+  async exportEquipeFinetuning(interactionIds: number[]): Promise<any> {
+    const queryParams = new URLSearchParams();
+    interactionIds.forEach(id => queryParams.append('interaction_ids', id.toString()));
+
+    const response = await api.post(`/api/equipe/consultas/export-finetuning?${queryParams.toString()}`);
     return response.data;
   },
 };

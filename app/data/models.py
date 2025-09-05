@@ -109,3 +109,18 @@ class FilaRevisao(Base):
     contexto_do_lead: Mapped[dict] = mapped_column(JSON, nullable=True)
     aprovado: Mapped[bool] = mapped_column(default=False)
     criado_em: Mapped[str] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class EquipeInteracao(Base):
+    """Interações da equipe de atendimento com o sistema RAG."""
+    __tablename__ = "equipe_interacao"
+    
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    pergunta_funcionario: Mapped[str] = mapped_column(String)
+    resposta_gerada: Mapped[str] = mapped_column(String)
+    parametros_rag: Mapped[dict] = mapped_column(JSON, nullable=True)  # Preset e parâmetros usados
+    fontes_kb: Mapped[dict] = mapped_column(JSON, nullable=True)  # Fontes da knowledge base
+    resultado_simulacao: Mapped[dict] = mapped_column(JSON, nullable=True)  # Resultado completo da simulação
+    funcionario_id: Mapped[str] = mapped_column(String, nullable=True)  # ID do funcionário (futuro)
+    sessao_id: Mapped[str] = mapped_column(String, nullable=True)  # Para agrupar interações
+    criado_em: Mapped[str] = mapped_column(DateTime(timezone=True), server_default=func.now())

@@ -14,7 +14,8 @@ import {
   ChevronUpIcon,
   ExclamationCircleIcon,
   UserGroupIcon,
-  TrashIcon
+  TrashIcon,
+  XMarkIcon
 } from '@heroicons/react/24/outline';
 import { apiService } from '../services/api';
 import { useToast } from '../hooks/useToast';
@@ -78,13 +79,17 @@ export default function RAG() {
   const [kbExpanded, setKbExpanded] = useState(false);
   const [promptExpanded, setPromptExpanded] = useState(false);
   const [parametersExpanded, setParametersExpanded] = useState(false);
-  const [logsExpanded, setLogsExpanded] = useState(true);
+  const [logsExpanded, setLogsExpanded] = useState(false); // Começa colapsado
+  
+  // Estados para popup de histórico completo  
+  const [showFullHistory, setShowFullHistory] = useState(false);
+  const [selectedLeadForHistory, setSelectedLeadForHistory] = useState<RAGLead | null>(null);
 
   // Estados de logs em tempo real
   const [logs, setLogs] = useState<RAGLogEvent[]>([]);
   const [streamActive, setStreamActive] = useState(false);
   const [streamPaused, setStreamPaused] = useState(false);
-  const [autoScroll, setAutoScroll] = useState(true);
+  const [autoScroll, setAutoScroll] = useState(false); // Desabilitado por padrão
   const [logFilter, setLogFilter] = useState<string>('');
 
   // Referências
@@ -104,7 +109,7 @@ export default function RAG() {
         response_length: 400,
         focus: 1.0,
         search_depth: 3,
-        relevance_filter: 0.05,
+        relevance_filter: 0.65,  // Aligned with Equipe threshold
         enable_rerank: false,
         enable_semantic_comparison: false
       },
@@ -112,7 +117,6 @@ export default function RAG() {
     }
   });
 
-  // const selectedPreset = watch('selectedPreset');
   const useCustomParameters = watch('useCustomParameters');
 
   // Carregar dados iniciais
@@ -298,16 +302,9 @@ export default function RAG() {
       // RECARREGAR LEADS para mostrar histórico REAL atualizado
       if (data.lead_id) {
         await loadLeads();
-        toast.success(
-          'Simulação concluída com sucesso!', 
-          `Processada em ${result.processing_time_ms}ms. Histórico do lead foi atualizado com mensagem real!`
-        );
-      } else {
-        toast.success(
-          'Simulação concluída com sucesso!', 
-          `Processada em ${result.processing_time_ms}ms - Classificação: ${result.classification}`
-        );
+        // Toast removido conforme solicitação do usuário
       }
+      // Toast de sucesso removido conforme solicitação do usuário
 
     } catch (err: any) {
       toast.error('Erro na simulação RAG', err.message);
@@ -879,9 +876,24 @@ Resposta:"
                       {/* Preview do Histórico */}
                       {selectedLead?.id === lead.id && lead.messages.length > 0 && (
                         <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-600">
-                          <p className="text-xs font-medium text-gray-700 dark:text-gray-300 mb-2">
-                            Últimas mensagens:
-                          </p>
+                          <div className="flex items-center justify-between mb-2">
+                            <p className="text-xs font-medium text-gray-700 dark:text-gray-300">
+                              Últimas mensagens:
+                            </p>
+                            {lead.messages.length > 3 && (
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSelectedLeadForHistory(lead);
+                                  setShowFullHistory(true);
+                                }}
+                                className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 flex items-center"
+                              >
+                                <EyeIcon className="h-3 w-3 mr-1" />
+                                Ver mais ({lead.messages.length})
+                              </button>
+                            )}
+                          </div>
                           <div className="space-y-1 max-h-20 overflow-y-auto">
                             {lead.messages.slice(-3).map((msg, idx) => (
                               <div key={idx} className="text-xs">
@@ -898,6 +910,74 @@ Resposta:"
                       )}
                     </div>
                   ))}
+                </div>
+              )}
+
+              {/* Modal de Histórico Completo - MOVIDO PARA O CONTEXTO CORRETO */}
+              {showFullHistory && selectedLeadForHistory && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                  <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-4xl max-h-[80vh] w-full mx-4 flex flex-col">
+                    <div className="flex items-center justify-between mb-4 pb-3 border-b border-gray-200 dark:border-gray-700">
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                          Histórico Completo - {selectedLeadForHistory.name}
+                        </h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          {selectedLeadForHistory.messages.length} mensagens no total
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setShowFullHistory(false);
+                          setSelectedLeadForHistory(null);
+                        }}
+                        className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                      >
+                        <XMarkIcon className="h-6 w-6" />
+                      </button>
+                    </div>
+                    
+                    <div className="flex-1 overflow-y-auto">
+                      <div className="space-y-3">
+                        {selectedLeadForHistory.messages.map((msg: any, idx: number) => (
+                          <div 
+                            key={idx} 
+                            className={`p-3 rounded-lg ${
+                              msg.role === 'Lead' 
+                                ? 'bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-400' 
+                                : 'bg-green-50 dark:bg-green-900/20 border-l-4 border-green-400'
+                            }`}
+                          >
+                            <div className="flex items-center justify-between mb-2">
+                              <span className={`text-sm font-semibold ${
+                                msg.role === 'Lead' ? 'text-blue-700 dark:text-blue-300' : 'text-green-700 dark:text-green-300'
+                              }`}>
+                                {msg.role}
+                              </span>
+                              <span className="text-xs text-gray-500 dark:text-gray-400">
+                                Mensagem {idx + 1} de {selectedLeadForHistory.messages.length}
+                              </span>
+                            </div>
+                            <div className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+                              {msg.text}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700 flex justify-end">
+                      <button
+                        onClick={() => {
+                          setShowFullHistory(false);
+                          setSelectedLeadForHistory(null);
+                        }}
+                        className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                      >
+                        Fechar
+                      </button>
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -1003,7 +1083,7 @@ Resposta:"
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                                             {...(register as any)('leadProfile.hasAccount')}
+                      {...register('leadProfile.hasAccount')}
                       className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
                     <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Tem conta em corretora</span>
@@ -1011,7 +1091,7 @@ Resposta:"
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                                             {...(register as any)('leadProfile.hasDeposit')}
+                      {...register('leadProfile.hasDeposit')}
                       className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
                     <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Já depositou</span>
@@ -1019,7 +1099,7 @@ Resposta:"
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                                             {...(register as any)('leadProfile.wantsTest')}
+                      {...register('leadProfile.wantsTest')}
                       className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
                     <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Quer testar o robô</span>

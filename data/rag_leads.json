@@ -1,9 +1,90 @@
 [
   {
     "id": 1,
-    "name": "dafad",
+    "name": "sdfdsf",
     "description": "",
-    "messages": [],
-    "created_at": "2025-09-05T15:47:51.337652"
+    "messages": [
+      {
+        "role": "Lead",
+        "text": "eae funciona como",
+        "timestamp": "2025-09-05T02:31:18.890211"
+      },
+      {
+        "role": "GPT",
+        "text": "Funciona na Nyrion.",
+        "timestamp": "2025-09-05T02:31:18.890222"
+      },
+      {
+        "role": "Lead",
+        "text": "opa mano",
+        "timestamp": "2025-09-05T02:32:49.183341"
+      },
+      {
+        "role": "GPT",
+        "text": "Nenhuma informação relevante encontrada.",
+        "timestamp": "2025-09-05T02:32:49.183351"
+      },
+      {
+        "role": "Lead",
+        "text": "opera sinais",
+        "timestamp": "2025-09-05T02:51:53.645993"
+      },
+      {
+        "role": "GPT",
+        "text": "Não, o robô não usa sinais.",
+        "timestamp": "2025-09-05T02:51:53.646008"
+      },
+      {
+        "role": "Lead",
+        "text": "opera sinais",
+        "timestamp": "2025-09-05T02:51:56.202757"
+      },
+      {
+        "role": "GPT",
+        "text": "Não, o robô não usa sinais.",
+        "timestamp": "2025-09-05T02:51:56.202775"
+      },
+      {
+        "role": "Lead",
+        "text": "opera sinais",
+        "timestamp": "2025-09-05T02:57:06.251247"
+      },
+      {
+        "role": "GPT",
+        "text": "Não, o robô não usa sinais.",
+        "timestamp": "2025-09-05T02:57:06.251271"
+      },
+      {
+        "role": "Lead",
+        "text": "opera sinais",
+        "timestamp": "2025-09-05T02:57:08.296653"
+      },
+      {
+        "role": "GPT",
+        "text": "Não, o robô não usa sinais.",
+        "timestamp": "2025-09-05T02:57:08.296665"
+      },
+      {
+        "role": "Lead",
+        "text": "como funciona o robô?",
+        "timestamp": "2025-09-05T02:57:17.181575"
+      },
+      {
+        "role": "GPT",
+        "text": "Funciona em nuvem.",
+        "timestamp": "2025-09-05T02:57:17.181595"
+      },
+      {
+        "role": "Lead",
+        "text": "como funciona o robô?",
+        "timestamp": "2025-09-05T02:57:19.860949"
+      },
+      {
+        "role": "GPT",
+        "text": "Funciona em nuvem.",
+        "timestamp": "2025-09-05T02:57:19.860962"
+      }
+    ],
+    "created_at": "2025-09-05T02:30:29.663960"
   }
 ]
