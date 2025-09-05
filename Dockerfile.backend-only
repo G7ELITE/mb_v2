@@ -1,0 +1,46 @@
+# Dockerfile BACKEND ONLY - ManyBlack V2
+FROM python:3.11-slim
+
+# Instalar dependências do sistema
+RUN apt-get update && apt-get install -y \
+    postgresql-client \
+    curl \
+    netcat-openbsd \
+    && rm -rf /var/lib/apt/lists/*
+
+# Criar usuário não-root
+RUN useradd --create-home --shell /bin/bash app
+
+# Diretório da aplicação
+WORKDIR /app
+
+# Copiar requirements e instalar dependências Python
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar código do backend
+COPY app/ ./app/
+COPY alembic/ ./alembic/
+COPY alembic.ini .
+
+# Copiar diretórios necessários
+COPY policies/ ./policies/
+COPY data/ ./data/
+
+# Criar diretório e copiar página inicial
+RUN mkdir -p /app/static
+COPY index-temp.html /app/static/index.html
+
+# Copiar scripts
+COPY scripts/ ./scripts/
+RUN chmod +x scripts/*.sh
+
+# Mudar para usuário não-root
+RUN chown -R app:app /app
+USER app
+
+# Expor porta
+EXPOSE 8000
+
+# Script de inicialização
+CMD ["./scripts/start-production.sh"]

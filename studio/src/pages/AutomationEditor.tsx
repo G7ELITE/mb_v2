@@ -56,7 +56,8 @@ export default function AutomationEditor() {
   // Carregar automação para edição
   useEffect(() => {
     if (isEditing && id) {
-      const automation = automationStorage.getById(id);
+      const loadAutomation = async () => {
+        const automation = await automationStorage.getById(id);
       if (automation) {
         reset({
           id: automation.id,
@@ -79,6 +80,8 @@ export default function AutomationEditor() {
       } else {
         setError(`Automação com ID "${id}" não encontrada`);
       }
+      };
+      loadAutomation();
     }
   }, [isEditing, id, reset]);
 

@@ -45,7 +45,7 @@ class CreateRAGLeadRequest(BaseModel):
     initial_messages: List[RAGLeadMessage] = []
 
 # Arquivo para salvar leads RAG
-RAG_LEADS_FILE = "/home/devbael/mb-v2/data/rag_leads.json"
+RAG_LEADS_FILE = "/app/data/rag_leads.json"
 
 def load_rag_leads() -> List[RAGLead]:
     """Carrega leads RAG do arquivo JSON"""
@@ -180,7 +180,7 @@ async def get_knowledge_base():
     """
     try:
         # Ler arquivo kb.md
-        kb_path = "/home/devbael/mb-v2/policies/kb.md"
+        kb_path = "/app/policies/kb.md"
         with open(kb_path, 'r', encoding='utf-8') as f:
             content = f.read()
         
@@ -208,7 +208,7 @@ async def update_knowledge_base(kb: RAGKnowledgeBase):
             raise HTTPException(status_code=400, detail="Conteúdo muito grande (máximo 100KB)")
         
         # Salvar arquivo
-        kb_path = "/home/devbael/mb-v2/policies/kb.md"
+        kb_path = "/app/policies/kb.md"
         with open(kb_path, 'w', encoding='utf-8') as f:
             f.write(kb.content)
         
@@ -399,7 +399,8 @@ async def simulate_rag(request: RAGSimulationRequest):
             mensagem_atual=request.message
         )
         
-        logger.info(f"📝 Prompt formatado com {len(historico.split('\\n'))} linhas de histórico")
+        linhas = historico.split('\n')
+        logger.info(f"📝 Prompt formatado com {len(linhas)} linhas de histórico")
         
         # CHAMADA REAL PARA OPENAI API com text-embedding-3-large para RAG
         from openai import AsyncOpenAI

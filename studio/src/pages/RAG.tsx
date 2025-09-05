@@ -12,7 +12,6 @@ import {
   EyeIcon,
   ChevronDownIcon,
   ChevronUpIcon,
-  InformationCircleIcon,
   ExclamationCircleIcon,
   UserGroupIcon,
   TrashIcon
@@ -32,7 +31,6 @@ import type {
   RAGTopNResult,
   RAGPreset,
   RAGLead,
-  RAGLeadMessage,
   CreateRAGLeadRequest
 } from '../types';
 
@@ -114,7 +112,7 @@ export default function RAG() {
     }
   });
 
-  const selectedPreset = watch('selectedPreset');
+  // const selectedPreset = watch('selectedPreset');
   const useCustomParameters = watch('useCustomParameters');
 
   // Carregar dados iniciais
@@ -1005,7 +1003,7 @@ Resposta:"
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                      {...register('leadProfile.hasAccount')}
+                                             {...(register as any)('leadProfile.hasAccount')}
                       className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
                     <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Tem conta em corretora</span>
@@ -1013,7 +1011,7 @@ Resposta:"
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                      {...register('leadProfile.hasDeposit')}
+                                             {...(register as any)('leadProfile.hasDeposit')}
                       className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
                     <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Já depositou</span>
@@ -1021,7 +1019,7 @@ Resposta:"
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                      {...register('leadProfile.wantsTest')}
+                                             {...(register as any)('leadProfile.wantsTest')}
                       className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
                     <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Quer testar o robô</span>

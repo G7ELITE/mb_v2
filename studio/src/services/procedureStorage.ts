@@ -1,7 +1,7 @@
 import type { Procedure } from '../types';
 import yaml from 'js-yaml';
 
-const API_BASE_URL = 'http://localhost:8000';
+// const API_BASE_URL = 'http://localhost:8000';
 const STORAGE_KEY = 'manyblack_procedures_cache';
 
 // Cache local para performance
@@ -56,7 +56,7 @@ export const procedureStorage = {
   async setAll(procedures: Procedure[]): Promise<void> {
     try {
       const yamlContent = yaml.dump(procedures, { 
-        defaultFlowStyle: false, 
+        // defaultFlowStyle: false, 
         noRefs: true 
       });
       

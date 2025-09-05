@@ -1,7 +1,7 @@
 import type { Automation } from '../types';
 import yaml from 'js-yaml';
 
-const API_BASE_URL = 'http://localhost:8000';
+// const API_BASE_URL = 'http://localhost:8000';
 const STORAGE_KEY = 'manyblack_automations_cache';
 
 // Cache local para performance
@@ -56,7 +56,7 @@ export const automationStorage = {
   async setAll(automations: Automation[]): Promise<void> {
     try {
       const yamlContent = yaml.dump(automations, { 
-        defaultFlowStyle: false, 
+        // defaultFlowStyle: false, 
         noRefs: true 
       });
       

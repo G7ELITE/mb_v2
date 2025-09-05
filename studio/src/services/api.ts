@@ -16,7 +16,7 @@ import type {
   RAGSimulationRequest,
   RAGSimulationResult,
   RAGPreset,
-  RAGLogEvent,
+  // RAGLogEvent,
   RAGLead,
   RAGLeadMessage,
   CreateRAGLeadRequest
