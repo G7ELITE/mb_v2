@@ -63,7 +63,7 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/ssl:/etc/nginx/ssl:ro
-      - ./static:/var/www/static:ro
+      - /var/www/static:/var/www/static:ro
     depends_on:
       - app
     networks:

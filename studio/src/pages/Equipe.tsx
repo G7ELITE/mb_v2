@@ -7,19 +7,19 @@ import {
   ExclamationTriangleIcon,
   CheckCircleIcon,
   ClockIcon,
-  PauseIcon,
-  EyeIcon,
+  // PauseIcon,
+  // EyeIcon,
   ChevronDownIcon,
   ChevronUpIcon,
-  InformationCircleIcon,
-  ExclamationCircleIcon,
+  // InformationCircleIcon,
+  // ExclamationCircleIcon,
   UserGroupIcon,
   TrashIcon,
-  ShieldCheckIcon
+  // ShieldCheckIcon
 } from '@heroicons/react/24/outline';
 import { apiService } from '../services/api';
 import { useToast } from '../hooks/useToast';
-import PopupContainer from '../components/PopupContainer';
+// import PopupContainer from '../components/PopupContainer';
 import { InfoTooltip } from '../components/Tooltip';
 import EquipeLayout from '../components/EquipeLayout';
 import { 
@@ -93,7 +93,7 @@ export default function Equipe() {
   // Estados principais
   const [knowledgeBase, setKnowledgeBase] = useState<any>(null);
   const [prompt, setPrompt] = useState<any>(null);
-  const [models, setModels] = useState<any[]>([]);
+  // const [models, setModels] = useState<any[]>([]);
   const [presets, setPresets] = useState<Record<string, EquipeParameters> | null>(null);
   const [simulationResult, setSimulationResult] = useState<EquipeSimulationResult | null>(null);
   const [history, setHistory] = useState<EquipeInteractionHistory[]>([]);
@@ -133,7 +133,7 @@ export default function Equipe() {
         top_k: globalConfig.top_k,
         threshold: globalConfig.threshold,
         re_rank: globalConfig.re_rank,
-        enable_semantic_comparison: globalConfig.enable_semantic_comparison
+        // enable_semantic_comparison: globalConfig.enable_semantic_comparison
       },
       safeMode: false
     }
@@ -153,7 +153,7 @@ export default function Equipe() {
       setValue('customParameters.top_k', newConfig.top_k);
       setValue('customParameters.threshold', newConfig.threshold);
       setValue('customParameters.re_rank', newConfig.re_rank);
-      setValue('customParameters.enable_semantic_comparison', newConfig.enable_semantic_comparison);
+              // setValue('customParameters.enable_semantic_comparison', newConfig.enable_semantic_comparison);
     });
 
     return cleanup;
@@ -181,7 +181,7 @@ export default function Equipe() {
       // Carregar parâmetros e modelos
       const parametersResponse = await apiService.getEquipeParameters();
       setPresets(parametersResponse.presets);
-      setModels(parametersResponse.models || []);
+              // setModels(parametersResponse.models || []);
 
       // Carregar histórico
       await loadHistory();
@@ -395,7 +395,7 @@ export default function Equipe() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                 <form onSubmit={handleSubmit(onSubmit as any)} className="space-y-6">
           {/* Seção de Simulação (sempre visível) */}
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
             <div className="flex items-center space-x-3 mb-6">

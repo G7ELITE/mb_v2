@@ -38,7 +38,7 @@ def get_current_rag_prompt():
     Retorna o template de prompt RAG atual.
     Usa personalizado se existir, senão usa o padrão.
     """
-    custom_prompt_path = "/home/devbael/mb-v2/policies/rag_prompt_custom.txt"
+    custom_prompt_path = "/app/policies/rag_prompt_custom.txt"
     
     try:
         if os.path.exists(custom_prompt_path):
@@ -57,7 +57,7 @@ def save_custom_rag_prompt(template: str):
     """
     Salva um template de prompt personalizado.
     """
-    custom_prompt_path = "/home/devbael/mb-v2/policies/rag_prompt_custom.txt"
+    custom_prompt_path = "/app/policies/rag_prompt_custom.txt"
     
     try:
         # Criar diretório se não existir
@@ -76,7 +76,7 @@ def is_using_custom_prompt():
     """
     Retorna True se está usando prompt personalizado, False se padrão.
     """
-    custom_prompt_path = "/home/devbael/mb-v2/policies/rag_prompt_custom.txt"
+    custom_prompt_path = "/app/policies/rag_prompt_custom.txt"
     try:
         if os.path.exists(custom_prompt_path):
             with open(custom_prompt_path, 'r', encoding='utf-8') as f:

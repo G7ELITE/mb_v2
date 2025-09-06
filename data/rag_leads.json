@@ -1,30 +1,50 @@
 [
   {
     "id": 1,
-    "name": "ergedfg",
+    "name": "lead99",
     "description": "",
     "messages": [
       {
         "role": "Lead",
-        "text": "pode usar com sinais?",
-        "timestamp": "2025-09-05T14:26:44.109293"
+        "text": "e pra testar?",
+        "timestamp": "2025-09-06T15:43:54.927341"
       },
       {
         "role": "GPT",
-        "text": "O robô não usa sinais.",
-        "timestamp": "2025-09-05T14:26:44.109305"
+        "text": "Para testar, é só ter uma conta na nyrion. Você já tem uma?",
+        "timestamp": "2025-09-06T15:43:54.927391"
       },
       {
         "role": "Lead",
-        "text": "pode usar com sinais?",
-        "timestamp": "2025-09-05T14:26:46.711817"
+        "text": "e pra testar?",
+        "timestamp": "2025-09-06T15:43:57.044594"
       },
       {
         "role": "GPT",
-        "text": "O robô não usa sinais.",
-        "timestamp": "2025-09-05T14:26:46.711830"
+        "text": "Para testar, você só precisa ter uma conta na nyrion. Já tem uma?",
+        "timestamp": "2025-09-06T15:43:57.044611"
+      },
+      {
+        "role": "Lead",
+        "text": "funciona otc tbm?",
+        "timestamp": "2025-09-06T15:44:27.706918"
+      },
+      {
+        "role": "GPT",
+        "text": "Funciona sim em OTC, mas o ideal é usar no mercado aberto que é mais estável.",
+        "timestamp": "2025-09-06T15:44:27.706967"
+      },
+      {
+        "role": "Lead",
+        "text": "funciona otc tbm?",
+        "timestamp": "2025-09-06T15:44:29.995285"
+      },
+      {
+        "role": "GPT",
+        "text": "Funciona sim em OTC, mas o ideal é usar no mercado aberto que é mais estável.",
+        "timestamp": "2025-09-06T15:44:29.995312"
       }
     ],
-    "created_at": "2025-09-05T14:26:38.980115"
+    "created_at": "2025-09-06T15:43:12.088288"
   }
 ]

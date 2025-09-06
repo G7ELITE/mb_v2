@@ -189,7 +189,7 @@ async def simulate_equipe_response(
         kb_text = "Nenhuma informação relevante encontrada."
         kb_hits = []
         
-        if rag_context and rag_context.hits:
+        if rag_context and hasattr(rag_context, 'hits') and rag_context.hits:
             # Aplicar threshold primeiro - IDÊNTICO à API RAG
             hits_filtrados = [hit for hit in rag_context.hits if hit.get('score', 0) >= request.parameters.threshold]
             
@@ -200,7 +200,8 @@ async def simulate_equipe_response(
             
             # Criar contexto atualizado com hits filtrados - IGUAL À API RAG
             from app.data.schemas import KbContext
-            rag_context_filtrado = KbContext(hits=hits_filtrados, topico=rag_context.topico)
+            topico = getattr(rag_context, 'topico', 'consulta')
+            rag_context_filtrado = KbContext(hits=hits_filtrados, topico=topico)
             
             # USAR O MESMO MÉTODO build_context_string para consistência
             kb_text = rag_context_filtrado.build_context_string()

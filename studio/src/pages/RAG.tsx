@@ -24,8 +24,8 @@ import { InfoTooltip } from '../components/Tooltip';
 import { 
   loadRAGConfig, 
   saveRAGConfig, 
-  configToRAGParameters, 
-  DEFAULT_RAG_CONFIG,
+  // configToRAGParameters, 
+  // DEFAULT_RAG_CONFIG,
   AVAILABLE_MODELS,
   validateRAGConfig,
   type RAGGlobalConfig 
@@ -117,12 +117,12 @@ export default function RAG() {
       useCustomParameters: true, // Sempre usar configuração global
       customParameters: {
         model_id: globalConfig.model_id,
-        temperature: globalConfig.temperature,
-        max_tokens: globalConfig.max_tokens,
-        top_p: globalConfig.top_p,
-        top_k: globalConfig.top_k,
-        threshold: globalConfig.threshold,
-        re_rank: globalConfig.re_rank,
+        creativity: globalConfig.temperature,
+        response_length: globalConfig.max_tokens,
+        focus: globalConfig.top_p,
+        search_depth: globalConfig.top_k,
+        relevance_filter: globalConfig.threshold,
+        enable_rerank: globalConfig.re_rank,
         enable_semantic_comparison: globalConfig.enable_semantic_comparison
       },
       safeMode: true
@@ -137,12 +137,12 @@ export default function RAG() {
     const currentParams = watchedParams;
     const newConfig: RAGGlobalConfig = {
       model_id: currentParams.model_id,
-      temperature: currentParams.temperature,
-      max_tokens: currentParams.max_tokens,
-      top_p: currentParams.top_p,
-      top_k: currentParams.top_k,
-      threshold: currentParams.threshold,
-      re_rank: currentParams.re_rank,
+      temperature: currentParams.creativity,
+      max_tokens: currentParams.response_length,
+      top_p: currentParams.focus,
+      top_k: currentParams.search_depth,
+      threshold: currentParams.relevance_filter,
+      re_rank: currentParams.enable_rerank,
       enable_semantic_comparison: currentParams.enable_semantic_comparison
     };
 
@@ -1114,7 +1114,7 @@ Resposta:"
               </div>
             </div>
             
-            <form onSubmit={handleSubmit(handleSimulation)} className="p-4 space-y-4">
+            <form onSubmit={handleSubmit(handleSimulation as any)} className="p-4 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Mensagem do Lead
@@ -1138,7 +1138,7 @@ Resposta:"
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                      {...register('leadProfile.hasAccount')}
+                      {...(register as any)('leadProfile.hasAccount')}
                       className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
                     <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Tem conta em corretora</span>
@@ -1146,7 +1146,7 @@ Resposta:"
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                      {...register('leadProfile.hasDeposit')}
+                      {...(register as any)('leadProfile.hasDeposit')}
                       className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
                     <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Já depositou</span>
@@ -1154,7 +1154,7 @@ Resposta:"
                   <label className="flex items-center">
                     <input
                       type="checkbox"
-                      {...register('leadProfile.wantsTest')}
+                      {...(register as any)('leadProfile.wantsTest')}
                       className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                     />
                     <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Quer testar o robô</span>
